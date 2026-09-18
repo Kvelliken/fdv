@@ -1,0 +1,237 @@
+# Konfigurasjon for KOSTRA FDV-normtall.
+# Ingen terskler eller verdikoder skal finnes i koden. Alt står her.
+
+api:
+  base_url: "https://data.ssb.no/api/v0/no/table"
+  maks_kall_per_minutt: 30
+  timeout_sekunder: 90
+  retry:
+    forsok: 5
+    grunn_ventetid_sekunder: 2.0
+    maks_ventetid_sekunder: 120.0
+    status_som_gir_retry: [429, 500, 502, 503, 504]
+
+tabeller:
+  # Tabellnumrene er stabile identifikatorer, ikke verdikoder. Verdikodene
+  # inne i tabellene slås opp i metadata, se `kodesok` lenger ned.
+  kostnad: "12905"      # Utgifter til FDV av utvalgte kommunale formålsbygg, etter art og funksjon (K)
+  # Forvaltning. Funksjon 121 står i funksjonsdimensjonen til 12905, men er tom
+  # for alle arter der - verifisert mot API-et 18.09.2026. Leddet må derfor
+  # hentes fra 12367, med art AGD4.
+  #
+  # AGD4 heter «Korrigerte brutto driftsutgifter på funksjon/tjenesteområde» og
+  # inneholder avskrivninger (art 590) og mva-utgift (art 429). Det er et annet
+  # målebegrep enn drift og vedlikehold, som er rene aktivitetsarter i
+  # artsgruppe 0-2. Forbeholdet står på nettsiden og i METODE.md. Finnes det en
+  # ren forvaltningsart i en senere årgang, bytt hit.
+  forvaltning: "12367"
+  areal: "11906"        # Areal for kommunale formålsbygg, etter eieform og funksjon (K)
+  energi: "12150"       # Energibruk i kommunal eiendomsforvaltning, etter funksjon og energitype (K)
+
+aargang:
+  antall_frosne: 5          # hentes og fryses
+  antall_vist: 3            # vises på nettsiden
+  revidert_publisering:     # reviderte tall publiseres denne datoen
+    maaned: 6
+    dag: 15
+  forelopig_publisering:
+    maaned: 3
+    dag: 15
+  tillat_forelopig: false   # kan overstyres av workflow-input
+
+# Bygningsfunksjonene. Forvaltning (121) er ikke en bygningsfunksjon: den er
+# porteføljenivå og har ikke eget areal.
+funksjoner:
+  "130": "Administrasjonslokaler"
+  "221": "Barnehagelokaler"
+  "222": "Skolelokaler"
+  "261": "Institusjonslokaler"
+  "381": "Idrettsbygg"
+  "386": "Kulturbygg"
+
+# Forvaltningsleddet: hvilken funksjon og hvilken art det hentes med.
+forvaltning:
+  tabell: forvaltning   # nøkkel i `tabeller` over
+  funksjon: "121"
+  art: forvaltning      # korrigerte brutto driftsutgifter, se forbeholdet
+  # Andel kommuner som må ha et forvaltningstall før jobben stoler på leddet.
+  minste_dekning: 0.6
+
+forvaltningsfunksjon: "121"
+
+# Tekstsøk mot metadata. Treffet må være entydig, ellers hard feil.
+# `krev` = alle strengene må finnes i kodeteksten eller i selve koden.
+# `unnta` = treffet forkastes hvis noen av disse finnes.
+# Søket er ikke-sensitivt for store/små bokstaver.
+kodesok:
+  sektor:
+    # Dimensjonen heter «regnskapsomfang» i noen tabeller og «sektor» i andre.
+    dimensjon_krev: ["sektor", "regnskapsomfang", "regnskapsomfa"]
+    krev: ["konsern"]
+    unnta: ["fylke", "stat"]
+    # Tabell 12905 har ingen sektordimensjon. Sektoren er bakt inn i tabellens
+    # definisjon: den dekker kommunens og de kommunale foretakenes formålsbygg,
+    # altså konserntall. Verifisert mot API-et 18.09.2026. Jobben summerer
+    # fortsatt aldri over en sektordimensjon som finnes, men er den ikke der,
+    # er det ingenting å velge.
+    tillat_manglende_dimensjon: true
+    manglende_dimensjon_begrunnelse: >-
+      Tabellen har ingen sektordimensjon. Den dekker kommune og kommunale
+      foretak samlet, altså konserntall, per tabellens egen definisjon.
+  eieform:
+    dimensjon_krev: ["eieform", "eier"]
+    krev: ["eid"]
+    unnta: ["leid", "total", "samlet", "ikke"]
+  art:
+    drift:
+      dimensjon_krev: ["art", "regnskapsbegrep"]
+      krev: ["driftsaktivitet"]
+      unnta: ["vedlikehold", "korrigert", "netto", "avskriv"]
+    vedlikehold:
+      dimensjon_krev: ["art", "regnskapsbegrep"]
+      krev: ["vedlikeholdsaktivitet"]
+      unnta: ["driftsaktivitet", "korrigert", "netto"]
+    renhold:
+      dimensjon_krev: ["art", "regnskapsbegrep"]
+      krev: ["renholdsaktivitet"]
+      unnta: ["korrigert", "netto"]
+    energi:
+      dimensjon_krev: ["art", "regnskapsbegrep"]
+      krev: ["energi"]
+      unnta: ["fornybar", "utslipp", "korrigert", "netto"]
+    forvaltning:
+      dimensjon_krev: ["art", "regnskapsbegrep"]
+      krev: ["korrigerte brutto"]
+      unnta: []
+  energibruk:
+    # Tabellen har både «Energibruk (MWh)» og «Temperaturkorrigert energibruk
+    # (MWh)». Vi henter den ukorrigerte. Grunnen er kryssvalideringen mot
+    # energiutgifter: implisitt pris er kroner delt på kilowattimer, og
+    # energiutgiftene gjelder det faktiske forbruket. Deles de på et
+    # temperaturkorrigert forbruk, måles ikke lenger en pris, men en pris
+    # ganget med årets avvik fra normalen.
+    #
+    # Den temperaturkorrigerte serien er likevel verdt å hente inn senere, som
+    # en parallell serie. Se METODE.md kapittel 13.
+    krev: ["energibruk"]
+    dimensjon_krev: ["statistikkvariabel", "contentscode"]
+    unnta: ["temperaturkorrigert", "per m2", "per m²", "per kvadratmeter",
+            "per bruker", "per innbygger", "andel", "prosent", "utslipp", "co2"]
+  kroner:
+    # Tabellen har to kronevariabler: «Beløp (1000 kr)» og «Utgifter per
+    # kvadratmeter bygg (kr)». Vi skal ha den første. SSBs ferdigberegnede
+    # kr/m²-tall brukes ikke: vi regner per m² selv, mot eid areal, slik at
+    # nevneren er kjent og hvert tall kan spores tilbake.
+    # «1000 kr» i etiketten er samtidig bekreftelsen på enheten under
+    # `enheter.kroner_faktor`.
+    krev: ["1000 kr"]
+    dimensjon_krev: ["statistikkvariabel", "contentscode"]
+    unnta: ["per innbygger", "per kvadratmeter", "per m2", "per m²", "prosent", "andel"]
+  areal:
+    dimensjon_krev: ["statistikkvariabel", "contentscode"]
+    krev: ["areal"]
+    unnta: ["per innbygger", "per bruker", "per elev", "per barn", "per plass",
+            "innbygger", "elev", "barn", "plass", "prosent", "andel"]
+
+# Manuell overstyring. Settes kun når tekstsøket feiler, og logges i
+# grunnlagsfilen som `kilde: overstyrt`.
+overstyring:
+  sektor: null
+  eieform: null
+  energibruk: null
+  # Beløpsvariabelen. Bekreftet å finnes i både 12905 og 12367. Låses fordi
+  # tabellene har flere kronevariabler, og et tekstsøk som treffer to stopper
+  # jobben uten å ta stilling.
+  kroner: "KOSbelop0000"
+  art:
+    drift: null          # f.eks. "AGD39"
+    vedlikehold: null    # f.eks. "AGD36"
+    renhold: null        # f.eks. "AGD38"
+    energi: null
+    # Bekreftet mot statistikkbanken 18.09.2026: forvaltningsutgifter på
+    # funksjon 121 publiseres kun som AGD4, korrigerte brutto driftsutgifter.
+    # Koden låses her fordi tekstsøket «korrigerte brutto» ikke er verifisert
+    # å være entydig i artsdimensjonen til 12367.
+    forvaltning: "AGD4"
+
+# Regionsdimensjonen inneholder både kommuner og aggregater (landet, fylker,
+# KOSTRA-grupper). Uttrekket henter alle regioner og filtrerer her, slik at
+# aggregatene ikke blandes inn i kommuneutvalget. Landsaggregatet brukes kun
+# av avstemmingstesten.
+region:
+  kommune_monster: "^(K-)?[0-9]{4}$"
+  # Norge har rundt 350 kommuner. Ligger uttrekket langt under, har det kommet
+  # tilbake på aggregatnivå, og alt som følger ville vært regnet på fylker.
+  minste_antall_kommuner: 300
+  landsaggregat_krev: ["landet"]
+  landsaggregat_unnta: ["uten"]
+
+enheter:  # ANTAKELSER, verifiseres av avstemmingstesten ved første kjøring.
+  kroner_faktor: 1000     # statistikkbanken oppgir beløp i 1000 kr
+  energi_faktor: 1000     # MWh -> kWh
+  areal_faktor: 1         # m2
+
+terskler:
+  areal_for_lite_m2: 500
+  drift_urimelig_lav_kr_m2: 200
+  energi_urimelig_lav_kr_m2: 40
+  renhold_urimelig_lav_kr_m2: 50
+  kwh_urimelig_lav: 50
+  kwh_urimelig_hoy: 500
+  tukey_k: 1.5
+  trimmet_snitt_andel: 0.10
+  implisitt_energipris:
+    lav: 0.5
+    hoy: 3.0
+
+# Flagg som utelukker en kommune fra kjernedatasettet på kostnadssiden.
+blokkerende_flagg:
+  - areal_mangler
+  - areal_for_lite
+  - drift_mangler
+  - drift_null
+  - drift_urimelig_lav
+  - energi_urimelig_lav
+  - renhold_urimelig_lav
+  - vedlikehold_negativ
+  - drift_mindre_enn_delposter
+  - DV_uteligger_lav
+  - DV_uteligger_hoy
+
+blokkerende_flagg_energi:
+  - areal_mangler
+  - areal_for_lite
+  - kwh_mangler
+  - kwh_null
+  - kwh_urimelig_lav
+  - kwh_urimelig_hoy
+  - kwh_uteligger
+
+energivarer:
+  # Klassifisering brukt til fornybarandel. Fjernvarme regnes som fornybar
+  # her fordi norsk fjernvarme i hovedsak er avfall og bio, men andelen
+  # varierer mellom anlegg. Forbeholdet står i METODE.md.
+  fornybar: ["elektrisitet", "elektrisk", "fjernvarme", "bioenergi", "bio", "ved", "flis", "pellets"]
+  ikke_fornybar: ["olje", "parafin", "gass", "kull", "koks"]
+
+avrunding:
+  kroner_naermeste: 5
+  kwh_naermeste: 5
+  prosent_desimaler: 1
+
+# Brudd i sammenlignbarhet, fra SSBs årlige KOSTRA-rapporteringsnotat.
+# Berører et brudd en serie, markeres bruddet på nettsiden og vekstraten over
+# bruddpunktet skjules. Listen er tom til et brudd faktisk er dokumentert:
+# den skal ikke fylles med gjetninger.
+brudd: []
+# Format:
+#   - aar: 2023
+#     gjelder: "funksjon:386"      # eller "art:AGD36", eller "alle"
+#     beskrivelse: "Endret avgrensning av kulturbygg i kontoplanen."
+#     kilde: "KOSTRA-rapporteringsnotat 2023"
+
+avstemming:
+  toleranse_landstall: 0.01   # 1 %
+
+sensitivitet:
+  faktorer: [0.5, 1.5]

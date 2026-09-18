@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FDV-normtall for kommunale formålsbygg</title>
+<meta name="description" content="Forvaltning, drift og vedlikehold per kvadratmeter for kommunale formålsbygg, regnet fra KOSTRA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="stil.css">
+</head>
+<body>
+<a class="hopp" href="#innhold">Hopp til innholdet</a>
+
+<header class="topp">
+  <p class="kilde" id="merking">Laster grunnlaget …</p>
+  <h1>Hva koster det å drifte et kommunalt formålsbygg?</h1>
+  <p class="ingress">
+    Tallene under er regnet fra KOSTRA: kroner og kilowattimer rapportert av
+    kommunene, delt på eid areal. De viser hva kommunene faktisk bruker, ikke
+    hva et bygg burde koste. Hvert tall kan spores tilbake til et kronebeløp,
+    et kWh-tall og et areal i statistikkbanken.
+  </p>
+</header>
+
+<main id="innhold">
+  <div id="tom" class="tom" hidden>
+    <h2>Ingen publiserte tall ennå</h2>
+    <p>
+      Nettsiden bygges fra <code>normtall.json</code>. Den lages av
+      <code>grunnlag.yml</code>, som henter og fryser KOSTRA-grunnlaget.
+      Kjør den workflowen, så fyller siden seg.
+    </p>
+  </div>
+
+  <div id="side" hidden>
+    <nav class="velger" aria-label="Bygningstype">
+      <span class="velger-tittel">Bygningstype</span>
+      <div id="bygg-knapper" class="knapperad" role="tablist"></div>
+    </nav>
+
+    <section class="hero" aria-labelledby="hero-tittel">
+      <h2 id="hero-tittel" class="skjult">Drift og vedlikehold, siste årgang</h2>
+      <p class="hero-merke">Drift og vedlikehold, <span id="hero-aar"></span></p>
+      <p class="hero-tall"><span id="hero-verdi"></span> <span class="enhet">kr/m² per år</span></p>
+      <div id="hero-spenn"></div>
+      <p class="hero-under">
+        Åtte av ti kommuner ligger mellom <span id="hero-kvartil"></span>.
+        Lav er 10. persentil, høy er 90. Beregnet på
+        <span id="hero-n"></span> kommuner, etter at rapporteringsfeil er luket ut.
+      </p>
+    </section>
+
+    <section aria-labelledby="normtall-tittel">
+      <h2 id="normtall-tittel">Normtall per post</h2>
+      <p class="forklaring">
+        Postene er nøstet i KOSTRA. Drift består av energi, renhold og øvrig
+        drift, så bare drift og vedlikehold kan summeres. Spennet er satt på
+        drift og vedlikehold samlet og brutt ned med medianandeler, slik at
+        radene faktisk summerer seg til totalen.
+      </p>
+      <div class="tabellramme">
+        <table id="normtall">
+          <caption class="skjult">Kroner per kvadratmeter, siste årgang</caption>
+          <thead>
+            <tr>
+              <th scope="col">Post</th>
+              <th scope="col" class="tall">Lav</th>
+              <th scope="col" class="tall">Sannsynlig</th>
+              <th scope="col" class="tall">Høy</th>
+              <th scope="col" class="spennkol">Spenn i kr/m²</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="fotnote" id="forvaltning-note"></p>
+      <p class="fotnote">
+        Vedlikehold er periodisk. Et tverrsnitt av ett år fanger mange kommuner
+        i en lavperiode, så medianen undervurderer årsnivået. Standard
+        sentralmål for vedlikehold er derfor 10&nbsp;% trimmet snitt:
+        <span id="vedlikehold-sentralmaal"></span>.
+      </p>
+    </section>
+
+    <section aria-labelledby="tidsserie-tittel">
+      <h2 id="tidsserie-tittel">Utvikling</h2>
+      <p class="forklaring">
+        Alle tall er i løpende kroner for den årgangen de gjelder. Ingenting er
+        prisjustert, så veksten inkluderer generell prisstigning. Nivået per år
+        regnes på alle rene kommuner det året. Vekstraten regnes på det
+        balanserte panelet — kommunene som er rene i alle årene — fordi en
+        kommune som faller ut og inn igjen ellers flytter medianen uten at noen
+        pris har endret seg.
+      </p>
+      <div class="tabellramme">
+        <table id="tidsserie">
+          <caption class="skjult">Median kr/m² per årgang og nominell endring</caption>
+          <thead><tr><th scope="col">Post</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="fotnote" id="panel-note"></p>
+    </section>
+
+    <section aria-labelledby="energi-tittel">
+      <h2 id="energi-tittel">Energibruk</h2>
+      <p class="advarsel">
+        Tallene er ikke temperaturkorrigert. Et kaldt år løfter alle kommuner,
+        og nordlige kommuner ligger systematisk høyere enn sørlige. Det er
+        klima, ikke drift. Varme fra varmepumper og solfangere er ikke med,
+        bare elektrisiteten som driver dem, så dette er tilført energi og ikke
+        energibehov.
+      </p>
+      <div class="tabellramme">
+        <table id="energi">
+          <caption class="skjult">Energibruk i kWh per kvadratmeter</caption>
+          <thead>
+            <tr>
+              <th scope="col">Årgang</th>
+              <th scope="col" class="tall">Lav</th>
+              <th scope="col" class="tall">Sannsynlig</th>
+              <th scope="col" class="tall">Høy</th>
+              <th scope="col" class="tall">Arealvektet</th>
+              <th scope="col" class="tall">Fornybar</th>
+              <th scope="col" class="tall">Kr/kWh</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <h3>Fordeling på energivare</h3>
+      <div id="energivarer"></div>
+    </section>
+
+    <section aria-labelledby="dekomp-tittel">
+      <h2 id="dekomp-tittel">Kommer kostnadsveksten fra pris eller forbruk?</h2>
+      <p class="forklaring">
+        Energikostnaden er kroner ganger forbruk. Vises begge i samme periode,
+        ser man hvilken av dem som driver utviklingen. Implisitt pris er
+        energiutgift delt på energibruk, og er samtidig den sterkeste
+        kvalitetskontrollen i grunnlaget: kroner og kilowattimer kommer fra
+        hvert sitt skjema, så et urimelig forholdstall isolerer hvilken side
+        feilen ligger på.
+      </p>
+      <div id="dekomponering" class="smaakart"></div>
+    </section>
+
+    <section aria-labelledby="kvalitet-tittel">
+      <h2 id="kvalitet-tittel">Datakvalitet</h2>
+      <p class="forklaring">
+        Kvalitetsflaggene settes på råstørrelsene, ikke på forholdstallet. Det
+        skiller en billig kommune fra en kommune som ikke har rapportert
+        kostnaden. Uteliggergrensen regnes i log-rom, og først etter at de
+        øvrige flaggene er satt, slik at rapporteringsfeil ikke trekker
+        kvartilene nedover og dermed beskytter seg selv.
+      </p>
+      <div class="tabellramme">
+        <table id="kvalitet">
+          <caption class="skjult">Kommuner i grunnlaget og i kjernedatasettet</caption>
+          <thead>
+            <tr>
+              <th scope="col">Årgang</th>
+              <th scope="col" class="tall">I grunnlaget</th>
+              <th scope="col" class="tall">I kjernen</th>
+              <th scope="col">Frafall per årsak</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <h3>Implisitt energipris i landet</h3>
+      <p id="prisfordeling" class="forklaring"></p>
+    </section>
+
+    <section aria-labelledby="forbehold-tittel">
+      <h2 id="forbehold-tittel">Forbehold</h2>
+      <ul id="forbehold" class="forbehold"></ul>
+    </section>
+
+    <section aria-labelledby="last-ned-tittel">
+      <h2 id="last-ned-tittel">Last ned grunnlaget</h2>
+      <p class="forklaring">
+        Revisjonsfilen har én rad per kommune med kroner, kilowattimer, areal og
+        alle kvalitetsflagg. Den er nok til å regne hvert publiserte tall på
+        nytt.
+      </p>
+      <ul id="nedlasting" class="lenker"></ul>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <p id="kodevalg-fot"></p>
+  <p>
+    Kilde: Statistisk sentralbyrå, KOSTRA. Beregningen og denne siden er
+    dokumentert i <code>METODE.md</code> i repoet.
+  </p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+*.egg-info/
+build/
+dist/
+
+# Frosset grunnlag, revisjonsfiler og publiserte tall SKAL committes.
+# De er revisjonsspor, ikke cache. Ikke legg data/ her.
