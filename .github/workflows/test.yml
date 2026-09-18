@@ -1,0 +1,41 @@
+name: Tester
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Installer
+        run: pip install -e ".[test]"
+
+      - name: Enhetstester uten nett
+        run: python -m pytest tests -q
+
+      - name: Sjekk at config lar seg lese og at ingen koder er hardkodet
+        run: |
+          python - <<'PY'
+          import pathlib, re, sys
+          from kostra_fdv import les_konfig
+          les_konfig()
+          # Verdikoder som AGD39 skal bare finnes i config.yaml og i testdata,
+          # aldri i modulene under src/.
+          monster = re.compile(r"\bAGD\d+\b")
+          feil = []
+          for sti in pathlib.Path("src").rglob("*.py"):
+              for nr, linje in enumerate(sti.read_text(encoding="utf-8").splitlines(), 1):
+                  if monster.search(linje) and not linje.lstrip().startswith("#"):
+                      feil.append(f"{sti}:{nr}: {linje.strip()}")
+          if feil:
+              print("Hardkodede verdikoder i koden:", *feil, sep="\n")
+              sys.exit(1)
+          print("Ingen hardkodede verdikoder i src/.")
+          PY
