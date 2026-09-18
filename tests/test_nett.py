@@ -112,16 +112,27 @@ def test_avstemming_mot_landstall(konfig, siste_aargang, uttrekk):
             continue
         ssb = (land_kr * faktor_kr) / land_m2
 
-        rader = [r for r in kostnad[funksjon] if r.areal and r.kroner.get("drift") is not None]
-        vaart = sum(r.kroner["drift"] for r in rader) / sum(r.areal for r in rader)
+        # Landstallet er sum(kroner) delt på sum(areal) over alle kommuner,
+        # uavhengig av om den enkelte kommune har rapportert begge deler. Vårt
+        # tall må regnes på samme måte, ellers sammenlignes to ulike
+        # definisjoner: en kommune som har ført kostnader uten å rapportere
+        # areal løfter landstallets teller, men ikke nevneren.
+        rader = kostnad[funksjon]
+        sum_kr = sum(r.kroner["drift"] for r in rader if r.kroner.get("drift") is not None)
+        sum_m2 = sum(r.areal for r in rader if r.areal)
+        vaart = sum_kr / sum_m2
 
         avvik = abs(vaart - ssb) / ssb
-        print(f"funksjon {funksjon}: vårt {vaart:.1f} kr/m², landstall {ssb:.1f}, avvik {avvik:.2%}")
+        print(
+            f"funksjon {funksjon}: vårt {vaart:.1f} kr/m² "
+            f"({sum_kr:,.0f} kr / {sum_m2:,.0f} m²), landstall {ssb:.1f}, avvik {avvik:.2%}"
+        )
         assert avvik <= toleranse, (
             f"Funksjon {funksjon}, årgang {siste_aargang}: vårt arealvektede snitt "
             f"{vaart:.1f} kr/m² mot landstallet {ssb:.1f} kr/m², avvik {avvik:.1%}. "
-            "Faktor ~1000 betyr feil enhetsantakelse, moderat avvik betyr feil "
-            "sektorvalg eller at nevneren er et annet areal enn landstallets."
+            "Faktor ~1000 betyr feil enhetsantakelse. Noen få prosent betyr som "
+            "regel at utvalget av kommuner ikke er det samme som landstallets, "
+            "eller at nevneren er et annet areal enn landstallets."
         )
 
     assert not manglet, (
