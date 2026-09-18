@@ -212,6 +212,13 @@ blokkerende_flagg_energi:
   - kwh_uteligger
 
 energivarer:
+  # Energitype-dimensjonen inneholder som regel en totalverdi ved siden av de
+  # enkelte varene. Summeres alle, telles forbruket dobbelt, og implisitt
+  # energipris faller til det halve uten at noe annet ser galt ut. Totalen
+  # holdes utenfor summen, men brukes til å kontrollere at delene stemmer.
+  totalverdier: ["i alt", "ialt", "samlet", "total", "alle energi"]
+  # Hvor mye summen av varene får avvike fra totalen før jobben stopper.
+  toleranse_mot_total: 0.02
   # Klassifisering brukt til fornybarandel. Fjernvarme regnes som fornybar
   # her fordi norsk fjernvarme i hovedsak er avfall og bio, men andelen
   # varierer mellom anlegg. Forbeholdet står i METODE.md.
