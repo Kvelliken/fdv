@@ -98,7 +98,7 @@ def meta_12367():
                 "code": "KOKregnskapsomfa0000",
                 "text": "regnskapsomfang",
                 "values": ["A", "B"],
-                "valueTexts": ["Konsern", "Kommunekasse"],
+                "valueTexts": ["(Fylkes-)Kommunekonsern", "(Fylkes-)Kommunekasse"],
             },
             {
                 "code": "ContentsCode",
@@ -215,7 +215,11 @@ def test_belopet_velges_foran_ssbs_ferdigberegnede_kr_per_m2(konfig, meta_12905)
 
 
 def test_regnskapsomfang_gjenkjennes_som_sektordimensjon(konfig, meta_12367):
-    """Dimensjonen heter «regnskapsomfang» her, ikke «sektor»."""
+    """Dimensjonen heter «regnskapsomfang» her, ikke «sektor».
+
+    Verdiene heter «(Fylkes-)Kommunekonsern» og «(Fylkes-)Kommunekasse».
+    Parentesen er felle: et unntak på «fylke» ville slått ut begge.
+    """
     valg = sektorvakt(meta_12367, konfig)
     assert valg.kode == "A"
     assert "konsern" in valg.tekst.lower()
