@@ -16,6 +16,7 @@ from typing import Any, Iterable, Mapping, Sequence
 
 FUNKSJONER = ["130", "221", "222", "261", "381", "386"]
 ENERGIVARER = [
+    ("00", "Energibruk i alt"),   # totalverdi: skal holdes utenfor summen
     ("01", "Elektrisitet"),
     ("02", "Fjernvarme"),
     ("03", "Olje og parafin"),
@@ -136,6 +137,7 @@ def lag_grunnlag(aar: int, antall_kommuner: int = 350, fro: int = 42) -> dict[st
                 andeler = {"01": 0.55, "02": 0.34, "03": 0.02, "04": 0.09}
             for vare, andel in andeler.items():
                 kwh[(kode, funksjon, vare)] = samlet_kwh * andel
+            kwh[(kode, funksjon, "00")] = samlet_kwh
 
     forvaltning = {}
     for kode, _ in kommuner:
