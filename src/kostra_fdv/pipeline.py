@@ -333,11 +333,17 @@ def bygg_rader(
         nokkel = (rad.koder[d_reg_e], rad.koder[d_fun_e])
         kwh.setdefault(nokkel, {})[vare] = kwh.setdefault(nokkel, {}).get(vare, 0.0) + rad.verdi * faktor_kwh
 
+    # Nevneren er kommunene som faktisk finnes i årgangen, ikke alle koder som
+    # ser ut som kommunenumre. Regionsdimensjonen inneholder også kommuner som
+    # ble slått sammen i 2020, og de er tomme i nyere årganger. Deles det på
+    # dem, ser dekningen halvparten så god ut som den er.
+    aktive = {kommune for (kommune, _), verdi in areal.items() if verdi}
+
     # Funksjon 121 skal finnes for de aller fleste kommuner. Gjør den ikke det,
     # er arten eller funksjonen feil, og forvaltningsleddet blir et tomt tall
     # som ingen oppdager før nettsiden er publisert.
-    med_forvaltning = sum(1 for v in forvaltning.values() if v)
-    dekning = med_forvaltning / max(len(forvaltning), 1)
+    med_forvaltning = sum(1 for kommune in aktive if forvaltning.get(kommune))
+    dekning = med_forvaltning / max(len(aktive), 1)
     minste = float(konfig["forvaltning"].get("minste_dekning", 0.6))
     # Også et helt tomt forvaltningsledd skal stoppe jobben. Det er nettopp
     # tilfellet der arten er feil, og det ville ellers passert i stillhet.
@@ -365,15 +371,23 @@ def bygg_rader(
             )
         raise UttrekkFeil(
             f"Forvaltning (funksjon {konfig['forvaltning']['funksjon']}, art "
-            f"{konfig['forvaltning']['art']}) finnes bare for {dekning:.0%} av "
-            f"kommunene, kravet er {minste:.0%}." + funnet
+            f"{konfig['forvaltning']['art']}) finnes for {med_forvaltning} av "
+            f"{len(aktive)} kommuner med areal i {aar}, altså {dekning:.0%}. "
+            f"Kravet er {minste:.0%}." + funnet
         )
     logg.info("Forvaltning funnet for %.0f %% av kommunene", dekning * 100)
 
-    kommuner = sorted({k for k, _ in areal} | {k for k, _ in kroner})
-    # Regionsdimensjonen inneholder både kommuner og aggregater. Får vi nesten
-    # ingen kommuner, har uttrekket kommet tilbake på feil nivå, og alt som
-    # følger ville vært regnet på en håndfull aggregater.
+    # Radene bygges for kommuner som har rapportert noe i årgangen, enten
+    # areal eller kroner. En kommune som har ført kostnader men ikke areal skal
+    # med, og få flagget `areal_mangler` - ikke forsvinne i stillhet.
+    med_kroner = {
+        kommune
+        for (kommune, _), poster in kroner.items()
+        if any(v is not None for v in poster.values())
+    }
+    kommuner = sorted(aktive | med_kroner)
+    # Får vi nesten ingen kommuner med areal, har uttrekket kommet tilbake på
+    # feil nivå, og alt som følger ville vært regnet på noen få aggregater.
     minste_kommuner = int(konfig["region"].get("minste_antall_kommuner", 300))
     if len(kommuner) < minste_kommuner:
         raise UttrekkFeil(
