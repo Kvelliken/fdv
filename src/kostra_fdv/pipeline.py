@@ -206,6 +206,40 @@ def sjekk_ingen_ufrie_dimensjoner(
         )
 
 
+def _sjekk_mot_total(
+    kwh: Mapping[tuple[str, str], Mapping[str, float]],
+    totaler: Mapping[tuple[str, str], float],
+    konfig: Mapping[str, Any],
+) -> None:
+    """Summen av energivarene skal stemme med tabellens egen totalverdi.
+
+    Dette er gratis kvalitetskontroll: finner tabellen en total, kan vi bruke
+    den til å bekrefte at vi har fanget alle varene og ingen dobbelttelling.
+    """
+    toleranse = float(konfig["energivarer"].get("toleranse_mot_total", 0.02))
+    avvik = []
+    for nokkel, total in totaler.items():
+        deler = sum(kwh.get(nokkel, {}).values())
+        if total <= 0 or not deler:
+            continue
+        if abs(deler - total) / total > toleranse:
+            avvik.append((nokkel, deler, total))
+    if len(avvik) > max(5, 0.02 * max(len(totaler), 1)):
+        eksempler = "; ".join(
+            f"{k[0]}/{k[1]}: deler {d:,.0f} kWh mot total {t:,.0f}" for k, d, t in avvik[:5]
+        )
+        raise UttrekkFeil(
+            f"Summen av energivarene avviker fra tabellens totalverdi for "
+            f"{len(avvik)} av {len(totaler)} kommune/funksjon-par. Enten mangler "
+            f"en energivare i uttrekket, eller så telles noe dobbelt. {eksempler}"
+        )
+    if avvik:
+        logg.info(
+            "Sum av energivarer avviker fra totalen for %d av %d par, innenfor det tillatte",
+            len(avvik), len(totaler),
+        )
+
+
 def _rens(utvalg: dict[str, Any]) -> dict[str, Any]:
     """Fjerner dimensjoner som ikke finnes i tabellen.
 
@@ -326,12 +360,24 @@ def bygg_rader(
         energi_ds, [d for d in (d_reg_e, d_fun_e, d_vare) if d], "energi"
     )
     kwh: dict[tuple[str, str], dict[str, float]] = {}
+    totaler: dict[tuple[str, str], float] = {}
+    totalmonster = [t.lower() for t in konfig["energivarer"].get("totalverdier", [])]
+    droppet: set[str] = set()
     for rad in parse_jsonstat2(energi_ds):
         if rad.verdi is None or not er_kommune(rad.koder[d_reg_e]):
             continue
         vare = rad.etiketter.get(d_vare, "samlet") if d_vare else "samlet"
         nokkel = (rad.koder[d_reg_e], rad.koder[d_fun_e])
+        # En totalverdi inne i energitype-dimensjonen ville blitt lagt oppå
+        # delene. Den holdes utenfor summen og brukes til kontroll i stedet.
+        if d_vare and any(m in vare.lower() for m in totalmonster):
+            droppet.add(vare)
+            totaler[nokkel] = totaler.get(nokkel, 0.0) + rad.verdi * faktor_kwh
+            continue
         kwh.setdefault(nokkel, {})[vare] = kwh.setdefault(nokkel, {}).get(vare, 0.0) + rad.verdi * faktor_kwh
+    if droppet:
+        logg.info("Holdt totalverdiene %s utenfor summen av energivarer", sorted(droppet))
+        _sjekk_mot_total(kwh, totaler, konfig)
 
     # Nevneren er kommunene som faktisk finnes i årgangen, ikke alle koder som
     # ser ut som kommunenumre. Regionsdimensjonen inneholder også kommuner som
