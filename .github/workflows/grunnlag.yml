@@ -1,0 +1,62 @@
+name: Hent KOSTRA-grunnlag
+
+# Kun manuell kjøring. Full henting av kostnad, energi og areal for alle seks
+# funksjoner. Jobben feiler hardt ved uavklart sektordimensjon eller
+# avstemmingsavvik: delvise tall publiseres aldri.
+
+on:
+  workflow_dispatch:
+    inputs:
+      aargang:
+        description: "Årstall, eller 'alle' for de fem siste reviderte"
+        required: true
+        default: "alle"
+      tillat_forelopig:
+        description: "Tillat foreløpig årgang (merkes som foreløpig overalt)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  hent:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Installer
+        run: pip install -e ".[test]"
+
+      - name: Hent og frys
+        run: |
+          python -m kostra_fdv.cli hent \
+            --aargang "${{ inputs.aargang }}" \
+            ${{ inputs.tillat_forelopig && '--tillat-forelopig' || '' }}
+
+      - name: Blokkerende avstemming mot landstall og implisitt energipris
+        env:
+          KOSTRA_NETT: "1"
+        run: python -m pytest tests/test_nett.py -q -s
+
+      - name: Beregn og publiser
+        run: |
+          python -m kostra_fdv.cli beregn \
+            ${{ inputs.tillat_forelopig && '--tillat-forelopig' || '' }}
+          python -m kostra_fdv.cli sensitivitet
+
+      - name: Commit frosset grunnlag og publiserte tall
+        run: |
+          git config user.name "kostra-fdv"
+          git config user.email "actions@github.com"
+          git add data docs
+          if git diff --cached --quiet; then
+            echo "Ingen endring."
+          else
+            git commit -m "KOSTRA-grunnlag ${{ inputs.aargang }}: hentet, beregnet og publisert"
+            git push
+          fi
