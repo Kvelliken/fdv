@@ -239,3 +239,28 @@ def test_tom_forvaltningsart_gir_feil_som_lister_artene_med_tall(frosset, konfig
     assert "AGD4" in tekst
     assert "kommuner med tall" in tekst
     assert "forvaltning.art" in tekst
+
+
+def test_historiske_kommunenumre_teller_ikke_med_i_dekningen(frosset, konfig):
+    """Regionsdimensjonen har koder for kommuner som ble slått sammen i 2020.
+
+    De er tomme i nyere årganger. Brukes de som nevner, ser dekningen på
+    forvaltningsleddet omtrent halvparten så god ut som den er, og jobben
+    stopper på en feil som ikke finnes.
+    """
+    from kostra_fdv.pipeline import les_frosset
+
+    grunnlag = les_frosset(frosset, 2025)
+    kostnad, _ = bygg_rader(grunnlag, konfig, 2025)
+    rader = kostnad["222"]
+
+    # Ingen av de historiske kodene skal ha blitt til rader.
+    assert not [r for r in rader if r.kommune.startswith("K-0") or r.kommune.startswith("K-5")]
+    # Og ingen aggregater.
+    assert not [r for r in rader if r.kommune.startswith("E")]
+    # Kommuner med kostnader men uten areal skal derimot være med, og flagges.
+    from kostra_fdv.beregning import beregn_funksjonsaar
+    import copy as _copy
+
+    resultat = beregn_funksjonsaar(rader, _copy.deepcopy(konfig))
+    assert resultat.frafall.get("areal_mangler", 0) > 0
