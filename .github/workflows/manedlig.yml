@@ -1,0 +1,101 @@
+name: Månedlig endringssjekk
+
+# Dette er en endringsdetektor, ikke en beregningsjobb. Uten indeksjustering er
+# det ingenting å regne på mellom KOSTRA-publiseringene, så de fleste
+# kjøringene skal ende uten commit. Det er forventet oppførsel.
+
+on:
+  schedule:
+    - cron: "0 6 5 * *"   # den 5. hver måned
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  sjekk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Installer
+        run: pip install -e .
+
+      - name: Spør SSB om tilgjengelige årganger
+        id: detektor
+        run: |
+          python -m kostra_fdv.cli sjekk --dyp --midlertidig "${RUNNER_TEMP}/stikkprove" \
+            > rapport.json
+          cat rapport.json
+          {
+            echo "ny_aargang=$(jq -r '.opprett_issue_ny_aargang' rapport.json)"
+            echo "nyeste=$(jq -r '.nye_aargang | last // empty' rapport.json)"
+            echo "revisjon=$(jq -r '.revisjon_oppdaget | length' rapport.json)"
+            echo "revidert_aargang=$(jq -r '.revisjon_oppdaget[0].aargang // empty' rapport.json)"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Opprett issue for ny revidert årgang
+        if: steps.detektor.outputs.ny_aargang == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          AARGANG: ${{ steps.detektor.outputs.nyeste }}
+        run: |
+          gh issue create \
+            --title "Ny revidert årgang tilgjengelig: $AARGANG" \
+            --body "$(cat <<EOF
+          SSB har publisert årgang $AARGANG, og datoen er etter 15. juni i
+          publiseringsåret, så dette er den reviderte utgaven.
+
+          Kjør \`grunnlag.yml\` manuelt med \`aargang: $AARGANG\` for å hente og
+          fryse den. Sjekk kodevalgene i jobbloggen før tallene publiseres.
+
+          Rapport fra detektoren:
+
+          \`\`\`json
+          $(cat rapport.json)
+          \`\`\`
+          EOF
+          )"
+
+      - name: Opprett issue for stille revisjon
+        if: steps.detektor.outputs.revisjon != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          AARGANG: ${{ steps.detektor.outputs.revidert_aargang }}
+        run: |
+          gh issue create \
+            --title "Revisjon oppdaget i årgang $AARGANG" \
+            --body "$(cat <<EOF
+          Stikkprøven mot det frosne grunnlaget for årgang $AARGANG avviker fra
+          det SSB leverer nå. SSB reviderer tabeller også utenom de faste
+          publiseringsdatoene.
+
+          Kjør \`grunnlag.yml\` med \`aargang: $AARGANG\`. Jobben skriver en diff
+          mot den frosne versjonen før overskriving, slik at revisjonens omfang
+          blir synlig i git-historikken.
+
+          \`\`\`json
+          $(cat rapport.json)
+          \`\`\`
+          EOF
+          )"
+
+      - name: Bygg docs fra frosset grunnlag
+        run: python -m kostra_fdv.cli beregn
+
+      - name: Commit kun ved faktisk endring
+        run: |
+          git config user.name "kostra-fdv"
+          git config user.email "actions@github.com"
+          git add docs data/publisert
+          if git diff --cached --quiet; then
+            echo "Ingen endring. Ingen commit."
+          else
+            git commit -m "Oppdatert nettside fra frosset grunnlag"
+            git push
+          fi
