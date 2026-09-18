@@ -71,9 +71,6 @@ def _datasett(
 def lag_grunnlag(aar: int, antall_kommuner: int = 350, fro: int = 42) -> dict[str, Any]:
     rng = random.Random(fro + aar)
     kommuner = [(f"K-{1000 + i}", f"Testkommune {i:02d}") for i in range(antall_kommuner)]
-    # Regionsdimensjonen inneholder også aggregater. De skal filtreres bort av
-    # uttrekket, og ligger derfor med i testgrunnlaget.
-    kommuner += [("EAK", "Landet"), ("EKG05", "KOSTRA-gruppe 05")]
     vekst = 1.03 ** (aar - 2021)  # nominell prisvekst i testgrunnlaget
 
     # Per kommune og funksjon: areal og kostnadsnivå
@@ -123,23 +120,22 @@ def lag_grunnlag(aar: int, antall_kommuner: int = 350, fro: int = 42) -> dict[st
                 skala = 1.25 * d / (e + r)
                 e, r = e * skala, r * skala
 
+            # En kommune som ikke rapporterer areal, fører gjerne kostnadene
+            # likevel. Da skal raden med i grunnlaget og få flagget
+            # `areal_mangler`, ikke forsvinne ut av utvalget.
             areal[(kode, funksjon)] = None if a is None else round(a, 1)
-            if a:
-                drift[(kode, funksjon)] = d * a / 1000.0            # 1000 kr
-                vedlikehold[(kode, funksjon)] = v * a / 1000.0
-                renhold[(kode, funksjon)] = r * a / 1000.0
-                energikr[(kode, funksjon)] = e * a / 1000.0
-                samlet_kwh = k * a / 1000.0                         # MWh
-                andeler = {"01": 0.72, "02": 0.16, "03": 0.04, "04": 0.08}
-                if indeks % 7 == 0:
-                    andeler = {"01": 0.55, "02": 0.34, "03": 0.02, "04": 0.09}
-                for vare, andel in andeler.items():
-                    kwh[(kode, funksjon, vare)] = samlet_kwh * andel
-            else:
-                for nokkel in (drift, vedlikehold, renhold, energikr):
-                    nokkel[(kode, funksjon)] = None
-                for vare, _ in ENERGIVARER:
-                    kwh[(kode, funksjon, vare)] = None
+            a_kost = a if a is not None else storrelse * 0.8
+
+            drift[(kode, funksjon)] = d * a_kost / 1000.0            # 1000 kr
+            vedlikehold[(kode, funksjon)] = v * a_kost / 1000.0
+            renhold[(kode, funksjon)] = r * a_kost / 1000.0
+            energikr[(kode, funksjon)] = e * a_kost / 1000.0
+            samlet_kwh = k * a_kost / 1000.0                          # MWh
+            andeler = {"01": 0.72, "02": 0.16, "03": 0.04, "04": 0.08}
+            if indeks % 7 == 0:
+                andeler = {"01": 0.55, "02": 0.34, "03": 0.02, "04": 0.09}
+            for vare, andel in andeler.items():
+                kwh[(kode, funksjon, vare)] = samlet_kwh * andel
 
     forvaltning = {}
     for kode, _ in kommuner:
@@ -148,7 +144,13 @@ def lag_grunnlag(aar: int, antall_kommuner: int = 350, fro: int = 42) -> dict[st
         )
         forvaltning[kode] = samlet_areal * rng.uniform(25, 60) * vekst / 1000.0  # 1000 kr
 
-    kommunedim = ("Region", "region", kommuner)
+    # Regionsdimensjonen inneholder mer enn dagens kommuner: aggregater, og
+    # kommunenumre som forsvant i sammenslåingene i 2020 og som er tomme i
+    # nyere årganger. Begge deler skal håndteres av uttrekket, og ligger derfor
+    # med i testgrunnlaget uten verdier.
+    historiske = [(f"K-{500 + i}", f"Sammenslått kommune {i:02d}") for i in range(120)]
+    aggregater = [("EAK", "Landet"), ("EAKUO", "Landet uten Oslo"), ("EKG05", "KOSTRA-gruppe 05")]
+    kommunedim = ("Region", "region", kommuner + historiske + aggregater)
     funksjonsdim = ("KOSTRAFunksjon", "funksjon", [(f, f) for f in FUNKSJONER])
     tidsdim = ("Tid", "år", [(str(aar), str(aar))])
     sektordim = ("Sektor", "sektor", [("EKG", "Kommunekonsern")])
