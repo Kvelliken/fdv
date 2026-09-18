@@ -68,7 +68,11 @@ kodesok:
     # Dimensjonen heter «regnskapsomfang» i noen tabeller og «sektor» i andre.
     dimensjon_krev: ["sektor", "regnskapsomfang", "regnskapsomfa"]
     krev: ["konsern"]
-    unnta: ["fylke", "stat"]
+    # Ingen unnta. Verdiene heter «(Fylkes-)Kommunekonsern» og
+    # «(Fylkes-)Kommunekasse», så et unntak på «fylke» slår ut begge og
+    # etterlater søket uten treff. «Konsern» alene er entydig: kassen
+    # inneholder ikke ordet. Verifisert mot 12367 den 18.09.2026.
+    unnta: []
     # Tabell 12905 har ingen sektordimensjon. Sektoren er bakt inn i tabellens
     # definisjon: den dekker kommunens og de kommunale foretakenes formålsbygg,
     # altså konserntall. Verifisert mot API-et 18.09.2026. Jobben summerer
