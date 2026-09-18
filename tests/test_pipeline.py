@@ -264,3 +264,26 @@ def test_historiske_kommunenumre_teller_ikke_med_i_dekningen(frosset, konfig):
 
     resultat = beregn_funksjonsaar(rader, _copy.deepcopy(konfig))
     assert resultat.frafall.get("areal_mangler", 0) > 0
+
+
+def test_totalverdien_i_energitype_telles_ikke_med(frosset, konfig):
+    """«Energibruk i alt» ligger i samme dimensjon som de enkelte varene.
+
+    Summeres alt, telles forbruket dobbelt. Implisitt energipris faller da til
+    det halve, og ingenting annet ser galt ut.
+    """
+    from kostra_fdv.pipeline import les_frosset
+
+    grunnlag = les_frosset(frosset, 2025)
+    _, energi = bygg_rader(grunnlag, konfig, 2025)
+    rad = next(e for e in energi["222"] if e.kwh and e.areal)
+    assert not [v for v in rad.kwh if "i alt" in v.lower()]
+
+    from kostra_fdv.energi import beregn_rad
+
+    beregn_rad(rad, konfig)
+    assert rad.sum_kwh > 0
+    assert abs(sum(rad.andeler.values()) - 1.0) < 1e-9
+    # Med totalen inkludert ville kWh/m² vært dobbelt så høy, og implisitt
+    # energipris halvparten av det den skal være.
+    assert 50 <= rad.kwh_m2 <= 500
