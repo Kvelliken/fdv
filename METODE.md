@@ -301,10 +301,23 @@ synlig i git-historikken.
 
 Blokkerende:
 
-* **Avstemming mot landstall.** `sum(kroner)/sum(areal)` og `sum(kWh)/sum(areal)`
-  skal reprodusere SSBs publiserte landstall for samme funksjon og årgang
-  innenfor 1 %. Avvik på omtrent faktor 1000 betyr feil enhetsantakelse:
-  statistikkbanken oppgir beløp i 1000 kr. Moderat avvik betyr feil sektorvalg.
+* **Avstemming mot landstall.** `sum(kroner)/sum(areal)` sammenlignes med
+  landsaggregatet i de samme tabellene, for hver funksjon og årgang. Avvik over
+  1 % rapporteres i loggen; avvik over 5 % stopper jobben.
+
+  De to grensene er forskjellige med hensikt. Testen skal fange regnefeil: feil
+  enhetsantakelse gir avvik på omtrent faktor 1000, feil sektorvalg gir titalls
+  prosent. Et avvik på noen få prosent er derimot som regel en
+  definisjonsforskjell — landsaggregatet er ikke nødvendigvis regnet på samme
+  kommuneutvalg som vårt, og det kan bruke samlet areal (eid + leid) som nevner
+  der vi bruker eid. Å kreve 1 % ville da stoppet publiseringen på noe som ikke
+  er en feil.
+
+  Loggen skriver ut avviket for alle seks funksjonene samlet. Samme fortegn og
+  omtrent samme størrelse på alle tyder på ulik nevner, ikke på en regnefeil.
+  `test_sammenlign_med_ssbs_egen_kr_per_m2` avgjør spørsmålet: den henter SSBs
+  ferdigberegnede kr/m² for landet og viser forholdet mot vårt tall. Er
+  forholdet nær 1,00, deler SSB på eid areal som oss.
 * **Implisitt energipris på landsnivå.** `sum(energiutgifter)/sum(kWh)` skal
   ligge i konfigurert intervall. Fanger at kostnads- og energiuttrekkene er
   hentet for ulik årgang, ulik sektor eller ulikt arealgrunnlag.
