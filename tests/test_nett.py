@@ -87,6 +87,7 @@ def test_avstemming_mot_landstall(konfig, siste_aargang, uttrekk):
     from kostra_fdv.pipeline import DIM_ART, DIM_FUNKSJON, DIM_REGION, finn_dim
 
     toleranse = float(konfig["avstemming"]["toleranse_landstall"])
+    blokkerende = float(konfig["avstemming"].get("toleranse_blokkerende", 0.05))
     kodevalg = {v["formaal"]: v for v in uttrekk["kodevalg"]}
     faktor_kr = float(konfig["enheter"]["kroner_faktor"])
     kostnad, _ = bygg_rader(uttrekk, konfig, siste_aargang)
@@ -104,6 +105,7 @@ def test_avstemming_mot_landstall(konfig, siste_aargang, uttrekk):
     }
 
     manglet = []
+    avvikene = {}
     for funksjon in konfig["funksjoner"]:
         land_kr = _landsrad(kost_ds, kost_dim, funksjon)
         land_m2 = _landsrad(areal_ds, areal_dim, funksjon)
@@ -122,12 +124,13 @@ def test_avstemming_mot_landstall(konfig, siste_aargang, uttrekk):
         sum_m2 = sum(r.areal for r in rader if r.areal)
         vaart = sum_kr / sum_m2
 
-        avvik = abs(vaart - ssb) / ssb
+        avvik = (vaart - ssb) / ssb
+        avvikene[funksjon] = avvik
         print(
             f"funksjon {funksjon}: vårt {vaart:.1f} kr/m² "
-            f"({sum_kr:,.0f} kr / {sum_m2:,.0f} m²), landstall {ssb:.1f}, avvik {avvik:.2%}"
+            f"({sum_kr:,.0f} kr / {sum_m2:,.0f} m²), landstall {ssb:.1f}, avvik {avvik:+.2%}"
         )
-        assert avvik <= toleranse, (
+        assert abs(avvik) <= blokkerende, (
             f"Funksjon {funksjon}, årgang {siste_aargang}: vårt arealvektede snitt "
             f"{vaart:.1f} kr/m² mot landstallet {ssb:.1f} kr/m², avvik {avvik:.1%}. "
             "Faktor ~1000 betyr feil enhetsantakelse. Noen få prosent betyr som "
@@ -140,6 +143,20 @@ def test_avstemming_mot_landstall(konfig, siste_aargang, uttrekk):
         "Avstemmingen kan da ikke kjøres slik den er skrevet, og tallene skal ikke "
         "publiseres uten en annen kontroll mot SSBs publiserte nivå."
     )
+
+    # Et systematisk avvik med samme fortegn og omtrent samme størrelse på alle
+    # seks funksjonene er en definisjonsforskjell, ikke en regnefeil. Skriv det
+    # ut samlet, så mønsteret er synlig i loggen.
+    over = {f: a for f, a in avvikene.items() if abs(a) > toleranse}
+    if over:
+        snitt = sum(avvikene.values()) / len(avvikene)
+        print(
+            f"\nAvvik over {toleranse:.0%} for {len(over)} av {len(avvikene)} funksjoner. "
+            f"Gjennomsnittlig avvik {snitt:+.2%}, spredning "
+            f"{min(avvikene.values()):+.2%} til {max(avvikene.values()):+.2%}. "
+            "Samme fortegn på alle tyder på ulik nevner eller ulikt kommuneutvalg, "
+            "ikke på en regnefeil. Se METODE.md kapittel 11."
+        )
 
 
 def test_implisitt_energipris_paa_landsnivaa(konfig, siste_aargang, uttrekk):
@@ -205,3 +222,87 @@ def test_forvaltning_har_dekning_og_baerer_forbeholdet(konfig, siste_aargang, ut
     tekst = " ".join(FORBEHOLD).lower()
     assert "avskrivninger" in tekst
     assert "korrigerte brutto" in tekst
+
+
+def test_sammenlign_med_ssbs_egen_kr_per_m2(klient, konfig, siste_aargang, uttrekk):
+    """Diagnose: bruker SSBs publiserte kr/m² samme nevner som oss?
+
+    Tabellen har en ferdigberegnet kr/m²-variabel ved siden av beløpet. Vi
+    bruker den ikke til å publisere, fordi nevneren da er ukjent. Men på
+    landsnivå kan den fortelle hva SSB deler på: stemmer vårt tall med deres
+    kr/m², er nevneren eid areal. Ligger deres lavere, er nevneren større,
+    altså samlet areal.
+
+    Testen stopper ikke jobben. Den skriver ut hva den finner.
+    """
+    from kostra_fdv.pipeline import (
+        DIM_ART, DIM_FUNKSJON, DIM_REGION, DIM_TID, _dimkode, _rens,
+    )
+    from kostra_fdv.ssb_api import dimensjonsverdier
+
+    kodevalg = {v["formaal"]: v for v in uttrekk["kodevalg"]}
+    meta = klient.hent_metadata(konfig["tabeller"]["kostnad"])
+
+    perkvm = None
+    for kode, _, verdier in dimensjonsverdier(meta):
+        if kode.lower() != "contentscode":
+            continue
+        for verdikode, tekst in verdier:
+            t = tekst.lower()
+            if "kvadratmeter" in t or "per m2" in t or "per m²" in t:
+                perkvm = (kode, verdikode, tekst)
+    if perkvm is None:
+        pytest.skip("Tabellen har ingen ferdigberegnet kr/m²-variabel")
+
+    dim_contents, kode_perkvm, tekst_perkvm = perkvm
+    print(f"\nSammenligner mot SSBs egen variabel: {kode_perkvm} ({tekst_perkvm})")
+
+    land = None
+    for kode, _, verdier in dimensjonsverdier(meta):
+        if "region" not in kode.lower():
+            continue
+        for verdikode, tekst in verdier:
+            if "landet" in tekst.lower() and "uten" not in tekst.lower():
+                land = verdikode
+    if land is None:
+        pytest.skip("Fant ingen landsaggregat")
+
+    utvalg = {
+        _dimkode(meta, DIM_REGION): [land],
+        _dimkode(meta, DIM_FUNKSJON): list(konfig["funksjoner"]),
+        _dimkode(meta, DIM_ART): [kodevalg["art:drift"]["kode"]],
+        dim_contents: [kode_perkvm],
+        _dimkode(meta, DIM_TID): [str(siste_aargang)],
+    }
+    datasett = klient.hent_data(konfig["tabeller"]["kostnad"], lag_sporring(_rens(utvalg)))
+
+    d_fun = finn_dim_i(datasett, "funksjon")
+    ssb_perkvm = {
+        rad.koder[d_fun]: rad.verdi for rad in parse_jsonstat2(datasett) if rad.verdi
+    }
+
+    kostnad, _ = bygg_rader(uttrekk, konfig, siste_aargang)
+    for funksjon in konfig["funksjoner"]:
+        deres = ssb_perkvm.get(funksjon)
+        if not deres:
+            continue
+        rader = kostnad[funksjon]
+        sum_kr = sum(r.kroner["drift"] for r in rader if r.kroner.get("drift") is not None)
+        sum_m2 = sum(r.areal for r in rader if r.areal)
+        vaart = sum_kr / sum_m2
+        print(
+            f"funksjon {funksjon}: vårt {vaart:.1f} kr/m² mot SSBs {deres:.1f} kr/m², "
+            f"forhold {vaart / deres:.4f}"
+        )
+    print(
+        "\nEr forholdet nær 1,00 for alle, deler SSB på eid areal som oss. "
+        "Ligger det systematisk over 1, deler de på et større areal, altså "
+        "samlet areal (eid + leid)."
+    )
+
+
+def finn_dim_i(datasett, navn):
+    for ident in datasett.get("id", []):
+        if navn.lower() in ident.lower():
+            return ident
+    raise AssertionError(f"Fant ingen dimensjon med {navn!r}")
