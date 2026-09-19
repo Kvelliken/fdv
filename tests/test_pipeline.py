@@ -287,3 +287,36 @@ def test_totalverdien_i_energitype_telles_ikke_med(frosset, konfig):
     # Med totalen inkludert ville kWh/m² vært dobbelt så høy, og implisitt
     # energipris halvparten av det den skal være.
     assert 50 <= rad.kwh_m2 <= 500
+
+
+def test_delsummen_fornybar_energi_telles_ikke_med(frosset, konfig):
+    """«Fornybar energi» er summen av strøm, fjernvarme og bioenergi.
+
+    Den ligger i samme dimensjon som de enkelte varene. Tas den med, telles
+    det fornybare forbruket to ganger, og i en kommune med utelukkende
+    fornybar energi blir hele forbruket dobbelt så høyt.
+    """
+    from kostra_fdv.energi import beregn_rad
+    from kostra_fdv.pipeline import les_frosset
+
+    grunnlag = les_frosset(frosset, 2025)
+    _, energi = bygg_rader(grunnlag, konfig, 2025)
+    rad = next(e for e in energi["222"] if e.kwh and e.areal)
+
+    assert not [v for v in rad.kwh if "fornybar" in v.lower()]
+    assert not [v for v in rad.kwh if "alle energityper" in v.lower()]
+    assert len(rad.kwh) == 5
+
+    beregn_rad(rad, konfig)
+    assert 50 <= rad.kwh_m2 <= 500
+
+
+def test_strom_regnes_som_fornybar(konfig):
+    """SSB skriver «Strøm», ikke «elektrisitet». Den største posten må med."""
+    from kostra_fdv.energi import klassifiser_fornybar
+
+    assert klassifiser_fornybar("Strøm", konfig) is True
+    assert klassifiser_fornybar("Fjernvarme/fjernkjøling", konfig) is True
+    assert klassifiser_fornybar("Bioenergi", konfig) is True
+    assert klassifiser_fornybar("Fyringsolje og fyringsparafin", konfig) is False
+    assert klassifiser_fornybar("Naturgass og andre fossile gasser", konfig) is False
