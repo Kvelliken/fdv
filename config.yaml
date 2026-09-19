@@ -267,7 +267,17 @@ brudd: []
 #     kilde: "KOSTRA-rapporteringsnotat 2023"
 
 avstemming:
-  toleranse_landstall: 0.01   # 1 %
+  # To nivåer. Det første er kravet vi ønsker å innfri: da er vårt tall og
+  # SSBs landstall i praksis samme størrelse. Det andre er grensen som
+  # stopper jobben.
+  #
+  # Grunnen til at de er forskjellige: landsaggregatet er ikke nødvendigvis
+  # regnet på samme kommuneutvalg som vårt, og det kan bruke samlet areal
+  # (eid + leid) som nevner der vi bruker eid. Et avvik på noen få prosent er
+  # derfor en definisjonsforskjell, ikke en regnefeil. Et avvik på titalls
+  # prosent eller faktor 1000 er en regnefeil, og det er den testen skal fange.
+  toleranse_landstall: 0.01       # avvik over dette rapporteres
+  toleranse_blokkerende: 0.05     # avvik over dette stopper jobben
 
 sensitivitet:
   faktorer: [0.5, 1.5]
