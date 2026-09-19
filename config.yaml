@@ -212,17 +212,42 @@ blokkerende_flagg_energi:
   - kwh_uteligger
 
 energivarer:
-  # Energitype-dimensjonen inneholder som regel en totalverdi ved siden av de
-  # enkelte varene. Summeres alle, telles forbruket dobbelt, og implisitt
-  # energipris faller til det halve uten at noe annet ser galt ut. Totalen
-  # holdes utenfor summen, men brukes til å kontrollere at delene stemmer.
+  # Energitype-dimensjonen i tabell 12150 har sju verdier, og bare fem av dem
+  # er faktiske energivarer:
+  #
+  #     Alle energityper              <- total
+  #     Strøm                         <- vare
+  #     Fjernvarme/fjernkjøling       <- vare
+  #     Fyringsolje og fyringsparafin <- vare
+  #     Naturgass og andre fossile gasser <- vare
+  #     Bioenergi                     <- vare
+  #     Fornybar energi               <- gruppering av strøm, fjernvarme, bio
+  #
+  # «Fornybar energi» overlapper de andre. Summeres alt, telles forbruket
+  # nesten dobbelt, og implisitt energipris faller til det halve uten at noe
+  # annet ser galt ut. Verifisert mot API-et 18.09.2026.
   totalverdier: ["i alt", "ialt", "samlet", "total", "alle energi"]
-  # Hvor mye summen av varene får avvike fra totalen før jobben stopper.
+  # Verdier som er delsummer på tvers av de faktiske varene. «Fornybar energi»
+  # er summen av strøm, fjernvarme og bioenergi, og ligger i samme dimensjon
+  # som dem. Tas den med, telles det fornybare forbruket to ganger. Den er
+  # heller ikke en total, så den skal ikke brukes til kontroll mot summen.
+  # Verifisert mot tabell 12150 den 18.09.2026.
+  aggregater: ["fornybar energi"]
+
+  # Grupperinger som ikke skal inn i summen, men som brukes til noe annet.
+  # Fornybarandelen tas fra SSBs egen gruppering i stedet for å utledes av
+  # varenavnene. Da slipper vi å ta stilling til hvor fornybar fjernvarmen er.
+  fornybar_gruppering: ["fornybar energi"]
+
+  # Hvor mye summen av varene får avvike fra tabellens totalverdi.
   toleranse_mot_total: 0.02
-  # Klassifisering brukt til fornybarandel. Fjernvarme regnes som fornybar
-  # her fordi norsk fjernvarme i hovedsak er avfall og bio, men andelen
-  # varierer mellom anlegg. Forbeholdet står i METODE.md.
-  fornybar: ["elektrisitet", "elektrisk", "fjernvarme", "bioenergi", "bio", "ved", "flis", "pellets"]
+
+  # Eksplisitt liste over energitypekoder som skal summeres. Tom betyr alle
+  # utenom totalene og grupperingene over.
+  koder: []
+
+  # Reserveklassifisering, brukt bare hvis fornybargrupperingen mangler.
+  fornybar: ["strøm", "elektrisitet", "elektrisk", "fjernvarme", "bioenergi", "bio", "ved", "flis", "pellets"]
   ikke_fornybar: ["olje", "parafin", "gass", "kull", "koks"]
 
 avrunding:
