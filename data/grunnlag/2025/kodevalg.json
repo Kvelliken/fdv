@@ -1,0 +1,102 @@
+{
+ "kodevalg": [
+  {
+   "dimensjon": "",
+   "formaal": "sektor",
+   "kilde": "ikke_aktuell",
+   "kode": "",
+   "tekst": "Tabellen har ingen sektordimensjon. Den dekker kommune og kommunale foretak samlet, altså konserntall, per tabellens egen definisjon."
+  },
+  {
+   "dimensjon": "ContentsCode",
+   "formaal": "contents:kroner",
+   "kilde": "overstyrt",
+   "kode": "KOSbelop0000",
+   "tekst": "Beløp (1000 kr)"
+  },
+  {
+   "dimensjon": "KOKart0000",
+   "formaal": "art:drift",
+   "kilde": "automatisk",
+   "kode": "AGD39",
+   "tekst": "Utgifter til driftsaktiviteter"
+  },
+  {
+   "dimensjon": "KOKart0000",
+   "formaal": "art:vedlikehold",
+   "kilde": "automatisk",
+   "kode": "AGD36",
+   "tekst": "Utgifter til vedlikeholdsaktiviteter"
+  },
+  {
+   "dimensjon": "KOKart0000",
+   "formaal": "art:renhold",
+   "kilde": "automatisk",
+   "kode": "AGD38",
+   "tekst": "Utgifter til renholdsaktiviteter"
+  },
+  {
+   "dimensjon": "KOKart0000",
+   "formaal": "art:energi",
+   "kilde": "automatisk",
+   "kode": "AG1",
+   "tekst": "Energiutgifter"
+  },
+  {
+   "dimensjon": "KOKregnskapsomfa0000",
+   "formaal": "sektor",
+   "kilde": "automatisk",
+   "kode": "A",
+   "tekst": "(Fylkes-)Kommunekonsern"
+  },
+  {
+   "dimensjon": "ContentsCode",
+   "formaal": "contents:kroner_forvaltning",
+   "kilde": "automatisk",
+   "kode": "KOSbelop0000",
+   "tekst": "Beløp (1000 kr)"
+  },
+  {
+   "dimensjon": "KOKart0000",
+   "formaal": "art:forvaltning",
+   "kilde": "overstyrt",
+   "kode": "AGD4",
+   "tekst": "Korrigerte brutto driftsutgifter på funksjon/tjenesteområde"
+  },
+  {
+   "dimensjon": "KOKeieform0000",
+   "formaal": "eieform",
+   "kilde": "automatisk",
+   "kode": "eid",
+   "tekst": "Eid areal"
+  },
+  {
+   "dimensjon": "ContentsCode",
+   "formaal": "contents:areal",
+   "kilde": "automatisk",
+   "kode": "KOSareal0000",
+   "tekst": "Areal (m2)"
+  },
+  {
+   "dimensjon": "",
+   "formaal": "sektor",
+   "kilde": "ikke_aktuell",
+   "kode": "",
+   "tekst": "Tabellen har ingen sektordimensjon. Den dekker kommune og kommunale foretak samlet, altså konserntall, per tabellens egen definisjon."
+  },
+  {
+   "dimensjon": "ContentsCode",
+   "formaal": "contents:energibruk",
+   "kilde": "automatisk",
+   "kode": "KOSbruk1000kWh0000",
+   "tekst": "Energibruk (MWh)"
+  },
+  {
+   "dimensjon": "",
+   "formaal": "sektor",
+   "kilde": "ikke_aktuell",
+   "kode": "",
+   "tekst": "Tabellen har ingen sektordimensjon. Den dekker kommune og kommunale foretak samlet, altså konserntall, per tabellens egen definisjon."
+  }
+ ]
+}
