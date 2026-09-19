@@ -15,12 +15,16 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 FUNKSJONER = ["130", "221", "222", "261", "381", "386"]
+# Energitypene slik de faktisk står i tabell 12150. To av de sju er ikke
+# energivarer: totalen og fornybargrupperingen, som overlapper varene.
 ENERGIVARER = [
-    ("00", "Energibruk i alt"),   # totalverdi: skal holdes utenfor summen
-    ("01", "Elektrisitet"),
-    ("02", "Fjernvarme"),
-    ("03", "Olje og parafin"),
-    ("04", "Bioenergi"),
+    ("00", "Alle energityper"),                   # total
+    ("01", "Strøm"),
+    ("02", "Fjernvarme/fjernkjøling"),
+    ("03", "Fyringsolje og fyringsparafin"),
+    ("04", "Naturgass og andre fossile gasser"),
+    ("05", "Bioenergi"),
+    ("06", "Fornybar energi"),                    # gruppering av 01, 02 og 05
 ]
 
 # Nivåer per funksjon: (drift kr/m², vedlikehold kr/m², kWh/m²)
@@ -132,12 +136,16 @@ def lag_grunnlag(aar: int, antall_kommuner: int = 350, fro: int = 42) -> dict[st
             renhold[(kode, funksjon)] = r * a_kost / 1000.0
             energikr[(kode, funksjon)] = e * a_kost / 1000.0
             samlet_kwh = k * a_kost / 1000.0                          # MWh
-            andeler = {"01": 0.72, "02": 0.16, "03": 0.04, "04": 0.08}
+            andeler = {"01": 0.72, "02": 0.16, "03": 0.04, "04": 0.02, "05": 0.06}
             if indeks % 7 == 0:
-                andeler = {"01": 0.55, "02": 0.34, "03": 0.02, "04": 0.09}
+                andeler = {"01": 0.55, "02": 0.34, "03": 0.02, "04": 0.03, "05": 0.06}
             for vare, andel in andeler.items():
                 kwh[(kode, funksjon, vare)] = samlet_kwh * andel
             kwh[(kode, funksjon, "00")] = samlet_kwh
+            # Fornybargrupperingen: strøm, fjernvarme og bioenergi
+            kwh[(kode, funksjon, "06")] = samlet_kwh * sum(
+                a for v, a in andeler.items() if v in ("01", "02", "05")
+            )
 
     forvaltning = {}
     for kode, _ in kommuner:
