@@ -104,3 +104,30 @@ def test_publisert_fordeling_av_implisitt_pris_er_kvalitetsindikator(konfig):
     assert pris["median"] == pytest.approx(1.5, abs=0.2)
     assert pris["andel_utenfor_intervall"] > 0
     assert pris["intervall"] == [0.5, 3.0]
+
+
+def test_fornybarandel_tas_fra_ssbs_egen_gruppering(konfig):
+    """Tabellen har en «Fornybar energi»-gruppering. Den er bedre enn å gjette.
+
+    Uten den måtte fornybarandelen utledes av varenavnene, og da må man ta
+    stilling til hvor fornybar fjernvarmen er. Det varierer mellom anlegg.
+    """
+    r = erad(el=1_000_000.0, fjernvarme=0.0, olje=500_000.0, bio=0.0)
+    r.fornybar_kwh = 1_000_000.0
+    beregn_rad(r, konfig)
+    assert r.fornybarandel == pytest.approx(1_000_000 / 1_500_000)
+
+
+def test_fornybarandel_faller_tilbake_paa_varenavn(konfig):
+    """Mangler grupperingen, brukes klassifiseringen i config."""
+    r = erad(el=1_000_000.0, fjernvarme=0.0, olje=500_000.0, bio=0.0)
+    r.fornybar_kwh = None
+    beregn_rad(r, konfig)
+    assert r.fornybarandel == pytest.approx(1_000_000 / 1_500_000)
+
+
+def test_fornybarandel_kan_ikke_overstige_hundre_prosent(konfig):
+    r = erad(el=1_000_000.0, fjernvarme=0.0, olje=0.0, bio=0.0)
+    r.fornybar_kwh = 1_200_000.0  # avrunding i kilden
+    beregn_rad(r, konfig)
+    assert r.fornybarandel == 1.0
