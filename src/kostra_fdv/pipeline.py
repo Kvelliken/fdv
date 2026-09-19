@@ -210,6 +210,7 @@ def _sjekk_mot_total(
     kwh: Mapping[tuple[str, str], Mapping[str, float]],
     totaler: Mapping[tuple[str, str], float],
     konfig: Mapping[str, Any],
+    sett_varer: Mapping[str, tuple[str, float]] | None = None,
 ) -> None:
     """Summen av energivarene skal stemme med tabellens egen totalverdi.
 
@@ -228,10 +229,23 @@ def _sjekk_mot_total(
         eksempler = "; ".join(
             f"{k[0]}/{k[1]}: deler {d:,.0f} kWh mot total {t:,.0f}" for k, d, t in avvik[:5]
         )
+        samlet_total = sum(totaler.values()) or 1.0
+        liste = ""
+        if sett_varer:
+            rader_ = sorted(sett_varer.items(), key=lambda kv: -kv[1][1])
+            liste = "\n\nEnergitype-dimensjonen inneholder:\n" + "\n".join(
+                f"    {kode:<16} {navn:<44} {sum_kwh / samlet_total:6.1%} av totalen"
+                for kode, (navn, sum_kwh) in rader_
+            ) + (
+                "\n\nAndeler som summerer til omtrent 100 % utgjør ett nivå. "
+                "Er det to slike nivåer, velg ett og før kodene inn under "
+                "`energivarer.koder` i config.yaml."
+            )
         raise UttrekkFeil(
             f"Summen av energivarene avviker fra tabellens totalverdi for "
             f"{len(avvik)} av {len(totaler)} kommune/funksjon-par. Enten mangler "
             f"en energivare i uttrekket, eller så telles noe dobbelt. {eksempler}"
+            + liste
         )
     if avvik:
         logg.info(
@@ -362,7 +376,12 @@ def bygg_rader(
     kwh: dict[tuple[str, str], dict[str, float]] = {}
     totaler: dict[tuple[str, str], float] = {}
     totalmonster = [t.lower() for t in konfig["energivarer"].get("totalverdier", [])]
+    valgte_koder = set(konfig["energivarer"].get("koder") or [])
+    aggregatmonster = [a.lower() for a in konfig["energivarer"].get("aggregater", [])]
+    fornybarmonster = [f.lower() for f in konfig["energivarer"].get("fornybar_gruppering", [])]
+    fornybar_kwh: dict[tuple[str, str], float] = {}
     droppet: set[str] = set()
+    sett_varer: dict[str, tuple[str, float]] = {}
     for rad in parse_jsonstat2(energi_ds):
         if rad.verdi is None or not er_kommune(rad.koder[d_reg_e]):
             continue
@@ -370,14 +389,32 @@ def bygg_rader(
         nokkel = (rad.koder[d_reg_e], rad.koder[d_fun_e])
         # En totalverdi inne i energitype-dimensjonen ville blitt lagt oppå
         # delene. Den holdes utenfor summen og brukes til kontroll i stedet.
+        varekode = rad.koder.get(d_vare, "") if d_vare else ""
+        if d_vare:
+            forrige = sett_varer.get(varekode, (vare, 0.0))
+            sett_varer[varekode] = (vare, forrige[1] + rad.verdi * faktor_kwh)
         if d_vare and any(m in vare.lower() for m in totalmonster):
             droppet.add(vare)
             totaler[nokkel] = totaler.get(nokkel, 0.0) + rad.verdi * faktor_kwh
             continue
+        # Delsummer på tvers av varene legges verken i summen eller i totalen.
+        if d_vare and any(m in vare.lower() for m in aggregatmonster):
+            droppet.add(vare)
+            continue
+        # «Fornybar energi» er en gruppering av strøm, fjernvarme og bioenergi.
+        # Den overlapper varene og skal ikke summeres, men brukes til å regne
+        # fornybarandelen fra SSBs egen klassifisering.
+        if d_vare and any(m in vare.lower() for m in fornybarmonster):
+            droppet.add(vare)
+            fornybar_kwh[nokkel] = fornybar_kwh.get(nokkel, 0.0) + rad.verdi * faktor_kwh
+            continue
+        if valgte_koder and varekode not in valgte_koder:
+            continue
         kwh.setdefault(nokkel, {})[vare] = kwh.setdefault(nokkel, {}).get(vare, 0.0) + rad.verdi * faktor_kwh
     if droppet:
         logg.info("Holdt totalverdiene %s utenfor summen av energivarer", sorted(droppet))
-        _sjekk_mot_total(kwh, totaler, konfig)
+    if totaler:
+        _sjekk_mot_total(kwh, totaler, konfig, sett_varer)
 
     # Nevneren er kommunene som faktisk finnes i årgangen, ikke alle koder som
     # ser ut som kommunenumre. Regionsdimensjonen inneholder også kommuner som
@@ -468,6 +505,7 @@ def bygg_rader(
                     funksjon=funksjon,
                     areal=areal.get((kommune, funksjon)),
                     kwh=dict(kwh.get((kommune, funksjon), {})),
+                    fornybar_kwh=fornybar_kwh.get((kommune, funksjon)),
                     energiutgift_kr=beløp.get("energi"),
                 )
             )
