@@ -33,6 +33,10 @@ class Energirad:
     funksjon: str
     areal: float | None = None
     kwh: dict[str, float] = field(default_factory=dict)  # energivare -> kWh
+    # SSBs egen gruppering «Fornybar energi». Brukes til fornybarandelen når
+    # den finnes, slik at vi slipper å ta stilling til hvor fornybar
+    # fjernvarmen i den enkelte kommunen er.
+    fornybar_kwh: float | None = None
     energiutgift_kr: float | None = None
     flagg: list[str] = field(default_factory=list)
     kwh_m2: float | None = None
@@ -100,16 +104,19 @@ def beregn_rad(rad: Energirad, konfig: dict[str, Any]) -> None:
         rad.kwh_m2 = sum_kwh / rad.areal
     if sum_kwh and sum_kwh > 0:
         rad.andeler = {vare: verdi / sum_kwh for vare, verdi in rad.kwh.items() if verdi is not None}
-        fornybar = 0.0
-        kjent = 0.0
-        for vare, verdi in rad.kwh.items():
-            klasse = klassifiser_fornybar(vare, konfig)
-            if klasse is None:
-                continue
-            kjent += verdi
-            if klasse:
-                fornybar += verdi
-        rad.fornybarandel = (fornybar / kjent) if kjent > 0 else None
+        if rad.fornybar_kwh is not None:
+            rad.fornybarandel = min(rad.fornybar_kwh / sum_kwh, 1.0)
+        else:
+            fornybar = 0.0
+            kjent = 0.0
+            for vare, verdi in rad.kwh.items():
+                klasse = klassifiser_fornybar(vare, konfig)
+                if klasse is None:
+                    continue
+                kjent += verdi
+                if klasse:
+                    fornybar += verdi
+            rad.fornybarandel = (fornybar / kjent) if kjent > 0 else None
     if rad.kwh_m2 and rad.kwh_m2 > 0 and rad.energiutgift_kr is not None and rad.areal:
         kr_m2 = rad.energiutgift_kr / rad.areal
         rad.implisitt_pris = kr_m2 / rad.kwh_m2
