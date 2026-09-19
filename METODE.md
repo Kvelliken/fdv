@@ -372,6 +372,18 @@ de øvrige kodevalgene.
 `KOKkommuneregion0000`. Ingen av dem lot seg gjette på forhånd, og alle ble
 funnet av tekstsøket. Det var poenget med å bygge kodegjenkjenningen slik.
 
+**Energitype-dimensjonen har sju verdier, hvorav to ikke er energivarer.**
+«Alle energityper» er totalen, og «Fornybar energi» er en delsum av strøm,
+fjernvarme og bioenergi. Begge ligger i samme dimensjon som de fem faktiske
+varene. Summeres alt, telles forbruket dobbelt, og implisitt energipris faller
+til det halve uten at noe annet ser galt ut. Totalen holdes utenfor summen og
+brukes i stedet til å kontrollere at delene stemmer; delsummen holdes helt
+utenfor.
+
+**SSB skriver «Strøm», ikke «elektrisitet».** Klassifiseringen av fornybare
+energivarer må bruke det ordet, ellers faller den største posten utenfor og
+fornybarandelen regnes på resten alene.
+
 **Artsetiketten for renhold** er «Utgifter til renholdsaktiviteter», ikke
 «Utgifter til renhold». Energiarten heter `AG1` «Energiutgifter» og følger ikke
 AGD-serien som de tre andre. Begge ble funnet av tekstsøket.
