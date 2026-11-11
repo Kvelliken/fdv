@@ -15,12 +15,12 @@
 
 <header class="topp">
   <p class="kilde" id="merking">Laster grunnlaget …</p>
-  <h1>Hva koster det å drifte et kommunalt formålsbygg?</h1>
+  <h1>Hva koster det å drifte kommunens bygg?</h1>
   <p class="ingress">
-    Tallene under er regnet fra KOSTRA: kroner og kilowattimer rapportert av
-    kommunene, delt på eid areal. De viser hva kommunene faktisk bruker, ikke
-    hva et bygg burde koste. Hvert tall kan spores tilbake til et kronebeløp,
-    et kWh-tall og et areal i statistikkbanken.
+    Normtall for forvaltning, drift og vedlikehold (FDV) av kommunale
+    formålsbygg, regnet fra det kommunene selv har rapportert i KOSTRA. Legg
+    inn arealene deres, så får du et årsbeløp med spenn som kan brukes rett i
+    budsjett og økonomiplan.
   </p>
 </header>
 
@@ -35,30 +35,118 @@
   </div>
 
   <div id="side" hidden>
+    <section class="lesehjelp" aria-labelledby="lesehjelp-tittel">
+      <h2 id="lesehjelp-tittel" class="skjult">Slik leser du tallene</h2>
+      <dl class="trepunkt">
+        <div>
+          <dt>Sannsynlig</dt>
+          <dd>Den typiske kommunen: halvparten bruker mer, halvparten mindre. Bruk dette som budsjettall.</dd>
+        </div>
+        <div>
+          <dt>Lav og høy</dt>
+          <dd>Åtte av ti kommuner ligger mellom disse. Bruk dem til å vurdere risiko og handlingsrom.</dd>
+        </div>
+        <div>
+          <dt>Kroner i <span class="prisaar"></span>-priser</dt>
+          <dd>Tallene viser hva kommunene faktisk brukte, ikke hva byggene burde hatt. Særlig vedlikehold ligger ofte under behovet.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section aria-labelledby="kalk-tittel">
+      <h2 id="kalk-tittel">Budsjettkalkulator</h2>
+      <p class="forklaring">
+        Skriv inn eid areal per bygningstype. Velger du kommune, hentes
+        arealene dere rapporterte til KOSTRA i <span class="prisaar"></span>,
+        og dere ser egne tall ved siden av normtallene.
+      </p>
+
+      <div class="skjemarad">
+        <label class="felt felt-bred">
+          <span>Kommune (valgfritt)</span>
+          <input id="kommune" type="search" list="kommuneliste" autocomplete="off"
+                 placeholder="Søk på kommunenavn">
+          <datalist id="kommuneliste"></datalist>
+        </label>
+        <fieldset class="felt valg">
+          <legend>Hva skal med?</legend>
+          <label><input type="radio" name="modus" value="fdv" checked> FDV samlet</label>
+          <label><input type="radio" name="modus" value="dv"> Bare drift og vedlikehold</label>
+        </fieldset>
+        <label class="felt">
+          <span>Budsjettår</span>
+          <input id="budsjettaar" type="number" inputmode="numeric" step="1">
+        </label>
+        <label class="felt">
+          <span>Årlig prisvekst, %</span>
+          <input id="prisvekst" type="number" inputmode="decimal" step="0.1" min="0" max="20" value="0">
+        </label>
+      </div>
+      <p class="fotnote" id="pris-note"></p>
+
+      <div class="resultat" aria-live="polite">
+        <p class="hero-merke" id="res-merke"></p>
+        <p class="resultat-tall"><span id="res-sannsynlig">–</span></p>
+        <p class="hero-under" id="res-spenn">Legg inn areal for å se årsbeløpet.</p>
+      </div>
+
+      <div class="tabellramme">
+        <table id="kalkulator">
+          <caption class="skjult">Årlig kostnad per bygningstype</caption>
+          <thead>
+            <tr>
+              <th scope="col">Bygningstype</th>
+              <th scope="col" class="tall">Eid areal, m²</th>
+              <th scope="col" class="tall">Normtall, kr/m²</th>
+              <th scope="col" class="tall egen-kol">Egne tall, kr/m²</th>
+              <th scope="col" class="tall">Lav</th>
+              <th scope="col" class="tall">Sannsynlig</th>
+              <th scope="col" class="tall">Høy</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+      <p class="fotnote">
+        Beløp i kroner per år, avrundet til nærmeste tusen. Summen av lav og
+        summen av høy forutsetter at alle bygningstypene ligger lavt eller
+        høyt samtidig. Det gjør de sjelden, så det reelle spennet for hele
+        porteføljen er smalere enn summen viser.
+      </p>
+      <p class="fotnote" id="egen-note" hidden></p>
+      <p class="knapper">
+        <button type="button" id="last-ned-budsjett" class="knapp">Last ned som CSV</button>
+        <button type="button" id="nullstill" class="knapp knapp-stille">Nullstill</button>
+      </p>
+    </section>
+
     <nav class="velger" aria-label="Bygningstype">
-      <span class="velger-tittel">Bygningstype</span>
+      <h2>Detaljer per bygningstype</h2>
       <div id="bygg-knapper" class="knapperad" role="tablist"></div>
     </nav>
 
     <section class="hero" aria-labelledby="hero-tittel">
-      <h2 id="hero-tittel" class="skjult">Drift og vedlikehold, siste årgang</h2>
-      <p class="hero-merke">Drift og vedlikehold, <span id="hero-aar"></span></p>
+      <h3 id="hero-tittel" class="skjult">Normtall, siste årgang</h3>
+      <p class="hero-merke"><span id="hero-hva"></span>, <span id="hero-aar"></span></p>
       <p class="hero-tall"><span id="hero-verdi"></span> <span class="enhet">kr/m² per år</span></p>
       <div id="hero-spenn"></div>
       <p class="hero-under">
         Åtte av ti kommuner ligger mellom <span id="hero-kvartil"></span>.
-        Lav er 10. persentil, høy er 90. Beregnet på
-        <span id="hero-n"></span> kommuner, etter at rapporteringsfeil er luket ut.
+        <span id="hero-deler"></span>
+        Beregnet på <span id="hero-n"></span> kommuner, etter at
+        rapporteringsfeil er luket ut.
+        <span id="hero-egen"></span>
       </p>
     </section>
 
     <section aria-labelledby="normtall-tittel">
-      <h2 id="normtall-tittel">Normtall per post</h2>
+      <h3 id="normtall-tittel" class="seksjonstittel">Hva består kostnaden av?</h3>
       <p class="forklaring">
-        Postene er nøstet i KOSTRA. Drift består av energi, renhold og øvrig
-        drift, så bare drift og vedlikehold kan summeres. Spennet er satt på
-        drift og vedlikehold samlet og brutt ned med medianandeler, slik at
-        radene faktisk summerer seg til totalen.
+        De fire første postene summerer seg til drift og vedlikehold, i alle
+        tre kolonnene. Forvaltning kommer i tillegg og er det samme tallet for
+        alle bygningstyper, fordi KOSTRA bare har det for eiendomsmassen
+        samlet.
       </p>
       <div class="tabellramme">
         <table id="normtall">
@@ -69,18 +157,21 @@
               <th scope="col" class="tall">Lav</th>
               <th scope="col" class="tall">Sannsynlig</th>
               <th scope="col" class="tall">Høy</th>
+              <th scope="col" class="tall egen-kol">Egne tall</th>
+              <th scope="col" class="tall kr-kol">Sannsynlig, kr/år</th>
               <th scope="col" class="spennkol">Spenn i kr/m²</th>
             </tr>
           </thead>
           <tbody></tbody>
         </table>
       </div>
+      <p class="fotnote" id="sum-note"></p>
       <p class="fotnote" id="forvaltning-note"></p>
       <p class="fotnote">
-        Vedlikehold er periodisk. Et tverrsnitt av ett år fanger mange kommuner
-        i en lavperiode, så medianen undervurderer årsnivået. Standard
-        sentralmål for vedlikehold er derfor 10&nbsp;% trimmet snitt:
-        <span id="vedlikehold-sentralmaal"></span>.
+        <strong>Vedlikehold kommer i rykk.</strong> Samme kommune kan bruke lite
+        tre år på rad og mye det fjerde, så et enkeltår undervurderer det
+        langsiktige nivået. Over tid er gjennomsnittet et bedre anslag enn det
+        typiske året: <span id="vedlikehold-sentralmaal"></span>.
       </p>
     </section>
 
@@ -89,10 +180,9 @@
       <p class="forklaring">
         Alle tall er i løpende kroner for den årgangen de gjelder. Ingenting er
         prisjustert, så veksten inkluderer generell prisstigning. Nivået per år
-        regnes på alle rene kommuner det året. Vekstraten regnes på det
-        balanserte panelet — kommunene som er rene i alle årene — fordi en
-        kommune som faller ut og inn igjen ellers flytter medianen uten at noen
-        pris har endret seg.
+        regnes på alle kommuner med godkjente tall det året. Endringen regnes
+        bare på kommunene som har godkjente tall i alle årene, slik at den
+        viser reell utvikling og ikke at utvalget har skiftet.
       </p>
       <div class="tabellramme">
         <table id="tidsserie">
@@ -123,7 +213,7 @@
               <th scope="col" class="tall">Sannsynlig</th>
               <th scope="col" class="tall">Høy</th>
               <th scope="col" class="tall">Arealvektet</th>
-              <th scope="col" class="tall">Fornybar</th>
+              <th scope="col" class="tall">Fornybar andel</th>
               <th scope="col" class="tall">Kr/kWh</th>
             </tr>
           </thead>

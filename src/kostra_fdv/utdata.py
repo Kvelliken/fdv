@@ -86,6 +86,28 @@ def avrund_tre_punkt(punkt: Mapping[str, float], naermeste: int) -> dict[str, An
     return {navn: verdipar(verdi, naermeste) for navn, verdi in punkt.items()}
 
 
+def avrund_summerbart(
+    verdier: Mapping[str, float], naermeste: int
+) -> dict[str, float]:
+    """Avrunder delposter slik at de summerer til den avrundede totalen.
+
+    Avrundes hver post for seg til nærmeste 5, kan summen bomme på totalen med
+    5 eller 10 kr/m². Det er nok til at en budsjettabell ikke går opp. Her
+    rundes hver post ned, og de gjenstående trinnene gis til postene med
+    størst rest (største rests metode). Ingen post flyttes mer enn ett trinn
+    fra sin egen avrunding.
+    """
+    if not verdier:
+        return {}
+    maal = avrund_naermeste(sum(verdier.values()), naermeste)
+    gulv = {k: math.floor(v / naermeste) * naermeste for k, v in verdier.items()}
+    trinn = int(round((maal - sum(gulv.values())) / naermeste))
+    etter_rest = sorted(verdier, key=lambda k: verdier[k] - gulv[k], reverse=True)
+    for k in etter_rest[: max(trinn, 0)]:
+        gulv[k] += naermeste
+    return {k: float(v) for k, v in gulv.items()}
+
+
 # -- Frosset grunnlag -------------------------------------------------------
 
 
@@ -173,6 +195,7 @@ def skriv_revisjonsfil(
         "implisitt_energipris_kr_kwh",
         "flagg_kostnad",
         "flagg_energi",
+        "kommunenummer_gjeldende",
     ]
     with sti.open("w", newline="", encoding="utf-8") as fil:
         skriver = csv.DictWriter(fil, fieldnames=felt, delimiter=";")
@@ -206,6 +229,7 @@ def skriv_revisjonsfil(
                     "implisitt_energipris_kr_kwh": e.implisitt_pris if e else None,
                     "flagg_kostnad": "|".join(rad.flagg),
                     "flagg_energi": "|".join(e.flagg) if e else "",
+                    "kommunenummer_gjeldende": rad.panelnokkel,
                 }
             )
     return sti

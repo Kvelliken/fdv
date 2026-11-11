@@ -1,6 +1,6 @@
 {
  "skjemaversjon": 1,
- "generert": "2026-11-05T13:57:06+00:00",
+ "generert": "2026-11-11T11:57:27+00:00",
  "grunnlag": {
   "kilde": "SSB statistikkbanken, KOSTRA",
   "tabeller": {
@@ -168,99 +168,99 @@
      "energi": {
       "lav": {
        "verdi": 82.63684832630125,
-       "verdi_avrundet": 85
+       "verdi_avrundet": 80.0
       },
       "sannsynlig": {
        "verdi": 151.86427436704,
-       "verdi_avrundet": 150
+       "verdi_avrundet": 155.0
       },
       "hoy": {
        "verdi": 329.77221053788963,
-       "verdi_avrundet": 330
+       "verdi_avrundet": 330.0
       }
      },
      "renhold": {
       "lav": {
        "verdi": 111.47634628270795,
-       "verdi_avrundet": 110
+       "verdi_avrundet": 110.0
       },
       "sannsynlig": {
        "verdi": 204.8635055691512,
-       "verdi_avrundet": 205
+       "verdi_avrundet": 205.0
       },
       "hoy": {
        "verdi": 444.8596707267633,
-       "verdi_avrundet": 445
+       "verdi_avrundet": 445.0
       }
      },
      "ovrig_drift": {
       "lav": {
        "verdi": 229.09422572081243,
-       "verdi_avrundet": 230
+       "verdi_avrundet": 230.0
       },
       "sannsynlig": {
        "verdi": 421.01349525568565,
-       "verdi_avrundet": 420
+       "verdi_avrundet": 420.0
       },
       "hoy": {
        "verdi": 914.2278628427946,
-       "verdi_avrundet": 915
+       "verdi_avrundet": 915.0
       }
      },
      "vedlikehold": {
       "lav": {
        "verdi": 43.79854182346621,
-       "verdi_avrundet": 45
+       "verdi_avrundet": 45.0
       },
       "sannsynlig": {
        "verdi": 80.48992558490595,
-       "verdi_avrundet": 80
+       "verdi_avrundet": 80.0
       },
       "hoy": {
        "verdi": 174.78331093205114,
-       "verdi_avrundet": 175
+       "verdi_avrundet": 175.0
       }
      },
      "fdv": {
       "lav": {
-       "verdi": 540.1646295381652,
+       "verdi": 539.1905668752084,
        "verdi_avrundet": 540
       },
       "sannsynlig": {
-       "verdi": 939.1835444563937,
-       "verdi_avrundet": 940
+       "verdi": 942.634836436979,
+       "verdi_avrundet": 945
       },
       "hoy": {
-       "verdi": 1987.4754746940698,
-       "verdi_avrundet": 1985
+       "verdi": 2007.2185323127023,
+       "verdi_avrundet": 2005
       }
      }
     },
     "fordeling_egen": {
      "forvaltning": {
-      "n": 272,
+      "n": 260,
       "p10": {
-       "verdi": 12.611696614466936,
-       "verdi_avrundet": 15
+       "verdi": 25.49964278421827,
+       "verdi_avrundet": 25
       },
       "median": {
-       "verdi": 74.14172763839986,
+       "verdi": 76.20798118495665,
        "verdi_avrundet": 75
       },
       "p90": {
-       "verdi": 162.8663920144472,
-       "verdi_avrundet": 165
+       "verdi": 168.1470171754034,
+       "verdi_avrundet": 170
       },
       "snitt": {
-       "verdi": 82.99873372938856,
+       "verdi": 86.83047718003375,
        "verdi_avrundet": 85
       },
       "trimmet_snitt": {
-       "verdi": 77.32324370428691,
-       "verdi_avrundet": 75
+       "verdi": 80.91050071190081,
+       "verdi_avrundet": 80
       },
       "arealvektet_snitt": {
-       "verdi": 112.70275967561244,
+       "verdi": 113.75126089272,
        "verdi_avrundet": 115
       }
      },
@@ -400,30 +400,30 @@
       }
      },
      "fdv": {
-      "n": 272,
+      "n": 245,
       "p10": {
-       "verdi": 540.1646295381652,
+       "verdi": 539.1905668752084,
        "verdi_avrundet": 540
       },
       "median": {
-       "verdi": 939.1835444563937,
-       "verdi_avrundet": 940
+       "verdi": 942.634836436979,
+       "verdi_avrundet": 945
       },
       "p90": {
-       "verdi": 1987.4754746940698,
-       "verdi_avrundet": 1985
+       "verdi": 2007.2185323127023,
+       "verdi_avrundet": 2005
       },
       "snitt": {
-       "verdi": 1145.2924030448742,
-       "verdi_avrundet": 1145
+       "verdi": 1158.0569937106877,
+       "verdi_avrundet": 1160
       },
       "trimmet_snitt": {
-       "verdi": 1025.9087379195605,
-       "verdi_avrundet": 1025
+       "verdi": 1035.130915114159,
+       "verdi_avrundet": 1035
       },
       "arealvektet_snitt": {
-       "verdi": 1139.9753419023468,
-       "verdi_avrundet": 1140
+       "verdi": 1146.0110681654726,
+       "verdi_avrundet": 1145
       }
      }
     },
@@ -455,27 +455,27 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 263,
-         "median": 66.65484843112924,
-         "p10": 12.098516293624934,
-         "p90": 146.16118312388392,
-         "arealvektet_snitt": 91.93164665396759
+         "n_kommuner": 252,
+         "median": 69.1022420459485,
+         "p10": 19.430301327588868,
+         "p90": 147.04907412778408,
+         "arealvektet_snitt": 93.53721202559225
         },
         {
          "aargang": 2024,
-         "n_kommuner": 273,
-         "median": 68.8348735625353,
-         "p10": 15.308141311749734,
-         "p90": 156.19241138414264,
-         "arealvektet_snitt": 94.71163322156438
+         "n_kommuner": 260,
+         "median": 73.18222804368499,
+         "p10": 21.594550717382937,
+         "p90": 157.70448719886733,
+         "arealvektet_snitt": 96.21928975051726
         },
         {
          "aargang": 2025,
-         "n_kommuner": 272,
-         "median": 74.14172763839986,
-         "p10": 12.611696614466936,
-         "p90": 162.8663920144472,
-         "arealvektet_snitt": 101.70376580170812
+         "n_kommuner": 260,
+         "median": 76.20798118495665,
+         "p10": 25.49964278421827,
+         "p90": 168.1470171754034,
+         "arealvektet_snitt": 103.32381478283853
         }
        ]
       },
@@ -484,37 +484,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 147,
-         "median": 65.00068278028131,
-         "p10": 7.368438495339246,
-         "p90": 140.9830370296196,
-         "arealvektet_snitt": 92.25529304913528
+         "n_kommuner": 216,
+         "median": 68.60448719202381,
+         "p10": 20.320094282525503,
+         "p90": 146.70050059180892,
+         "arealvektet_snitt": 94.02584069607944
         },
         {
          "aargang": 2024,
-         "n_kommuner": 147,
-         "median": 68.22371520452265,
-         "p10": 13.649652902632162,
-         "p90": 157.8874246059036,
-         "arealvektet_snitt": 98.52893248434563
+         "n_kommuner": 214,
+         "median": 73.18222804368499,
+         "p10": 22.40952366430319,
+         "p90": 157.9460089322172,
+         "arealvektet_snitt": 98.32175166976155
         },
         {
          "aargang": 2025,
-         "n_kommuner": 147,
-         "median": 72.33195964189285,
-         "p10": 11.216006119868934,
-         "p90": 168.4025121636802,
-         "arealvektet_snitt": 104.72213381865893
+         "n_kommuner": 215,
+         "median": 76.30588186886662,
+         "p10": 25.831941654383286,
+         "p90": 166.0510284698069,
+         "arealvektet_snitt": 104.8567625507304
         }
        ]
       },
-      "n_panel": 147,
+      "n_panel": 223,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 147,
-       "nominell_endring_prosent": 11.278769003693556,
-       "aarlig_gjennomsnittlig_endring_prosent": 5.488752482761661,
+       "n_panel": 214,
+       "nominell_endring_prosent": 11.225788562906413,
+       "aarlig_gjennomsnittlig_endring_prosent": 5.463637602211691,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -556,37 +556,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 147,
-         "median": 174.02169289663973,
-         "p10": 86.72913254059135,
-         "p90": 311.0256022623187,
-         "arealvektet_snitt": 181.91643012607696
+         "n_kommuner": 223,
+         "median": 182.2125813449024,
+         "p10": 90.09526235918341,
+         "p90": 341.2003023431596,
+         "arealvektet_snitt": 194.92921668956686
         },
         {
          "aargang": 2024,
-         "n_kommuner": 147,
-         "median": 152.25878416062466,
-         "p10": 87.64654628684384,
-         "p90": 282.64841676827086,
-         "arealvektet_snitt": 168.86932325410208
+         "n_kommuner": 223,
+         "median": 157.83938096311323,
+         "p10": 88.44951427419376,
+         "p90": 303.01486450254464,
+         "arealvektet_snitt": 173.85233278555677
         },
         {
          "aargang": 2025,
-         "n_kommuner": 147,
-         "median": 147.8125,
-         "p10": 83.33980289495416,
-         "p90": 282.9678589695937,
-         "arealvektet_snitt": 157.68548844296956
+         "n_kommuner": 223,
+         "median": 149.4986326344576,
+         "p10": 82.17447529172847,
+         "p90": 293.3596479086324,
+         "arealvektet_snitt": 159.89712664065271
         }
        ]
       },
-      "n_panel": 147,
+      "n_panel": 223,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 147,
-       "nominell_endring_prosent": -15.060876871371832,
-       "aarlig_gjennomsnittlig_endring_prosent": -7.837576459476625,
+       "n_panel": 223,
+       "nominell_endring_prosent": -17.953726613708387,
+       "aarlig_gjennomsnittlig_endring_prosent": -9.420602018841162,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -628,37 +628,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 147,
-         "median": 165.15837104072398,
-         "p10": 87.21110286667145,
-         "p90": 376.2101703566643,
-         "arealvektet_snitt": 204.89764395542673
+         "n_kommuner": 223,
+         "median": 174.36224969004772,
+         "p10": 85.862347447824,
+         "p90": 380.3679570775708,
+         "arealvektet_snitt": 198.599721467518
         },
         {
          "aargang": 2024,
-         "n_kommuner": 147,
+         "n_kommuner": 223,
          "median": 187.94988003199146,
-         "p10": 91.43608709612207,
-         "p90": 428.32879235580805,
-         "arealvektet_snitt": 227.3765459490783
+         "p10": 86.97540288379984,
+         "p90": 412.5128682699467,
+         "arealvektet_snitt": 214.83468232726474
         },
         {
          "aargang": 2025,
-         "n_kommuner": 147,
-         "median": 186.36363636363637,
-         "p10": 86.91741420042055,
-         "p90": 452.9271708683474,
-         "arealvektet_snitt": 223.7452650660273
+         "n_kommuner": 223,
+         "median": 189.56521739130434,
+         "p10": 88.27640805247682,
+         "p90": 432.9044793362391,
+         "arealvektet_snitt": 215.84657368856693
         }
        ]
       },
-      "n_panel": 147,
+      "n_panel": 223,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 147,
-       "nominell_endring_prosent": 12.839352428393536,
-       "aarlig_gjennomsnittlig_endring_prosent": 6.225868990747041,
+       "n_panel": 223,
+       "nominell_endring_prosent": 8.719185332996071,
+       "aarlig_gjennomsnittlig_endring_prosent": 4.268492524346046,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -700,37 +700,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 147,
-         "median": 340.75508228460797,
-         "p10": 153.71271315543763,
-         "p90": 924.8570329177013,
-         "arealvektet_snitt": 418.25809169416556
+         "n_kommuner": 223,
+         "median": 362.6923076923077,
+         "p10": 152.51117989971937,
+         "p90": 914.9195244317161,
+         "arealvektet_snitt": 466.09504299223465
         },
         {
          "aargang": 2024,
-         "n_kommuner": 147,
+         "n_kommuner": 223,
          "median": 394.1064235743057,
-         "p10": 157.953414275255,
-         "p90": 971.5722715718053,
-         "arealvektet_snitt": 467.834601068134
+         "p10": 162.01970310391366,
+         "p90": 1000.8117243502984,
+         "arealvektet_snitt": 498.0346229220274
         },
         {
          "aargang": 2025,
-         "n_kommuner": 147,
-         "median": 394.4,
-         "p10": 188.66621332014506,
-         "p90": 1121.337733990366,
-         "arealvektet_snitt": 605.4047157354479
+         "n_kommuner": 223,
+         "median": 401.0989010989011,
+         "p10": 187.28480596292263,
+         "p90": 1126.515286214188,
+         "arealvektet_snitt": 584.9755419054909
         }
        ]
       },
-      "n_panel": 147,
+      "n_panel": 223,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 147,
-       "nominell_endring_prosent": 15.742954545454534,
-       "aarlig_gjennomsnittlig_endring_prosent": 7.583899606518507,
+       "n_panel": 223,
+       "nominell_endring_prosent": 10.589304650810472,
+       "aarlig_gjennomsnittlig_endring_prosent": 5.161449519684003,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -772,37 +772,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 147,
-         "median": 70.98988439306359,
-         "p10": 15.909940310792111,
-         "p90": 245.17022653721685,
-         "arealvektet_snitt": 131.10450246236246
+         "n_kommuner": 223,
+         "median": 77.77777777777777,
+         "p10": 20.210930622562547,
+         "p90": 271.8113681086089,
+         "arealvektet_snitt": 136.64955888661615
         },
         {
          "aargang": 2024,
-         "n_kommuner": 147,
-         "median": 64.55542021924482,
-         "p10": 17.286068672263948,
-         "p90": 267.3808852226874,
-         "arealvektet_snitt": 126.07479026254379
+         "n_kommuner": 223,
+         "median": 75.79384075315143,
+         "p10": 19.733333333333334,
+         "p90": 281.4520812445706,
+         "arealvektet_snitt": 133.6004416650255
         },
         {
          "aargang": 2025,
-         "n_kommuner": 147,
-         "median": 68.11706811706811,
-         "p10": 16.168949187252014,
-         "p90": 245.8780970582213,
-         "arealvektet_snitt": 133.14869046802272
+         "n_kommuner": 223,
+         "median": 78.01418439716312,
+         "p10": 16.26906426906427,
+         "p90": 263.11396468699843,
+         "arealvektet_snitt": 132.80729759837692
         }
        ]
       },
-      "n_panel": 147,
+      "n_panel": 223,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 147,
-       "nominell_endring_prosent": -4.046796667661823,
-       "aarlig_gjennomsnittlig_endring_prosent": -2.0442940241161,
+       "n_panel": 223,
+       "nominell_endring_prosent": 0.3039513677811634,
+       "aarlig_gjennomsnittlig_endring_prosent": 0.1518603760215509,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -844,37 +844,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 147,
-         "median": 839.3665158371041,
-         "p10": 462.30294635109425,
-         "p90": 1652.1516984887683,
-         "arealvektet_snitt": 936.1766682380318
+         "n_kommuner": 223,
+         "median": 851.5625,
+         "p10": 468.02660969437005,
+         "p90": 1845.5951782443124,
+         "arealvektet_snitt": 996.2735400359356
         },
         {
          "aargang": 2024,
-         "n_kommuner": 147,
-         "median": 894.2307692307693,
-         "p10": 466.37837837837844,
-         "p90": 1862.7909754754808,
-         "arealvektet_snitt": 990.1552605338582
+         "n_kommuner": 223,
+         "median": 902.3148148148148,
+         "p10": 448.28886627443273,
+         "p90": 1935.762052510599,
+         "arealvektet_snitt": 1020.3220796998744
         },
         {
          "aargang": 2025,
-         "n_kommuner": 147,
-         "median": 912.7545551982851,
-         "p10": 485.5601173020528,
-         "p90": 1841.3693419551162,
-         "arealvektet_snitt": 1119.9841597124675
+         "n_kommuner": 223,
+         "median": 915.7407407407408,
+         "p10": 481.7215556849803,
+         "p90": 1845.5092466807948,
+         "arealvektet_snitt": 1093.5265398330876
         }
        ]
       },
-      "n_panel": 147,
+      "n_panel": 223,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 147,
-       "nominell_endring_prosent": 8.743265066749872,
-       "aarlig_gjennomsnittlig_endring_prosent": 4.2800388697423974,
+       "n_panel": 223,
+       "nominell_endring_prosent": 7.536527353041111,
+       "aarlig_gjennomsnittlig_endring_prosent": 3.699820324357894,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -887,27 +887,27 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 263,
-         "median": 908.0348049885956,
-         "p10": 540.585509467242,
-         "p90": 1921.9329156623455,
-         "arealvektet_snitt": 1066.5600853581013
+         "n_kommuner": 241,
+         "median": 946.1402987129426,
+         "p10": 531.3424691743406,
+         "p90": 1924.178501367782,
+         "arealvektet_snitt": 1070.8778215065638
         },
         {
          "aargang": 2024,
-         "n_kommuner": 273,
-         "median": 932.8463816301027,
+         "n_kommuner": 253,
+         "median": 941.6578343048931,
          "p10": 503.38258032827076,
          "p90": 1953.2049067714472,
-         "arealvektet_snitt": 1066.8564169902575
+         "arealvektet_snitt": 1070.3294722776977
         },
         {
          "aargang": 2025,
-         "n_kommuner": 272,
-         "median": 939.1835444563937,
-         "p10": 540.1646295381652,
-         "p90": 1987.4754746940698,
-         "arealvektet_snitt": 1139.9753419023468
+         "n_kommuner": 245,
+         "median": 942.634836436979,
+         "p10": 539.1905668752084,
+         "p90": 2007.2185323127023,
+         "arealvektet_snitt": 1146.0110681654726
         }
        ]
       },
@@ -916,37 +916,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 147,
-         "median": 906.0213642682334,
-         "p10": 529.023156209601,
-         "p90": 1788.6310261524402,
-         "arealvektet_snitt": 1028.431961287167
+         "n_kommuner": 206,
+         "median": 968.7540957360081,
+         "p10": 535.4875331868778,
+         "p90": 1918.5645371041905,
+         "arealvektet_snitt": 1097.8232043573848
         },
         {
          "aargang": 2024,
-         "n_kommuner": 147,
-         "median": 977.2919966752612,
-         "p10": 534.2825977606685,
-         "p90": 1948.056940548486,
-         "arealvektet_snitt": 1088.6841930182038
+         "n_kommuner": 208,
+         "median": 994.3129224600353,
+         "p10": 530.92473365115,
+         "p90": 1964.2968396930803,
+         "arealvektet_snitt": 1121.511553590526
         },
         {
          "aargang": 2025,
-         "n_kommuner": 147,
-         "median": 974.7457627118644,
-         "p10": 572.8801492301287,
-         "p90": 1953.0863107976788,
-         "arealvektet_snitt": 1224.7062935311264
+         "n_kommuner": 204,
+         "median": 996.822614052161,
+         "p10": 563.2079901575449,
+         "p90": 1984.2986942356792,
+         "arealvektet_snitt": 1204.7871510621403
         }
        ]
       },
-      "n_panel": 147,
+      "n_panel": 223,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 147,
-       "nominell_endring_prosent": 7.585295574032913,
-       "aarlig_gjennomsnittlig_endring_prosent": 3.723331788962936,
+       "n_panel": 204,
+       "nominell_endring_prosent": 2.8973831893663204,
+       "aarlig_gjennomsnittlig_endring_prosent": 1.4383473787730416,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -977,13 +977,14 @@
       }
      },
      "energivarefordeling": {
-      "Bioenergi": 0.0,
-      "Fjernvarme/fjernkjøling": 0.0,
-      "Fyringsolje og fyringsparafin": 0.0,
-      "Naturgass og andre fossile gasser": 0.0,
-      "Strøm": 1.0
+      "Bioenergi": 0.014303201032915807,
+      "Fjernvarme/fjernkjøling": 0.14281402485034458,
+      "Fyringsolje og fyringsparafin": 0.0014881700957459294,
+      "Naturgass og andre fossile gasser": 0.00014252896691651157,
+      "Strøm": 0.8412520750540772
      },
      "fornybarandel_median": 1.0,
+     "fornybarandel_vektet": 0.9983693009373376,
      "implisitt_energipris": {
       "n": 310,
       "p10": 0.4462544859064144,
@@ -1033,37 +1034,37 @@
       "punkter": [
        {
         "aargang": 2023,
-        "n_kommuner": 180,
+        "n_kommuner": 270,
         "median": 152.57794009602546,
-        "p10": 97.35158490901928,
-        "p90": 231.18164224230551,
-        "arealvektet_snitt": 153.2566128147642
+        "p10": 97.56168167812262,
+        "p90": 234.17726142747154,
+        "arealvektet_snitt": 153.10682820553032
        },
        {
         "aargang": 2024,
-        "n_kommuner": 180,
-        "median": 137.99412715257344,
-        "p10": 94.27297922720912,
-        "p90": 221.69800240129462,
-        "arealvektet_snitt": 141.91192537596083
+        "n_kommuner": 270,
+        "median": 148.4095646994865,
+        "p10": 94.46335552088885,
+        "p90": 228.63717872086073,
+        "arealvektet_snitt": 148.90709344838413
        },
        {
         "aargang": 2025,
-        "n_kommuner": 180,
-        "median": 135.56541380401956,
-        "p10": 84.37728937728937,
-        "p90": 208.01203230886074,
-        "arealvektet_snitt": 126.50833825007949
+        "n_kommuner": 270,
+        "median": 137.71952055115966,
+        "p10": 88.2062381888157,
+        "p90": 219.51787217079325,
+        "arealvektet_snitt": 132.33570770288222
        }
       ]
      },
-     "n_panel": 180,
+     "n_panel": 270,
      "vekst": {
       "fra_aargang": 2023,
       "til_aargang": 2025,
-      "n_panel": 180,
-      "nominell_endring_prosent": -11.150056345824966,
-      "aarlig_gjennomsnittlig_endring_prosent": -5.739751934245884,
+      "n_panel": 270,
+      "nominell_endring_prosent": -9.73824888153202,
+      "aarlig_gjennomsnittlig_endring_prosent": -4.993815402118173,
       "skjult_grunnet_brudd": false,
       "brudd": [],
       "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -1092,13 +1093,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.01374574098079634,
+       "Fjernvarme/fjernkjøling": 0.1614779239362192,
+       "Fyringsolje og fyringsparafin": 0.0017036076814643233,
+       "Naturgass og andre fossile gasser": 0.0002727189011907545,
+       "Strøm": 0.8228000085003294
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.9980236734173449,
       "implisitt_energipris": {
        "n": 318,
        "p10": 0.36417700406546444,
@@ -1134,13 +1136,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.016391497699908913,
+       "Fjernvarme/fjernkjøling": 0.16358201872220562,
+       "Fyringsolje og fyringsparafin": 0.002675147534960619,
+       "Naturgass og andre fossile gasser": 0.0005319678216874478,
+       "Strøm": 0.8168193682212374
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.9967928846433519,
       "implisitt_energipris": {
        "n": 300,
        "p10": 0.4691588296760711,
@@ -1176,13 +1179,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.014303201032915807,
+       "Fjernvarme/fjernkjøling": 0.14281402485034458,
+       "Fyringsolje og fyringsparafin": 0.0014881700957459294,
+       "Naturgass og andre fossile gasser": 0.00014252896691651157,
+       "Strøm": 0.8412520750540772
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.9983693009373376,
       "implisitt_energipris": {
        "n": 310,
        "p10": 0.4462544859064144,
@@ -1220,99 +1224,99 @@
      "energi": {
       "lav": {
        "verdi": 113.28056911442965,
-       "verdi_avrundet": 115
+       "verdi_avrundet": 115.0
       },
       "sannsynlig": {
        "verdi": 162.58380769632453,
-       "verdi_avrundet": 165
+       "verdi_avrundet": 160.0
       },
       "hoy": {
        "verdi": 241.4150389204764,
-       "verdi_avrundet": 240
+       "verdi_avrundet": 240.0
       }
      },
      "renhold": {
       "lav": {
        "verdi": 267.0725937184065,
-       "verdi_avrundet": 265
+       "verdi_avrundet": 265.0
       },
       "sannsynlig": {
        "verdi": 383.3109204651848,
-       "verdi_avrundet": 385
+       "verdi_avrundet": 385.0
       },
       "hoy": {
        "verdi": 569.1650484382042,
-       "verdi_avrundet": 570
+       "verdi_avrundet": 570.0
       }
      },
      "ovrig_drift": {
       "lav": {
        "verdi": 383.5175520781647,
-       "verdi_avrundet": 385
+       "verdi_avrundet": 385.0
       },
       "sannsynlig": {
        "verdi": 550.4363583507002,
-       "verdi_avrundet": 550
+       "verdi_avrundet": 550.0
       },
       "hoy": {
        "verdi": 817.3237959999113,
-       "verdi_avrundet": 815
+       "verdi_avrundet": 815.0
       }
      },
      "vedlikehold": {
       "lav": {
        "verdi": 76.86652516461353,
-       "verdi_avrundet": 75
+       "verdi_avrundet": 75.0
       },
       "sannsynlig": {
        "verdi": 110.32123552472795,
-       "verdi_avrundet": 110
+       "verdi_avrundet": 110.0
       },
       "hoy": {
        "verdi": 163.8121639868527,
-       "verdi_avrundet": 165
+       "verdi_avrundet": 165.0
       }
      },
      "fdv": {
       "lav": {
-       "verdi": 917.3552430566286,
-       "verdi_avrundet": 915
+       "verdi": 942.4464182191407,
+       "verdi_avrundet": 940
       },
       "sannsynlig": {
-       "verdi": 1300.458838765283,
-       "verdi_avrundet": 1300
+       "verdi": 1302.9376917940986,
+       "verdi_avrundet": 1305
       },
       "hoy": {
-       "verdi": 1920.985257902679,
+       "verdi": 1922.4968059177631,
        "verdi_avrundet": 1920
       }
      }
     },
     "fordeling_egen": {
      "forvaltning": {
-      "n": 291,
+      "n": 282,
       "p10": {
-       "verdi": 18.200202224469162,
-       "verdi_avrundet": 20
+       "verdi": 27.694348275253184,
+       "verdi_avrundet": 30
       },
       "median": {
-       "verdi": 78.71673233094798,
+       "verdi": 80.55747040634569,
        "verdi_avrundet": 80
       },
       "p90": {
-       "verdi": 163.03479290555063,
-       "verdi_avrundet": 165
+       "verdi": 167.55914625193512,
+       "verdi_avrundet": 170
       },
       "snitt": {
-       "verdi": 86.03146641328904,
-       "verdi_avrundet": 85
+       "verdi": 88.77715151158549,
+       "verdi_avrundet": 90
       },
       "trimmet_snitt": {
-       "verdi": 81.1766290807525,
-       "verdi_avrundet": 80
+       "verdi": 83.6104121416001,
+       "verdi_avrundet": 85
       },
       "arealvektet_snitt": {
-       "verdi": 111.49968871999066,
+       "verdi": 112.3247174555362,
        "verdi_avrundet": 110
       }
      },
@@ -1452,30 +1456,30 @@
       }
      },
      "fdv": {
-      "n": 291,
+      "n": 266,
       "p10": {
-       "verdi": 917.3552430566286,
-       "verdi_avrundet": 915
+       "verdi": 942.4464182191407,
+       "verdi_avrundet": 940
       },
       "median": {
-       "verdi": 1300.458838765283,
-       "verdi_avrundet": 1300
+       "verdi": 1302.9376917940986,
+       "verdi_avrundet": 1305
       },
       "p90": {
-       "verdi": 1920.985257902679,
+       "verdi": 1922.4968059177631,
        "verdi_avrundet": 1920
       },
       "snitt": {
-       "verdi": 1361.8552199089354,
-       "verdi_avrundet": 1360
+       "verdi": 1372.7016729848538,
+       "verdi_avrundet": 1375
       },
       "trimmet_snitt": {
-       "verdi": 1331.704777931899,
-       "verdi_avrundet": 1330
+       "verdi": 1343.982520960742,
+       "verdi_avrundet": 1345
       },
       "arealvektet_snitt": {
-       "verdi": 1507.172180241074,
-       "verdi_avrundet": 1505
+       "verdi": 1515.981055515344,
+       "verdi_avrundet": 1515
       }
      }
     },
@@ -1507,27 +1511,27 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 291,
-         "median": 72.33065442020666,
-         "p10": 18.29822700409153,
-         "p90": 142.95803526677906,
-         "arealvektet_snitt": 95.6165599672575
+         "n_kommuner": 280,
+         "median": 75.09232824982425,
+         "p10": 21.758644538249804,
+         "p90": 145.56090976037152,
+         "arealvektet_snitt": 96.65522259199274
         },
         {
          "aargang": 2024,
-         "n_kommuner": 290,
-         "median": 73.92661314764172,
-         "p10": 18.178164533475048,
-         "p90": 157.70448719886733,
-         "arealvektet_snitt": 111.71669464016998
+         "n_kommuner": 278,
+         "median": 76.33910985528584,
+         "p10": 24.558567305641645,
+         "p90": 158.11340220416312,
+         "arealvektet_snitt": 113.10051703082648
         },
         {
          "aargang": 2025,
-         "n_kommuner": 291,
-         "median": 78.71673233094798,
-         "p10": 18.200202224469162,
-         "p90": 163.03479290555063,
-         "arealvektet_snitt": 116.5139058966952
+         "n_kommuner": 282,
+         "median": 80.55747040634569,
+         "p10": 27.694348275253184,
+         "p90": 167.55914625193512,
+         "arealvektet_snitt": 117.67387082514362
         }
        ]
       },
@@ -1536,37 +1540,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 172,
-         "median": 69.1022420459485,
-         "p10": 8.33158872620888,
-         "p90": 140.44539606670764,
-         "arealvektet_snitt": 95.52870961357432
+         "n_kommuner": 249,
+         "median": 74.93127604859448,
+         "p10": 23.24514062030985,
+         "p90": 143.47447969501565,
+         "arealvektet_snitt": 97.62045501808126
         },
         {
          "aargang": 2024,
-         "n_kommuner": 172,
-         "median": 73.22173212844194,
-         "p10": 18.27207111620242,
-         "p90": 148.25051146914439,
-         "arealvektet_snitt": 104.8543750009022
+         "n_kommuner": 249,
+         "median": 75.48449612403101,
+         "p10": 25.040692027339336,
+         "p90": 151.44630914371794,
+         "arealvektet_snitt": 103.28584319980975
         },
         {
          "aargang": 2025,
-         "n_kommuner": 172,
-         "median": 78.38957043444267,
-         "p10": 12.891769052253222,
-         "p90": 170.65912405416938,
-         "arealvektet_snitt": 110.88189468342236
+         "n_kommuner": 249,
+         "median": 81.4298619176668,
+         "p10": 28.304919015250682,
+         "p90": 162.6929976314754,
+         "arealvektet_snitt": 109.72249428931431
         }
        ]
       },
-      "n_panel": 172,
+      "n_panel": 256,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 172,
-       "nominell_endring_prosent": 13.439981270533451,
-       "aarlig_gjennomsnittlig_endring_prosent": 6.508206853055909,
+       "n_panel": 249,
+       "nominell_endring_prosent": 8.672728147399834,
+       "aarlig_gjennomsnittlig_endring_prosent": 4.2462124719166106,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -1608,37 +1612,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 172,
-         "median": 181.7131407936467,
-         "p10": 107.22703679844447,
-         "p90": 318.62195813482356,
-         "arealvektet_snitt": 177.39256964812733
+         "n_kommuner": 256,
+         "median": 187.55751010335342,
+         "p10": 109.01652919666137,
+         "p90": 316.9622392764117,
+         "arealvektet_snitt": 186.26082771896054
         },
         {
          "aargang": 2024,
-         "n_kommuner": 172,
-         "median": 167.35514913617607,
-         "p10": 104.32344661597928,
-         "p90": 246.02354019059152,
-         "arealvektet_snitt": 161.51945886564766
+         "n_kommuner": 256,
+         "median": 170.685381993779,
+         "p10": 105.37714343088419,
+         "p90": 258.2570490212975,
+         "arealvektet_snitt": 168.61862695574098
         },
         {
          "aargang": 2025,
-         "n_kommuner": 172,
-         "median": 161.44857085324657,
-         "p10": 101.90963397147094,
-         "p90": 254.32355871886122,
-         "arealvektet_snitt": 157.0929309681708
+         "n_kommuner": 256,
+         "median": 163.77937108184577,
+         "p10": 98.53157514007864,
+         "p90": 254.19548921951383,
+         "arealvektet_snitt": 160.58698573836676
         }
        ]
       },
-      "n_panel": 172,
+      "n_panel": 256,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 172,
-       "nominell_endring_prosent": -11.151956238218652,
-       "aarlig_gjennomsnittlig_endring_prosent": -5.7407597305275555,
+       "n_panel": 256,
+       "nominell_endring_prosent": -12.67778560741435,
+       "aarlig_gjennomsnittlig_endring_prosent": -6.553644055754826,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -1680,37 +1684,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 172,
-         "median": 367.4661542311054,
-         "p10": 206.62566200351998,
-         "p90": 591.6819571865444,
-         "arealvektet_snitt": 360.249170801239
+         "n_kommuner": 256,
+         "median": 360.15354838805786,
+         "p10": 211.5410314196654,
+         "p90": 571.5321433253446,
+         "arealvektet_snitt": 343.2483156881617
         },
         {
          "aargang": 2024,
-         "n_kommuner": 172,
-         "median": 389.5188334277343,
-         "p10": 224.162094019321,
-         "p90": 603.9676941915935,
-         "arealvektet_snitt": 374.1009440853859
+         "n_kommuner": 256,
+         "median": 381.1166957943271,
+         "p10": 225.63968093288287,
+         "p90": 580.9710462352093,
+         "arealvektet_snitt": 358.44992504093295
         },
         {
          "aargang": 2025,
-         "n_kommuner": 172,
-         "median": 399.33341716998075,
-         "p10": 237.37466546078738,
-         "p90": 626.0875628820788,
-         "arealvektet_snitt": 378.86693626377536
+         "n_kommuner": 256,
+         "median": 384.32045304302574,
+         "p10": 226.0699052361888,
+         "p90": 610.056190851735,
+         "arealvektet_snitt": 354.2760011462043
         }
        ]
       },
-      "n_panel": 172,
+      "n_panel": 256,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 172,
-       "nominell_endring_prosent": 8.672162748037326,
-       "aarlig_gjennomsnittlig_endring_prosent": 4.245941286957233,
+       "n_panel": 256,
+       "nominell_endring_prosent": 6.7101670282389,
+       "aarlig_gjennomsnittlig_endring_prosent": 3.3006132741906224,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -1752,37 +1756,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 172,
-         "median": 515.6013453413641,
-         "p10": 324.30231100010974,
-         "p90": 800.3953005908087,
-         "arealvektet_snitt": 517.1687545114809
+         "n_kommuner": 256,
+         "median": 528.1769449542716,
+         "p10": 324.80593429415796,
+         "p90": 807.9722053892727,
+         "arealvektet_snitt": 526.1350199367524
         },
         {
          "aargang": 2024,
-         "n_kommuner": 172,
-         "median": 468.7657703240153,
-         "p10": 289.18656571539503,
-         "p90": 754.2458371384779,
-         "arealvektet_snitt": 493.23080183129144
+         "n_kommuner": 256,
+         "median": 472.37532332619867,
+         "p10": 292.6816239316239,
+         "p90": 756.6124871776163,
+         "arealvektet_snitt": 504.98575980866815
         },
         {
          "aargang": 2025,
-         "n_kommuner": 172,
-         "median": 536.3674967378983,
-         "p10": 316.73518211421816,
-         "p90": 840.3711023737937,
-         "arealvektet_snitt": 542.2592356277248
+         "n_kommuner": 256,
+         "median": 543.0363599076994,
+         "p10": 315.0880947834039,
+         "p90": 828.0298490901021,
+         "arealvektet_snitt": 549.1280372058984
         }
        ]
       },
-      "n_panel": 172,
+      "n_panel": 256,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 172,
-       "nominell_endring_prosent": 4.027559583419138,
-       "aarlig_gjennomsnittlig_endring_prosent": 1.9939015742701738,
+       "n_panel": 256,
+       "nominell_endring_prosent": 2.813340320016122,
+       "aarlig_gjennomsnittlig_endring_prosent": 1.3969133258089572,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -1824,37 +1828,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 172,
-         "median": 105.78976031055598,
-         "p10": 27.972448124284178,
-         "p90": 250.00298070178212,
-         "arealvektet_snitt": 176.41946035836006
+         "n_kommuner": 256,
+         "median": 110.60493744898469,
+         "p10": 27.239548772395487,
+         "p90": 285.52793502338176,
+         "arealvektet_snitt": 186.20376735872404
         },
         {
          "aargang": 2024,
-         "n_kommuner": 172,
-         "median": 105.31694901773642,
-         "p10": 26.920548981824783,
-         "p90": 250.22023809523813,
-         "arealvektet_snitt": 173.7730514646428
+         "n_kommuner": 256,
+         "median": 109.75432584888836,
+         "p10": 30.949402169609627,
+         "p90": 254.27613048006256,
+         "arealvektet_snitt": 172.13432231450847
         },
         {
          "aargang": 2025,
-         "n_kommuner": 172,
-         "median": 89.33402721041679,
-         "p10": 20.851524117000515,
-         "p90": 286.1869407624017,
-         "arealvektet_snitt": 159.09156593828018
+         "n_kommuner": 256,
+         "median": 98.08872305140962,
+         "p10": 24.924932698281218,
+         "p90": 306.02806503652016,
+         "arealvektet_snitt": 168.14830161316144
         }
        ]
       },
-      "n_panel": 172,
+      "n_panel": 256,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 172,
-       "nominell_endring_prosent": -15.555128447055555,
-       "aarlig_gjennomsnittlig_endring_prosent": -8.106109260220984,
+       "n_panel": 256,
+       "nominell_endring_prosent": -11.316144365931258,
+       "aarlig_gjennomsnittlig_endring_prosent": -5.82789392072155,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -1896,37 +1900,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 172,
-         "median": 1213.5187910844234,
-         "p10": 872.3019469225953,
-         "p90": 1804.6236001179104,
-         "arealvektet_snitt": 1231.2299553192072
+         "n_kommuner": 256,
+         "median": 1228.520987654321,
+         "p10": 862.7339394108467,
+         "p90": 1785.462519936204,
+         "arealvektet_snitt": 1241.8479307025987
         },
         {
          "aargang": 2024,
-         "n_kommuner": 172,
-         "median": 1170.4374877943842,
-         "p10": 772.7839374800847,
-         "p90": 1686.058519138574,
-         "arealvektet_snitt": 1202.624256246968
+         "n_kommuner": 256,
+         "median": 1178.7092732991398,
+         "p10": 815.3699479864354,
+         "p90": 1658.1145161071981,
+         "arealvektet_snitt": 1204.1886341198506
         },
         {
          "aargang": 2025,
-         "n_kommuner": 172,
-         "median": 1203.2304443398375,
-         "p10": 815.58346860371,
-         "p90": 1790.0456336542543,
-         "arealvektet_snitt": 1237.3106687979512
+         "n_kommuner": 256,
+         "median": 1207.0748410607075,
+         "p10": 846.7577273193119,
+         "p90": 1783.1317672566138,
+         "arealvektet_snitt": 1232.139325703631
         }
        ]
       },
-      "n_panel": 172,
+      "n_panel": 256,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 172,
-       "nominell_endring_prosent": -0.8478110780132164,
-       "aarlig_gjennomsnittlig_endring_prosent": -0.4248078475432848,
+       "n_panel": 256,
+       "nominell_endring_prosent": -1.7456882551564523,
+       "aarlig_gjennomsnittlig_endring_prosent": -0.8766870283062334,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -1939,27 +1943,27 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 291,
-         "median": 1318.6832611936418,
-         "p10": 928.7735203116672,
-         "p90": 1858.694290783843,
-         "arealvektet_snitt": 1335.224222068065
+         "n_kommuner": 267,
+         "median": 1323.9581960469104,
+         "p10": 932.1997549379315,
+         "p90": 1869.4947028585882,
+         "arealvektet_snitt": 1340.2146023635337
         },
         {
          "aargang": 2024,
-         "n_kommuner": 290,
-         "median": 1270.7179363349871,
-         "p10": 880.4309524480857,
-         "p90": 1741.9096856073331,
-         "arealvektet_snitt": 1425.4569411136858
+         "n_kommuner": 270,
+         "median": 1280.1070734719722,
+         "p10": 883.5059510901651,
+         "p90": 1776.5356194511098,
+         "arealvektet_snitt": 1432.751135248954
         },
         {
          "aargang": 2025,
-         "n_kommuner": 291,
-         "median": 1300.458838765283,
-         "p10": 917.3552430566286,
-         "p90": 1920.985257902679,
-         "arealvektet_snitt": 1507.172180241074
+         "n_kommuner": 266,
+         "median": 1302.9376917940986,
+         "p10": 942.4464182191407,
+         "p90": 1922.4968059177631,
+         "arealvektet_snitt": 1515.981055515344
         }
        ]
       },
@@ -1968,37 +1972,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 172,
-         "median": 1311.1044623957318,
-         "p10": 934.8127458619911,
-         "p90": 1858.508540371644,
-         "arealvektet_snitt": 1326.7586649327816
+         "n_kommuner": 237,
+         "median": 1326.4932810378937,
+         "p10": 940.9837838714271,
+         "p90": 1888.405518437166,
+         "arealvektet_snitt": 1343.6063587403128
         },
         {
          "aargang": 2024,
-         "n_kommuner": 172,
-         "median": 1234.8752612621743,
-         "p10": 872.2959677764728,
-         "p90": 1737.3009069066768,
-         "arealvektet_snitt": 1307.47863124787
+         "n_kommuner": 241,
+         "median": 1260.212957844503,
+         "p10": 885.6794881669066,
+         "p90": 1738.2598947842348,
+         "arealvektet_snitt": 1311.7954200399972
         },
         {
          "aargang": 2025,
-         "n_kommuner": 172,
-         "median": 1300.1128207221827,
-         "p10": 874.4691470054447,
-         "p90": 1878.296846818158,
-         "arealvektet_snitt": 1348.1925634813736
+         "n_kommuner": 236,
+         "median": 1302.9376917940986,
+         "p10": 942.5042408146037,
+         "p90": 1878.0972034078513,
+         "arealvektet_snitt": 1346.534886000511
         }
        ]
       },
-      "n_panel": 172,
+      "n_panel": 256,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 172,
-       "nominell_endring_prosent": -0.8383498026895975,
-       "aarlig_gjennomsnittlig_endring_prosent": -0.42005714135481265,
+       "n_panel": 236,
+       "nominell_endring_prosent": -1.775779009250944,
+       "aarlig_gjennomsnittlig_endring_prosent": -0.8918666350994919,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -2029,13 +2033,14 @@
       }
      },
      "energivarefordeling": {
-      "Bioenergi": 0.0,
-      "Fjernvarme/fjernkjøling": 0.0,
-      "Fyringsolje og fyringsparafin": 0.0,
-      "Naturgass og andre fossile gasser": 0.0,
-      "Strøm": 1.0
+      "Bioenergi": 0.009503716702486346,
+      "Fjernvarme/fjernkjøling": 0.08080919612753121,
+      "Fyringsolje og fyringsparafin": 0.00014985113472800048,
+      "Naturgass og andre fossile gasser": 0.001257960841532425,
+      "Strøm": 0.908279275193722
      },
      "fornybarandel_median": 1.0,
+     "fornybarandel_vektet": 0.9985921880237396,
      "implisitt_energipris": {
       "n": 303,
       "p10": 0.6541588053763914,
@@ -2085,37 +2090,37 @@
       "punkter": [
        {
         "aargang": 2023,
-        "n_kommuner": 175,
-        "median": 154.12844036697248,
-        "p10": 106.83297028422776,
-        "p90": 235.65021493931678,
-        "arealvektet_snitt": 144.20951149011728
+        "n_kommuner": 263,
+        "median": 154.4034090909091,
+        "p10": 106.91473750936635,
+        "p90": 233.85220247794936,
+        "arealvektet_snitt": 146.34728916112303
        },
        {
         "aargang": 2024,
-        "n_kommuner": 175,
-        "median": 142.5563909774436,
-        "p10": 99.83259351969198,
-        "p90": 210.89845103182066,
-        "arealvektet_snitt": 138.84038050281217
+        "n_kommuner": 263,
+        "median": 149.13700107874865,
+        "p10": 105.28230616566623,
+        "p90": 213.7067575104385,
+        "arealvektet_snitt": 142.80115298620478
        },
        {
         "aargang": 2025,
-        "n_kommuner": 175,
-        "median": 141.86633039092055,
-        "p10": 94.38383772929173,
-        "p90": 211.51992592958626,
-        "arealvektet_snitt": 130.0832216033596
+        "n_kommuner": 263,
+        "median": 141.62317797372683,
+        "p10": 97.27288716911443,
+        "p90": 213.57317291083447,
+        "arealvektet_snitt": 133.79493482597186
        }
       ]
      },
-     "n_panel": 175,
+     "n_panel": 263,
      "vekst": {
       "fra_aargang": 2023,
       "til_aargang": 2025,
-      "n_panel": 175,
-      "nominell_endring_prosent": -7.955773734462268,
-      "aarlig_gjennomsnittlig_endring_prosent": -4.0603177691640795,
+      "n_panel": 263,
+      "nominell_endring_prosent": -8.277169003216478,
+      "aarlig_gjennomsnittlig_endring_prosent": -4.227962850953448,
       "skjult_grunnet_brudd": false,
       "brudd": [],
       "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -2144,13 +2149,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.009962967561921596,
+       "Fjernvarme/fjernkjøling": 0.08472904964684055,
+       "Fyringsolje og fyringsparafin": 0.00015338879677445272,
+       "Naturgass og andre fossile gasser": 0.0015083231682821185,
+       "Strøm": 0.9036462708261813
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.9983382880349434,
       "implisitt_energipris": {
        "n": 308,
        "p10": 0.579263565891473,
@@ -2186,13 +2192,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.010190923365166537,
+       "Fjernvarme/fjernkjøling": 0.07517086010331252,
+       "Fyringsolje og fyringsparafin": 0.0002503166885377713,
+       "Naturgass og andre fossile gasser": 0.001429839266344542,
+       "Strøm": 0.9129580605766386
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.9983198440451176,
       "implisitt_energipris": {
        "n": 289,
        "p10": 0.6826419535157399,
@@ -2228,13 +2235,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.009503716702486346,
+       "Fjernvarme/fjernkjøling": 0.08080919612753121,
+       "Fyringsolje og fyringsparafin": 0.00014985113472800048,
+       "Naturgass og andre fossile gasser": 0.001257960841532425,
+       "Strøm": 0.908279275193722
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.9985921880237396,
       "implisitt_energipris": {
        "n": 303,
        "p10": 0.6541588053763914,
@@ -2272,99 +2280,99 @@
      "energi": {
       "lav": {
        "verdi": 97.25044991555434,
-       "verdi_avrundet": 95
+       "verdi_avrundet": 95.0
       },
       "sannsynlig": {
        "verdi": 132.24279558471292,
-       "verdi_avrundet": 130
+       "verdi_avrundet": 130.0
       },
       "hoy": {
        "verdi": 193.48896877677018,
-       "verdi_avrundet": 195
+       "verdi_avrundet": 195.0
       }
      },
      "renhold": {
       "lav": {
        "verdi": 183.35890128915617,
-       "verdi_avrundet": 185
+       "verdi_avrundet": 185.0
       },
       "sannsynlig": {
        "verdi": 249.33451436856748,
-       "verdi_avrundet": 250
+       "verdi_avrundet": 250.0
       },
       "hoy": {
        "verdi": 364.8098775613587,
-       "verdi_avrundet": 365
+       "verdi_avrundet": 365.0
       }
      },
      "ovrig_drift": {
       "lav": {
        "verdi": 245.6902655312062,
-       "verdi_avrundet": 245
+       "verdi_avrundet": 245.0
       },
       "sannsynlig": {
        "verdi": 334.09375062027897,
-       "verdi_avrundet": 335
+       "verdi_avrundet": 335.0
       },
       "hoy": {
        "verdi": 488.8240224842456,
-       "verdi_avrundet": 490
+       "verdi_avrundet": 490.0
       }
      },
      "vedlikehold": {
       "lav": {
        "verdi": 53.50805928129538,
-       "verdi_avrundet": 55
+       "verdi_avrundet": 55.0
       },
       "sannsynlig": {
        "verdi": 72.76115793618858,
-       "verdi_avrundet": 75
+       "verdi_avrundet": 75.0
       },
       "hoy": {
        "verdi": 106.45934512975683,
-       "verdi_avrundet": 105
+       "verdi_avrundet": 105.0
       }
      },
      "fdv": {
       "lav": {
-       "verdi": 642.5213659764253,
-       "verdi_avrundet": 645
+       "verdi": 649.8592180168635,
+       "verdi_avrundet": 650
       },
       "sannsynlig": {
        "verdi": 884.912915796328,
        "verdi_avrundet": 885
       },
       "hoy": {
-       "verdi": 1211.5193720979858,
-       "verdi_avrundet": 1210
+       "verdi": 1204.4566168770102,
+       "verdi_avrundet": 1205
       }
      }
     },
     "fordeling_egen": {
      "forvaltning": {
-      "n": 313,
+      "n": 302,
       "p10": {
-       "verdi": 17.46455022681831,
-       "verdi_avrundet": 15
+       "verdi": 26.96765524940225,
+       "verdi_avrundet": 25
       },
       "median": {
-       "verdi": 76.11008050104668,
-       "verdi_avrundet": 75
+       "verdi": 77.98062061138113,
+       "verdi_avrundet": 80
       },
       "p90": {
-       "verdi": 162.6979911233438,
-       "verdi_avrundet": 165
+       "verdi": 167.55914625193526,
+       "verdi_avrundet": 170
       },
       "snitt": {
-       "verdi": 84.51492836260562,
-       "verdi_avrundet": 85
+       "verdi": 87.59328668044886,
+       "verdi_avrundet": 90
       },
       "trimmet_snitt": {
-       "verdi": 78.85788008805027,
+       "verdi": 81.60916541563843,
        "verdi_avrundet": 80
       },
       "arealvektet_snitt": {
-       "verdi": 110.59938922963627,
+       "verdi": 111.5068814961782,
        "verdi_avrundet": 110
       }
      },
@@ -2504,30 +2512,30 @@
       }
      },
      "fdv": {
-      "n": 313,
+      "n": 287,
       "p10": {
-       "verdi": 642.5213659764253,
-       "verdi_avrundet": 645
+       "verdi": 649.8592180168635,
+       "verdi_avrundet": 650
       },
       "median": {
        "verdi": 884.912915796328,
        "verdi_avrundet": 885
       },
       "p90": {
-       "verdi": 1211.5193720979858,
-       "verdi_avrundet": 1210
+       "verdi": 1204.4566168770102,
+       "verdi_avrundet": 1205
       },
       "snitt": {
-       "verdi": 911.4602426927003,
-       "verdi_avrundet": 910
+       "verdi": 912.8107329206471,
+       "verdi_avrundet": 915
       },
       "trimmet_snitt": {
-       "verdi": 892.2550854546884,
-       "verdi_avrundet": 890
+       "verdi": 894.0763444304444,
+       "verdi_avrundet": 895
       },
       "arealvektet_snitt": {
-       "verdi": 951.761490827467,
-       "verdi_avrundet": 950
+       "verdi": 956.1547406623494,
+       "verdi_avrundet": 955
       }
      }
     },
@@ -2555,27 +2563,27 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 301,
-         "median": 69.06982033204457,
-         "p10": 18.29822700409153,
-         "p90": 140.55364928665412,
-         "arealvektet_snitt": 95.21288665343212
+         "n_kommuner": 291,
+         "median": 72.33065442020666,
+         "p10": 20.922911547911546,
+         "p90": 141.6271186440678,
+         "arealvektet_snitt": 95.82953134061242
         },
         {
          "aargang": 2024,
-         "n_kommuner": 308,
-         "median": 69.19663673999588,
-         "p10": 17.35292589371259,
-         "p90": 148.88863697863314,
-         "arealvektet_snitt": 106.21822240771871
+         "n_kommuner": 294,
+         "median": 73.23975249108176,
+         "p10": 23.01851502915048,
+         "p90": 152.91075508307117,
+         "arealvektet_snitt": 107.13553113110181
         },
         {
          "aargang": 2025,
-         "n_kommuner": 313,
-         "median": 76.11008050104668,
-         "p10": 17.46455022681831,
-         "p90": 162.6979911233438,
-         "arealvektet_snitt": 112.98802402890504
+         "n_kommuner": 302,
+         "median": 77.98062061138113,
+         "p10": 26.96765524940225,
+         "p90": 167.55914625193526,
+         "arealvektet_snitt": 113.69241315802817
         }
        ]
       },
@@ -2584,37 +2592,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 178,
-         "median": 65.39690832359932,
-         "p10": 15.191363928444542,
-         "p90": 138.73108291705148,
-         "arealvektet_snitt": 94.95912361460513
+         "n_kommuner": 262,
+         "median": 73.21868104010596,
+         "p10": 21.934370201129045,
+         "p90": 141.51977170832643,
+         "arealvektet_snitt": 97.2103282390579
         },
         {
          "aargang": 2024,
-         "n_kommuner": 178,
-         "median": 69.64345564073298,
-         "p10": 18.08685499672905,
-         "p90": 144.6189245495631,
-         "arealvektet_snitt": 104.06537217870533
+         "n_kommuner": 260,
+         "median": 73.92661314764172,
+         "p10": 24.56960040446044,
+         "p90": 147.08888853799613,
+         "arealvektet_snitt": 102.93528271879744
         },
         {
          "aargang": 2025,
-         "n_kommuner": 178,
-         "median": 77.10235727684577,
-         "p10": 16.751191068576805,
-         "p90": 162.93944451812973,
-         "arealvektet_snitt": 109.97234283812335
+         "n_kommuner": 260,
+         "median": 78.77160435490525,
+         "p10": 27.81178803993221,
+         "p90": 160.80479265359833,
+         "arealvektet_snitt": 109.27089987677586
         }
        ]
       },
-      "n_panel": 178,
+      "n_panel": 268,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 178,
-       "nominell_endring_prosent": 17.899086139248553,
-       "aarlig_gjennomsnittlig_endring_prosent": 8.58134560745163,
+       "n_panel": 260,
+       "nominell_endring_prosent": 7.584025327849919,
+       "aarlig_gjennomsnittlig_endring_prosent": 3.7227194629267046,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -2656,37 +2664,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 178,
-         "median": 152.23207769727858,
-         "p10": 92.82499760582829,
-         "p90": 248.51778856285844,
-         "arealvektet_snitt": 146.72819826066257
+         "n_kommuner": 268,
+         "median": 153.48364889560344,
+         "p10": 94.5632586014845,
+         "p90": 249.55600888534573,
+         "arealvektet_snitt": 153.95944934108067
         },
         {
          "aargang": 2024,
-         "n_kommuner": 178,
-         "median": 135.01030865912895,
-         "p10": 94.44005145183311,
-         "p90": 210.43551453264308,
-         "arealvektet_snitt": 132.23853862352973
+         "n_kommuner": 268,
+         "median": 137.01805881686886,
+         "p10": 97.82330158049379,
+         "p90": 200.1140691994083,
+         "arealvektet_snitt": 135.62858272717065
         },
         {
          "aargang": 2025,
-         "n_kommuner": 178,
-         "median": 134.63214449892735,
-         "p10": 90.53628902627725,
-         "p90": 186.3262396103063,
-         "arealvektet_snitt": 126.86972075758469
+         "n_kommuner": 268,
+         "median": 134.99541268228717,
+         "p10": 88.32188559397639,
+         "p90": 189.64856873467394,
+         "arealvektet_snitt": 127.95700565392217
         }
        ]
       },
-      "n_panel": 178,
+      "n_panel": 268,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 178,
-       "nominell_endring_prosent": -11.561251389703564,
-       "aarlig_gjennomsnittlig_endring_prosent": -5.9581217699814175,
+       "n_panel": 268,
+       "nominell_endring_prosent": -12.04573669335397,
+       "aarlig_gjennomsnittlig_endring_prosent": -6.2160657113138456,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -2728,37 +2736,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 178,
-         "median": 231.54211203059933,
-         "p10": 153.73338301064197,
-         "p90": 345.5568983409304,
-         "arealvektet_snitt": 219.5510461212414
+         "n_kommuner": 268,
+         "median": 220.7225313561661,
+         "p10": 154.81180496150554,
+         "p90": 349.0002868483572,
+         "arealvektet_snitt": 208.61042530199813
         },
         {
          "aargang": 2024,
-         "n_kommuner": 178,
-         "median": 241.58882123643693,
-         "p10": 166.36718116877984,
-         "p90": 336.7144799700321,
-         "arealvektet_snitt": 226.8813836578725
+         "n_kommuner": 268,
+         "median": 232.6467958183024,
+         "p10": 164.29429656327267,
+         "p90": 349.73466528481504,
+         "arealvektet_snitt": 214.20812618237326
         },
         {
          "aargang": 2025,
-         "n_kommuner": 178,
-         "median": 249.13996996116725,
-         "p10": 171.88538693467336,
-         "p90": 360.0179311059642,
-         "arealvektet_snitt": 230.67507324302963
+         "n_kommuner": 268,
+         "median": 235.23276169129593,
+         "p10": 164.3264278307029,
+         "p90": 370.5984310459319,
+         "arealvektet_snitt": 217.16059989223803
         }
        ]
       },
-      "n_panel": 178,
+      "n_panel": 268,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 178,
-       "nominell_endring_prosent": 7.600283929448781,
-       "aarlig_gjennomsnittlig_endring_prosent": 3.7305566983272254,
+       "n_panel": 268,
+       "nominell_endring_prosent": 6.573968795109364,
+       "aarlig_gjennomsnittlig_endring_prosent": 3.2346689804880313,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -2800,37 +2808,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 178,
-         "median": 311.1997228825882,
-         "p10": 203.034061299855,
-         "p90": 445.1255043542721,
-         "arealvektet_snitt": 320.5781061051485
+         "n_kommuner": 268,
+         "median": 315.88109562965064,
+         "p10": 206.0,
+         "p90": 456.01291291447626,
+         "arealvektet_snitt": 320.84545824008836
         },
         {
          "aargang": 2024,
-         "n_kommuner": 178,
-         "median": 289.61349503023325,
-         "p10": 196.67214431305734,
-         "p90": 444.8342702049072,
-         "arealvektet_snitt": 313.81028034077576
+         "n_kommuner": 268,
+         "median": 292.45890215633995,
+         "p10": 199.87673415304255,
+         "p90": 441.3353985956217,
+         "arealvektet_snitt": 313.150776575227
         },
         {
          "aargang": 2025,
-         "n_kommuner": 178,
-         "median": 314.8614633565518,
-         "p10": 200.2466477165861,
-         "p90": 491.3111927250097,
-         "arealvektet_snitt": 322.63962896403433
+         "n_kommuner": 268,
+         "median": 318.650712350065,
+         "p10": 209.92982130700713,
+         "p90": 478.63414634146346,
+         "arealvektet_snitt": 326.22615045135575
         }
        ]
       },
-      "n_panel": 178,
+      "n_panel": 268,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 178,
-       "nominell_endring_prosent": 1.1766528710390523,
-       "aarlig_gjennomsnittlig_endring_prosent": 0.586605903091808,
+       "n_panel": 268,
+       "nominell_endring_prosent": 0.876790906050795,
+       "aarlig_gjennomsnittlig_endring_prosent": 0.43743868998791235,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -2872,37 +2880,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 178,
-         "median": 67.192709401459,
-         "p10": 21.505296001738596,
-         "p90": 137.57281901603173,
-         "arealvektet_snitt": 90.93868908297571
+         "n_kommuner": 268,
+         "median": 70.29814927178126,
+         "p10": 23.682184996792913,
+         "p90": 149.05649927012522,
+         "arealvektet_snitt": 97.27117399901915
         },
         {
          "aargang": 2024,
-         "n_kommuner": 178,
-         "median": 67.26182043954924,
-         "p10": 21.080869442457434,
-         "p90": 162.21791112302265,
-         "arealvektet_snitt": 97.88111994097433
+         "n_kommuner": 268,
+         "median": 71.13016622642013,
+         "p10": 22.692164027224745,
+         "p90": 164.17513867777407,
+         "arealvektet_snitt": 102.26910941424663
         },
         {
          "aargang": 2025,
-         "n_kommuner": 178,
-         "median": 71.57952641564702,
-         "p10": 22.26151964827245,
-         "p90": 155.26696202597162,
-         "arealvektet_snitt": 94.1126164164033
+         "n_kommuner": 268,
+         "median": 72.76830924346915,
+         "p10": 22.28890158416453,
+         "p90": 170.52839361052082,
+         "arealvektet_snitt": 97.62173225230914
         }
        ]
       },
-      "n_panel": 178,
+      "n_panel": 268,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 178,
-       "nominell_endring_prosent": 6.528709815789591,
-       "aarlig_gjennomsnittlig_endring_prosent": 3.2127462166323673,
+       "n_panel": 268,
+       "nominell_endring_prosent": 3.5138335749607785,
+       "aarlig_gjennomsnittlig_endring_prosent": 1.7417483508912257,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -2944,37 +2952,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 178,
-         "median": 772.5033269452612,
-         "p10": 600.2609208972846,
-         "p90": 1073.1098171995206,
-         "arealvektet_snitt": 777.7960395700281
+         "n_kommuner": 268,
+         "median": 789.1038074249677,
+         "p10": 600.0433073574357,
+         "p90": 1072.7951949741137,
+         "arealvektet_snitt": 780.6865068821863
         },
         {
          "aargang": 2024,
-         "n_kommuner": 178,
-         "median": 760.1612340401409,
-         "p10": 588.8429811877531,
+         "n_kommuner": 268,
+         "median": 763.1622762954219,
+         "p10": 583.8938263559327,
          "p90": 1030.0313482281722,
-         "arealvektet_snitt": 770.8113225631523
+         "arealvektet_snitt": 765.2565948990176
         },
         {
          "aargang": 2025,
-         "n_kommuner": 178,
-         "median": 787.154680032022,
-         "p10": 585.3384624554458,
-         "p90": 1123.3834095199807,
-         "arealvektet_snitt": 774.297039381052
+         "n_kommuner": 268,
+         "median": 784.5193267908937,
+         "p10": 585.3384624554459,
+         "p90": 1116.5441923650942,
+         "arealvektet_snitt": 768.9654882498251
         }
        ]
       },
-      "n_panel": 178,
+      "n_panel": 268,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 178,
-       "nominell_endring_prosent": 1.8966071181462985,
-       "aarlig_gjennomsnittlig_endring_prosent": 0.9438493015529348,
+       "n_panel": 268,
+       "nominell_endring_prosent": -0.5809730723558726,
+       "aarlig_gjennomsnittlig_endring_prosent": -0.29090967838282245,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -2987,27 +2995,27 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 301,
-         "median": 869.5836647075887,
-         "p10": 651.5937806246786,
-         "p90": 1190.8324857112464,
-         "arealvektet_snitt": 876.0993479091185
+         "n_kommuner": 278,
+         "median": 869.4783947329744,
+         "p10": 664.5893186887715,
+         "p90": 1190.8823377687625,
+         "arealvektet_snitt": 877.1964776545658
         },
         {
          "aargang": 2024,
-         "n_kommuner": 308,
-         "median": 837.7975993702084,
-         "p10": 635.2318266360052,
-         "p90": 1153.3819880116755,
-         "arealvektet_snitt": 936.0862299080319
+         "n_kommuner": 284,
+         "median": 836.2268090997967,
+         "p10": 639.3019669465301,
+         "p90": 1153.905829746528,
+         "arealvektet_snitt": 937.8360283538395
         },
         {
          "aargang": 2025,
-         "n_kommuner": 313,
+         "n_kommuner": 287,
          "median": 884.912915796328,
-         "p10": 642.5213659764253,
-         "p90": 1211.5193720979858,
-         "arealvektet_snitt": 951.761490827467
+         "p10": 649.8592180168635,
+         "p90": 1204.4566168770102,
+         "arealvektet_snitt": 956.1547406623494
         }
        ]
       },
@@ -3016,37 +3024,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 178,
-         "median": 852.9796563310047,
-         "p10": 642.9489495430478,
-         "p90": 1140.5184231241706,
-         "arealvektet_snitt": 872.7551631846333
+         "n_kommuner": 250,
+         "median": 868.851911003319,
+         "p10": 651.3692339813426,
+         "p90": 1161.1667212215852,
+         "arealvektet_snitt": 878.970721346676
         },
         {
          "aargang": 2024,
-         "n_kommuner": 178,
-         "median": 835.9597337908822,
-         "p10": 647.1557446534682,
-         "p90": 1106.540435822675,
-         "arealvektet_snitt": 874.8766947418577
+         "n_kommuner": 253,
+         "median": 847.6097890958729,
+         "p10": 648.3779475651221,
+         "p90": 1121.731718920924,
+         "arealvektet_snitt": 868.1740579463697
         },
         {
          "aargang": 2025,
-         "n_kommuner": 178,
-         "median": 884.9722834358483,
-         "p10": 645.0900258478238,
-         "p90": 1176.5326132654209,
-         "arealvektet_snitt": 884.2693822191752
+         "n_kommuner": 250,
+         "median": 882.6776610377683,
+         "p10": 654.89508390082,
+         "p90": 1187.535226099458,
+         "arealvektet_snitt": 880.2883357221383
         }
        ]
       },
-      "n_panel": 178,
+      "n_panel": 268,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 178,
-       "nominell_endring_prosent": 3.7506905196844187,
-       "aarlig_gjennomsnittlig_endring_prosent": 1.8580828995345078,
+       "n_panel": 250,
+       "nominell_endring_prosent": 1.5912665736654619,
+       "aarlig_gjennomsnittlig_endring_prosent": 0.7924930605774039,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -3077,13 +3085,14 @@
       }
      },
      "energivarefordeling": {
-      "Bioenergi": 0.0,
-      "Fjernvarme/fjernkjøling": 0.0,
-      "Fyringsolje og fyringsparafin": 0.0,
-      "Naturgass og andre fossile gasser": 0.0,
-      "Strøm": 1.0
+      "Bioenergi": 0.04050927429864717,
+      "Fjernvarme/fjernkjøling": 0.12925697836799555,
+      "Fyringsolje og fyringsparafin": 0.003289018591401162,
+      "Naturgass og andre fossile gasser": 0.005775464670375825,
+      "Strøm": 0.8211692640715803
      },
      "fornybarandel_median": 1.0,
+     "fornybarandel_vektet": 0.990935516738223,
      "implisitt_energipris": {
       "n": 329,
       "p10": 0.6013657228744363,
@@ -3133,37 +3142,37 @@
       "punkter": [
        {
         "aargang": 2023,
-        "n_kommuner": 196,
-        "median": 132.12342743581098,
-        "p10": 93.47039501662243,
-        "p90": 188.97369318989257,
-        "arealvektet_snitt": 122.42145209854527
+        "n_kommuner": 293,
+        "median": 128.94244573019532,
+        "p10": 92.59746194477603,
+        "p90": 192.25094212387225,
+        "arealvektet_snitt": 122.47405237482911
        },
        {
         "aargang": 2024,
-        "n_kommuner": 196,
-        "median": 122.5479842486218,
-        "p10": 84.8934315998433,
-        "p90": 185.72103987991323,
-        "arealvektet_snitt": 116.39201872199597
+        "n_kommuner": 293,
+        "median": 123.97281120016233,
+        "p10": 86.56746431122701,
+        "p90": 190.29003984063746,
+        "arealvektet_snitt": 117.72487930423212
        },
        {
         "aargang": 2025,
-        "n_kommuner": 196,
-        "median": 116.15088343091472,
-        "p10": 83.88221123591654,
-        "p90": 181.93068287225884,
-        "arealvektet_snitt": 113.68645410107865
+        "n_kommuner": 293,
+        "median": 115.48387096774194,
+        "p10": 81.6111263395885,
+        "p90": 193.50074386045617,
+        "arealvektet_snitt": 112.10933931865893
        }
       ]
      },
-     "n_panel": 196,
+     "n_panel": 293,
      "vekst": {
       "fra_aargang": 2023,
       "til_aargang": 2025,
-      "n_panel": 196,
-      "nominell_endring_prosent": -12.08910812781946,
-      "aarlig_gjennomsnittlig_endring_prosent": -6.239191624548934,
+      "n_panel": 293,
+      "nominell_endring_prosent": -10.437660528492444,
+      "aarlig_gjennomsnittlig_endring_prosent": -5.362618658635975,
       "skjult_grunnet_brudd": false,
       "brudd": [],
       "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -3192,13 +3201,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.03583942616633399,
+       "Fjernvarme/fjernkjøling": 0.13964465506895263,
+       "Fyringsolje og fyringsparafin": 0.005138401843026615,
+       "Naturgass og andre fossile gasser": 0.006896662661506118,
+       "Strøm": 0.8124808542601807
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.9879649354954673,
       "implisitt_energipris": {
        "n": 325,
        "p10": 0.6315117038339381,
@@ -3234,13 +3244,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.038805961352436344,
+       "Fjernvarme/fjernkjøling": 0.135245107537299,
+       "Fyringsolje og fyringsparafin": 0.0029830337652310434,
+       "Naturgass og andre fossile gasser": 0.007140420660068973,
+       "Strøm": 0.8158254766849646
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.9898765455747,
       "implisitt_energipris": {
        "n": 324,
        "p10": 0.6979476994372724,
@@ -3276,13 +3287,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.04050927429864717,
+       "Fjernvarme/fjernkjøling": 0.12925697836799555,
+       "Fyringsolje og fyringsparafin": 0.003289018591401162,
+       "Naturgass og andre fossile gasser": 0.005775464670375825,
+       "Strøm": 0.8211692640715803
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.990935516738223,
       "implisitt_energipris": {
        "n": 329,
        "p10": 0.6013657228744363,
@@ -3320,100 +3332,100 @@
      "energi": {
       "lav": {
        "verdi": 106.47427305722957,
-       "verdi_avrundet": 105
+       "verdi_avrundet": 105.0
       },
       "sannsynlig": {
        "verdi": 172.7950399366122,
-       "verdi_avrundet": 175
+       "verdi_avrundet": 170.0
       },
       "hoy": {
        "verdi": 260.40725478979203,
-       "verdi_avrundet": 260
+       "verdi_avrundet": 260.0
       }
      },
      "renhold": {
       "lav": {
        "verdi": 140.88879637228973,
-       "verdi_avrundet": 140
+       "verdi_avrundet": 140.0
       },
       "sannsynlig": {
        "verdi": 228.6457047016957,
-       "verdi_avrundet": 230
+       "verdi_avrundet": 230.0
       },
       "hoy": {
        "verdi": 344.57586457740877,
-       "verdi_avrundet": 345
+       "verdi_avrundet": 345.0
       }
      },
      "ovrig_drift": {
       "lav": {
        "verdi": 254.68497247612524,
-       "verdi_avrundet": 255
+       "verdi_avrundet": 255.0
       },
       "sannsynlig": {
        "verdi": 413.3233195836212,
-       "verdi_avrundet": 415
+       "verdi_avrundet": 415.0
       },
       "hoy": {
        "verdi": 622.8905125567165,
-       "verdi_avrundet": 625
+       "verdi_avrundet": 625.0
       }
      },
      "vedlikehold": {
       "lav": {
        "verdi": 55.17531181208273,
-       "verdi_avrundet": 55
+       "verdi_avrundet": 55.0
       },
       "sannsynlig": {
        "verdi": 89.54294717710223,
-       "verdi_avrundet": 90
+       "verdi_avrundet": 90.0
       },
       "hoy": {
        "verdi": 134.94387957391803,
-       "verdi_avrundet": 135
+       "verdi_avrundet": 135.0
       }
      },
      "fdv": {
       "lav": {
-       "verdi": 633.8267625802275,
-       "verdi_avrundet": 635
+       "verdi": 660.0476240991558,
+       "verdi_avrundet": 660
       },
       "sannsynlig": {
-       "verdi": 991.2757464227542,
-       "verdi_avrundet": 990
+       "verdi": 1005.4250938504651,
+       "verdi_avrundet": 1005
       },
       "hoy": {
-       "verdi": 1445.8108471666887,
+       "verdi": 1447.3245026636002,
        "verdi_avrundet": 1445
       }
      }
     },
     "fordeling_egen": {
      "forvaltning": {
-      "n": 276,
+      "n": 267,
       "p10": {
-       "verdi": 20.863855828392637,
-       "verdi_avrundet": 20
+       "verdi": 28.6231821446929,
+       "verdi_avrundet": 30
       },
       "median": {
-       "verdi": 78.77160435490525,
+       "verdi": 81.16248848957392,
        "verdi_avrundet": 80
       },
       "p90": {
-       "verdi": 165.54832254243087,
-       "verdi_avrundet": 165
+       "verdi": 168.4025121636802,
+       "verdi_avrundet": 170
       },
       "snitt": {
-       "verdi": 86.2079445068487,
-       "verdi_avrundet": 85
+       "verdi": 89.11483586631209,
+       "verdi_avrundet": 90
       },
       "trimmet_snitt": {
-       "verdi": 81.61234742027142,
-       "verdi_avrundet": 80
+       "verdi": 84.12418956506095,
+       "verdi_avrundet": 85
       },
       "arealvektet_snitt": {
-       "verdi": 112.3636517080033,
-       "verdi_avrundet": 110
+       "verdi": 113.24741917991842,
+       "verdi_avrundet": 115
       }
      },
      "energi": {
@@ -3552,30 +3564,30 @@
       }
      },
      "fdv": {
-      "n": 276,
+      "n": 254,
       "p10": {
-       "verdi": 633.8267625802275,
-       "verdi_avrundet": 635
+       "verdi": 660.0476240991558,
+       "verdi_avrundet": 660
       },
       "median": {
-       "verdi": 991.2757464227542,
-       "verdi_avrundet": 990
+       "verdi": 1005.4250938504651,
+       "verdi_avrundet": 1005
       },
       "p90": {
-       "verdi": 1445.8108471666887,
+       "verdi": 1447.3245026636002,
        "verdi_avrundet": 1445
       },
       "snitt": {
-       "verdi": 1022.199848329161,
-       "verdi_avrundet": 1020
+       "verdi": 1033.1612653871955,
+       "verdi_avrundet": 1035
       },
       "trimmet_snitt": {
-       "verdi": 991.1380328674188,
-       "verdi_avrundet": 990
+       "verdi": 1000.5788630613088,
+       "verdi_avrundet": 1000
       },
       "arealvektet_snitt": {
-       "verdi": 1030.016347080407,
-       "verdi_avrundet": 1030
+       "verdi": 1036.5077214569933,
+       "verdi_avrundet": 1035
       }
      }
     },
@@ -3606,27 +3618,27 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 270,
-         "median": 69.98630193458465,
-         "p10": 19.2166321431274,
-         "p90": 139.73031406369742,
-         "arealvektet_snitt": 94.06118823902365
+         "n_kommuner": 261,
+         "median": 74.10670766000526,
+         "p10": 21.851503759398497,
+         "p90": 140.55364928665412,
+         "arealvektet_snitt": 95.04045365697989
         },
         {
          "aargang": 2024,
-         "n_kommuner": 274,
-         "median": 74.42453925211998,
-         "p10": 18.044256688754295,
-         "p90": 157.37940357568328,
-         "arealvektet_snitt": 103.37432835170988
+         "n_kommuner": 263,
+         "median": 76.48927887549186,
+         "p10": 24.691510722237215,
+         "p90": 157.9862625544422,
+         "arealvektet_snitt": 104.61110222438734
         },
         {
          "aargang": 2025,
-         "n_kommuner": 276,
-         "median": 78.77160435490525,
-         "p10": 20.863855828392637,
-         "p90": 165.54832254243087,
-         "arealvektet_snitt": 108.54550516658455
+         "n_kommuner": 267,
+         "median": 81.16248848957392,
+         "p10": 28.6231821446929,
+         "p90": 168.4025121636802,
+         "arealvektet_snitt": 109.61674382749983
         }
        ]
       },
@@ -3635,37 +3647,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 155,
-         "median": 68.13915405200304,
-         "p10": 19.304400313191707,
-         "p90": 140.12063640686816,
-         "arealvektet_snitt": 96.78161854021361
+         "n_kommuner": 229,
+         "median": 74.87599563669295,
+         "p10": 23.643183271417247,
+         "p90": 145.58156211278134,
+         "arealvektet_snitt": 97.73860970041113
         },
         {
          "aargang": 2024,
-         "n_kommuner": 155,
-         "median": 75.48449612403101,
-         "p10": 22.516414280584332,
-         "p90": 153.94132932755525,
-         "arealvektet_snitt": 111.06557566674883
+         "n_kommuner": 228,
+         "median": 76.81286297435616,
+         "p10": 26.77523877761216,
+         "p90": 156.99963024107115,
+         "arealvektet_snitt": 107.57114387755104
         },
         {
          "aargang": 2025,
-         "n_kommuner": 155,
-         "median": 78.71673233094798,
-         "p10": 22.749561214322462,
-         "p90": 166.0510284698069,
-         "arealvektet_snitt": 114.71968777241547
+         "n_kommuner": 228,
+         "median": 80.55747040634569,
+         "p10": 28.245112639658984,
+         "p90": 160.92612406269123,
+         "arealvektet_snitt": 110.7979480653677
         }
        ]
       },
-      "n_panel": 155,
+      "n_panel": 234,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 155,
-       "nominell_endring_prosent": 15.523495156503198,
-       "aarlig_gjennomsnittlig_endring_prosent": 7.481856681257226,
+       "n_panel": 228,
+       "nominell_endring_prosent": 7.587845371993329,
+       "aarlig_gjennomsnittlig_endring_prosent": 3.724560915914865,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -3707,37 +3719,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 155,
-         "median": 191.39302826497868,
-         "p10": 101.50242949455188,
-         "p90": 346.9062789788183,
-         "arealvektet_snitt": 203.16318684925554
+         "n_kommuner": 234,
+         "median": 206.46613969822764,
+         "p10": 101.80775457759171,
+         "p90": 352.380515064804,
+         "arealvektet_snitt": 211.8803014933361
         },
         {
          "aargang": 2024,
-         "n_kommuner": 155,
-         "median": 175.21902377972467,
-         "p10": 104.37247177872312,
-         "p90": 284.8300722980301,
-         "arealvektet_snitt": 172.32820311880195
+         "n_kommuner": 234,
+         "median": 176.88115256852953,
+         "p10": 106.23098320323437,
+         "p90": 287.1454114496417,
+         "arealvektet_snitt": 173.7197627899126
         },
         {
          "aargang": 2025,
-         "n_kommuner": 155,
-         "median": 167.93893129770993,
-         "p10": 90.32606082965795,
-         "p90": 283.16239316239313,
-         "arealvektet_snitt": 164.92191609197107
+         "n_kommuner": 234,
+         "median": 168.81606273107406,
+         "p10": 87.97553753701227,
+         "p90": 280.96216619230006,
+         "arealvektet_snitt": 167.53597225836015
         }
        ]
       },
-      "n_panel": 155,
+      "n_panel": 234,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 155,
-       "nominell_endring_prosent": -12.25441552384926,
-       "aarlig_gjennomsnittlig_endring_prosent": -6.327386885946895,
+       "n_panel": 234,
+       "nominell_endring_prosent": -18.2354729071717,
+       "aarlig_gjennomsnittlig_endring_prosent": -9.576260256043213,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -3779,37 +3791,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 155,
-         "median": 205.31783764747314,
-         "p10": 117.76531605967207,
-         "p90": 350.1991338374344,
-         "arealvektet_snitt": 178.21504268061258
+         "n_kommuner": 234,
+         "median": 205.3221833162013,
+         "p10": 117.23452200213941,
+         "p90": 365.16584392947397,
+         "arealvektet_snitt": 187.66175385319988
         },
         {
          "aargang": 2024,
-         "n_kommuner": 155,
-         "median": 220.1422688131786,
-         "p10": 127.65667822204476,
-         "p90": 339.4225910329452,
-         "arealvektet_snitt": 187.1709500810671
+         "n_kommuner": 234,
+         "median": 221.44198179764237,
+         "p10": 123.70747119065777,
+         "p90": 344.40220481004525,
+         "arealvektet_snitt": 196.48233031217868
         },
         {
          "aargang": 2025,
-         "n_kommuner": 155,
-         "median": 218.30890642615557,
-         "p10": 120.61804802785237,
-         "p90": 328.3496433331327,
-         "arealvektet_snitt": 186.95431672372294
+         "n_kommuner": 234,
+         "median": 217.15714906484158,
+         "p10": 128.5507076778851,
+         "p90": 348.8089925845237,
+         "arealvektet_snitt": 193.96973932345213
         }
        ]
       },
-      "n_panel": 155,
+      "n_panel": 234,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 155,
-       "nominell_endring_prosent": 6.327296706186747,
-       "aarlig_gjennomsnittlig_endring_prosent": 3.1151282335365016,
+       "n_panel": 234,
+       "nominell_endring_prosent": 5.764095022511095,
+       "aarlig_gjennomsnittlig_endring_prosent": 2.8416720121328565,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -3851,37 +3863,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 155,
-         "median": 367.9354094579008,
-         "p10": 219.72014671207754,
-         "p90": 602.8015991084114,
-         "arealvektet_snitt": 342.1639783627818
+         "n_kommuner": 234,
+         "median": 374.22862427566133,
+         "p10": 219.31283730678544,
+         "p90": 587.0230648261402,
+         "arealvektet_snitt": 359.5451721724634
         },
         {
          "aargang": 2024,
-         "n_kommuner": 155,
-         "median": 350.16205435053604,
-         "p10": 229.92550116718152,
-         "p90": 577.7572969315418,
-         "arealvektet_snitt": 399.98167470136656
+         "n_kommuner": 234,
+         "median": 355.75236492173036,
+         "p10": 230.46090307537364,
+         "p90": 565.3585938625558,
+         "arealvektet_snitt": 395.32773423743856
         },
         {
          "aargang": 2025,
-         "n_kommuner": 155,
-         "median": 381.87966417910445,
-         "p10": 228.7673227967985,
-         "p90": 653.6596564345277,
-         "arealvektet_snitt": 464.34667148359966
+         "n_kommuner": 234,
+         "median": 379.8204043690448,
+         "p10": 236.14796919890117,
+         "p90": 607.215301530153,
+         "arealvektet_snitt": 436.87257220355843
         }
        ]
       },
-      "n_panel": 155,
+      "n_panel": 234,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 155,
-       "nominell_endring_prosent": 3.789864841154733,
-       "aarlig_gjennomsnittlig_endring_prosent": 1.877310938773169,
+       "n_panel": 234,
+       "nominell_endring_prosent": 1.4942149612971578,
+       "aarlig_gjennomsnittlig_endring_prosent": 0.744337290637409,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -3923,37 +3935,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 155,
-         "median": 76.28788589659379,
-         "p10": 19.488829859606174,
-         "p90": 205.90549554785872,
-         "arealvektet_snitt": 191.8975122028146
+         "n_kommuner": 234,
+         "median": 80.47270566283572,
+         "p10": 21.11659130336513,
+         "p90": 209.06855439642325,
+         "arealvektet_snitt": 162.13761834943097
         },
         {
          "aargang": 2024,
-         "n_kommuner": 155,
-         "median": 82.31220031965903,
-         "p10": 22.97709115633644,
-         "p90": 200.78769904938093,
-         "arealvektet_snitt": 139.0260699720986
+         "n_kommuner": 234,
+         "median": 82.5697731629935,
+         "p10": 23.951375241903982,
+         "p90": 219.08095366076805,
+         "arealvektet_snitt": 131.94893391339752
         },
         {
          "aargang": 2025,
-         "n_kommuner": 155,
-         "median": 72.97297297297297,
-         "p10": 23.07970830470575,
-         "p90": 199.52965802300642,
-         "arealvektet_snitt": 139.9649662241532
+         "n_kommuner": 234,
+         "median": 73.53800267407178,
+         "p10": 27.657358797360615,
+         "p90": 206.53953498765406,
+         "arealvektet_snitt": 126.74415659474134
         }
        ]
       },
-      "n_panel": 155,
+      "n_panel": 234,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 155,
-       "nominell_endring_prosent": -4.345267777002104,
-       "aarlig_gjennomsnittlig_endring_prosent": -2.1967627207576057,
+       "n_panel": 234,
+       "nominell_endring_prosent": -8.617459710897435,
+       "aarlig_gjennomsnittlig_endring_prosent": -4.405784542629066,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -3995,37 +4007,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 155,
-         "median": 913.665108605994,
-         "p10": 570.3902704173527,
-         "p90": 1315.3611502430092,
-         "arealvektet_snitt": 915.4397200954645
+         "n_kommuner": 234,
+         "median": 921.2234521590899,
+         "p10": 583.4404283141852,
+         "p90": 1389.1072744195803,
+         "arealvektet_snitt": 921.2248458684304
         },
         {
          "aargang": 2024,
-         "n_kommuner": 155,
-         "median": 858.1775700934579,
-         "p10": 591.3808118787111,
-         "p90": 1286.6679990611062,
-         "arealvektet_snitt": 898.5068978733342
+         "n_kommuner": 234,
+         "median": 872.9166845950338,
+         "p10": 572.7802315501717,
+         "p90": 1296.8883863648962,
+         "arealvektet_snitt": 897.4787612529274
         },
         {
          "aargang": 2025,
-         "n_kommuner": 155,
-         "median": 886.7551158084102,
-         "p10": 574.6302474509228,
-         "p90": 1373.4804317856263,
-         "arealvektet_snitt": 956.1878705234469
+         "n_kommuner": 234,
+         "median": 890.3919811624246,
+         "p10": 568.075404384379,
+         "p90": 1331.2522460139278,
+         "arealvektet_snitt": 925.122440380112
         }
        ]
       },
-      "n_panel": 155,
+      "n_panel": 234,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 155,
-       "nominell_endring_prosent": -2.9452796811559434,
-       "aarlig_gjennomsnittlig_endring_prosent": -1.4836458658542995,
+       "n_panel": 234,
+       "nominell_endring_prosent": -3.3467961464077933,
+       "aarlig_gjennomsnittlig_endring_prosent": -1.6876386950286926,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -4038,27 +4050,27 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 270,
-         "median": 988.6032142647477,
-         "p10": 634.2999439196261,
-         "p90": 1449.740880389426,
-         "arealvektet_snitt": 1008.0255703401205
+         "n_kommuner": 251,
+         "median": 993.3883718033835,
+         "p10": 642.1354991620917,
+         "p90": 1476.0156632183314,
+         "arealvektet_snitt": 1012.6092904796426
         },
         {
          "aargang": 2024,
-         "n_kommuner": 274,
-         "median": 957.4220555915881,
-         "p10": 617.7991144812426,
-         "p90": 1412.187995135902,
-         "arealvektet_snitt": 993.6204526430153
+         "n_kommuner": 256,
+         "median": 941.7128923933658,
+         "p10": 619.4075754805413,
+         "p90": 1411.3280620686082,
+         "arealvektet_snitt": 995.0179618360247
         },
         {
          "aargang": 2025,
-         "n_kommuner": 276,
-         "median": 991.2757464227542,
-         "p10": 633.8267625802275,
-         "p90": 1445.8108471666887,
-         "arealvektet_snitt": 1030.016347080407
+         "n_kommuner": 254,
+         "median": 1005.4250938504651,
+         "p10": 660.0476240991558,
+         "p90": 1447.3245026636002,
+         "arealvektet_snitt": 1036.5077214569933
         }
        ]
       },
@@ -4067,37 +4079,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 155,
-         "median": 974.6328855791575,
-         "p10": 616.7782865238153,
-         "p90": 1405.400873808096,
-         "arealvektet_snitt": 1012.2213386356782
+         "n_kommuner": 221,
+         "median": 1003.0168183111958,
+         "p10": 663.3447309940715,
+         "p90": 1476.0156632183314,
+         "arealvektet_snitt": 1023.6838963568214
         },
         {
          "aargang": 2024,
-         "n_kommuner": 155,
-         "median": 945.8255625600578,
-         "p10": 644.4889199958443,
-         "p90": 1392.1512400063802,
-         "arealvektet_snitt": 1009.5724735400829
+         "n_kommuner": 222,
+         "median": 946.7146938073827,
+         "p10": 644.1973711251648,
+         "p90": 1394.0796964622514,
+         "arealvektet_snitt": 1005.2808268346848
         },
         {
          "aargang": 2025,
-         "n_kommuner": 155,
-         "median": 976.37461193413,
-         "p10": 645.526091642624,
-         "p90": 1473.5917712930743,
-         "arealvektet_snitt": 1070.9075582958624
+         "n_kommuner": 217,
+         "median": 1000.5978180079145,
+         "p10": 679.8290660172979,
+         "p90": 1436.8973802868225,
+         "arealvektet_snitt": 1042.01257923375
         }
        ]
       },
-      "n_panel": 155,
+      "n_panel": 234,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 155,
-       "nominell_endring_prosent": 0.1787058882111836,
-       "aarlig_gjennomsnittlig_endring_prosent": 0.08931305999215766,
+       "n_panel": 217,
+       "nominell_endring_prosent": -0.2411724568441742,
+       "aarlig_gjennomsnittlig_endring_prosent": -0.12065902141933371,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -4128,13 +4140,14 @@
       }
      },
      "energivarefordeling": {
-      "Bioenergi": 0.0,
-      "Fjernvarme/fjernkjøling": 0.0,
-      "Fyringsolje og fyringsparafin": 0.0,
-      "Naturgass og andre fossile gasser": 0.0,
-      "Strøm": 1.0
+      "Bioenergi": 0.03014708814264571,
+      "Fjernvarme/fjernkjøling": 0.14804863689564507,
+      "Fyringsolje og fyringsparafin": 0.004906847303696789,
+      "Naturgass og andre fossile gasser": 0.008196452152374965,
+      "Strøm": 0.8087009755056375
      },
      "fornybarandel_median": 1.0,
+     "fornybarandel_vektet": 0.9868967005439282,
      "implisitt_energipris": {
       "n": 314,
       "p10": 0.42923040064109186,
@@ -4184,37 +4197,37 @@
       "punkter": [
        {
         "aargang": 2023,
-        "n_kommuner": 188,
-        "median": 201.94806891176063,
-        "p10": 145.5100846464618,
-        "p90": 284.6262215140054,
-        "arealvektet_snitt": 185.38270403736436
+        "n_kommuner": 276,
+        "median": 198.2778333744265,
+        "p10": 137.9134344313859,
+        "p90": 289.5445832636902,
+        "arealvektet_snitt": 186.09474834079938
        },
        {
         "aargang": 2024,
-        "n_kommuner": 188,
-        "median": 190.65329997533388,
-        "p10": 130.4753301018219,
-        "p90": 280.5463042553034,
-        "arealvektet_snitt": 181.5330715113158
+        "n_kommuner": 276,
+        "median": 189.25910342863193,
+        "p10": 131.15829384740144,
+        "p90": 281.35624020954026,
+        "arealvektet_snitt": 182.24726346448278
        },
        {
         "aargang": 2025,
-        "n_kommuner": 188,
-        "median": 184.57765279931402,
-        "p10": 126.96794924273435,
-        "p90": 250.47460935309098,
-        "arealvektet_snitt": 166.61932675428815
+        "n_kommuner": 276,
+        "median": 182.29774750768502,
+        "p10": 127.79728587525642,
+        "p90": 253.58207429726303,
+        "arealvektet_snitt": 167.65555629056104
        }
       ]
      },
-     "n_panel": 188,
+     "n_panel": 276,
      "vekst": {
       "fra_aargang": 2023,
       "til_aargang": 2025,
-      "n_panel": 188,
-      "nominell_endring_prosent": -8.60142719167889,
-      "aarlig_gjennomsnittlig_endring_prosent": -4.397399194205443,
+      "n_panel": 276,
+      "nominell_endring_prosent": -8.05944143870324,
+      "aarlig_gjennomsnittlig_endring_prosent": -4.114360532300376,
       "skjult_grunnet_brudd": false,
       "brudd": [],
       "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -4243,13 +4256,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.0325241671875034,
+       "Fjernvarme/fjernkjøling": 0.1504463226022818,
+       "Fyringsolje og fyringsparafin": 0.0033155704414445215,
+       "Naturgass og andre fossile gasser": 0.015621835508507242,
+       "Strøm": 0.798092104260263
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.9810625940500483,
       "implisitt_energipris": {
        "n": 317,
        "p10": 0.4038886743638259,
@@ -4285,13 +4299,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.0283320353411929,
+       "Fjernvarme/fjernkjøling": 0.14636624862368075,
+       "Fyringsolje og fyringsparafin": 0.00549560920589736,
+       "Naturgass og andre fossile gasser": 0.012038563794075785,
+       "Strøm": 0.8077675430351532
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.9824658270000268,
       "implisitt_energipris": {
        "n": 318,
        "p10": 0.44650283553875236,
@@ -4327,13 +4342,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.03014708814264571,
+       "Fjernvarme/fjernkjøling": 0.14804863689564507,
+       "Fyringsolje og fyringsparafin": 0.004906847303696789,
+       "Naturgass og andre fossile gasser": 0.008196452152374965,
+       "Strøm": 0.8087009755056375
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.9868967005439282,
       "implisitt_energipris": {
        "n": 314,
        "p10": 0.42923040064109186,
@@ -4371,100 +4387,100 @@
      "energi": {
       "lav": {
        "verdi": 81.62314348260091,
-       "verdi_avrundet": 80
+       "verdi_avrundet": 80.0
       },
       "sannsynlig": {
        "verdi": 147.00793277965056,
-       "verdi_avrundet": 145
+       "verdi_avrundet": 150.0
       },
       "hoy": {
        "verdi": 317.6496868067023,
-       "verdi_avrundet": 320
+       "verdi_avrundet": 315.0
       }
      },
      "renhold": {
       "lav": {
        "verdi": 72.89538954344587,
-       "verdi_avrundet": 75
+       "verdi_avrundet": 75.0
       },
       "sannsynlig": {
        "verdi": 131.28875057640533,
-       "verdi_avrundet": 130
+       "verdi_avrundet": 130.0
       },
       "hoy": {
        "verdi": 283.6842183499585,
-       "verdi_avrundet": 285
+       "verdi_avrundet": 285.0
       }
      },
      "ovrig_drift": {
       "lav": {
        "verdi": 255.4295658800556,
-       "verdi_avrundet": 255
+       "verdi_avrundet": 255.0
       },
       "sannsynlig": {
        "verdi": 460.0432040311566,
-       "verdi_avrundet": 460
+       "verdi_avrundet": 460.0
       },
       "hoy": {
        "verdi": 994.0455383253782,
-       "verdi_avrundet": 995
+       "verdi_avrundet": 995.0
       }
      },
      "vedlikehold": {
       "lav": {
        "verdi": 55.09161486849511,
-       "verdi_avrundet": 55
+       "verdi_avrundet": 55.0
       },
       "sannsynlig": {
        "verdi": 99.22313782287151,
-       "verdi_avrundet": 100
+       "verdi_avrundet": 100.0
       },
       "hoy": {
        "verdi": 214.3979447738773,
-       "verdi_avrundet": 215
+       "verdi_avrundet": 215.0
       }
      },
      "fdv": {
       "lav": {
-       "verdi": 525.7217443904837,
-       "verdi_avrundet": 525
+       "verdi": 552.6511244418589,
+       "verdi_avrundet": 555
       },
       "sannsynlig": {
-       "verdi": 907.6458826510528,
-       "verdi_avrundet": 910
+       "verdi": 926.8786246546002,
+       "verdi_avrundet": 925
       },
       "hoy": {
-       "verdi": 1901.9953078167498,
-       "verdi_avrundet": 1900
+       "verdi": 1941.626843083816,
+       "verdi_avrundet": 1940
       }
      }
     },
     "fordeling_egen": {
      "forvaltning": {
-      "n": 173,
+      "n": 167,
       "p10": {
-       "verdi": 27.946080761700486,
-       "verdi_avrundet": 30
+       "verdi": 33.17016134385382,
+       "verdi_avrundet": 35
       },
       "median": {
-       "verdi": 79.79485130049622,
+       "verdi": 81.18257544722108,
        "verdi_avrundet": 80
       },
       "p90": {
-       "verdi": 160.2016777176185,
+       "verdi": 160.67733305453876,
        "verdi_avrundet": 160
       },
       "snitt": {
-       "verdi": 86.40877690607549,
-       "verdi_avrundet": 85
+       "verdi": 89.5148915997973,
+       "verdi_avrundet": 90
       },
       "trimmet_snitt": {
-       "verdi": 81.7748189431778,
-       "verdi_avrundet": 80
+       "verdi": 84.25648378512398,
+       "verdi_avrundet": 85
       },
       "arealvektet_snitt": {
-       "verdi": 107.44998076210558,
-       "verdi_avrundet": 105
+       "verdi": 108.34270939926881,
+       "verdi_avrundet": 110
       }
      },
      "energi": {
@@ -4603,30 +4619,30 @@
       }
      },
      "fdv": {
-      "n": 173,
+      "n": 162,
       "p10": {
-       "verdi": 525.7217443904837,
-       "verdi_avrundet": 525
+       "verdi": 552.6511244418589,
+       "verdi_avrundet": 555
       },
       "median": {
-       "verdi": 907.6458826510528,
-       "verdi_avrundet": 910
+       "verdi": 926.8786246546002,
+       "verdi_avrundet": 925
       },
       "p90": {
-       "verdi": 1901.9953078167498,
-       "verdi_avrundet": 1900
+       "verdi": 1941.626843083816,
+       "verdi_avrundet": 1940
       },
       "snitt": {
-       "verdi": 1079.521687554003,
-       "verdi_avrundet": 1080
+       "verdi": 1094.2976445969775,
+       "verdi_avrundet": 1095
       },
       "trimmet_snitt": {
-       "verdi": 1008.6699349295816,
-       "verdi_avrundet": 1010
+       "verdi": 1022.1232939750665,
+       "verdi_avrundet": 1020
       },
       "arealvektet_snitt": {
-       "verdi": 1243.6869699746603,
-       "verdi_avrundet": 1245
+       "verdi": 1250.0311871166243,
+       "verdi_avrundet": 1250
       }
      }
     },
@@ -4657,27 +4673,27 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 171,
-         "median": 75.76232280670345,
-         "p10": 18.878232366152726,
-         "p90": 145.74678093205986,
-         "arealvektet_snitt": 94.60826124781617
+         "n_kommuner": 164,
+         "median": 77.6972068822524,
+         "p10": 24.61066482673526,
+         "p90": 146.7193865378625,
+         "arealvektet_snitt": 95.80114328959307
         },
         {
          "aargang": 2024,
-         "n_kommuner": 175,
-         "median": 77.96205342124739,
-         "p10": 21.05384924878299,
-         "p90": 151.8045027577288,
-         "arealvektet_snitt": 106.42276545462096
+         "n_kommuner": 169,
+         "median": 81.63396295617092,
+         "p10": 26.81286835633452,
+         "p90": 154.62524481623436,
+         "arealvektet_snitt": 107.31484479970038
         },
         {
          "aargang": 2025,
-         "n_kommuner": 173,
-         "median": 79.79485130049622,
-         "p10": 27.946080761700486,
-         "p90": 160.2016777176185,
-         "arealvektet_snitt": 108.0077074729201
+         "n_kommuner": 167,
+         "median": 81.18257544722108,
+         "p10": 33.17016134385382,
+         "p90": 160.67733305453876,
+         "arealvektet_snitt": 108.93673729459545
         }
        ]
       },
@@ -4686,37 +4702,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 85,
-         "median": 74.87599563669295,
-         "p10": 13.10009537083965,
-         "p90": 149.17472611658138,
-         "arealvektet_snitt": 95.81836247360917
+         "n_kommuner": 135,
+         "median": 80.40824494696818,
+         "p10": 30.946806395191942,
+         "p90": 146.58044287989068,
+         "arealvektet_snitt": 98.62283763378227
         },
         {
          "aargang": 2024,
-         "n_kommuner": 85,
-         "median": 87.1177329103296,
-         "p10": 18.416826559265523,
-         "p90": 159.2430656845228,
-         "arealvektet_snitt": 109.07618918655275
+         "n_kommuner": 134,
+         "median": 87.32108026008169,
+         "p10": 29.376851459156974,
+         "p90": 157.7699878768904,
+         "arealvektet_snitt": 106.63115096720333
         },
         {
          "aargang": 2025,
-         "n_kommuner": 85,
-         "median": 85.62653562653563,
-         "p10": 26.73055017247524,
-         "p90": 167.7257663889843,
-         "arealvektet_snitt": 113.85106148308374
+         "n_kommuner": 134,
+         "median": 86.71148728966011,
+         "p10": 33.80120141684381,
+         "p90": 160.71073000179533,
+         "arealvektet_snitt": 111.50132192313242
         }
        ]
       },
-      "n_panel": 85,
+      "n_panel": 138,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 85,
-       "nominell_endring_prosent": 14.357792371811051,
-       "aarlig_gjennomsnittlig_endring_prosent": 6.938202889243961,
+       "n_panel": 134,
+       "nominell_endring_prosent": 7.839049772631057,
+       "aarlig_gjennomsnittlig_endring_prosent": 3.8455823675860756,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -4758,37 +4774,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 85,
-         "median": 152.97261189044755,
-         "p10": 81.26157823890821,
-         "p90": 344.6887883358472,
-         "arealvektet_snitt": 192.70063192409137
+         "n_kommuner": 138,
+         "median": 166.27056078875933,
+         "p10": 79.6289494415638,
+         "p90": 380.2245634444523,
+         "arealvektet_snitt": 208.95593862333493
         },
         {
          "aargang": 2024,
-         "n_kommuner": 85,
-         "median": 150.13360053440215,
-         "p10": 80.75682609943887,
-         "p90": 265.3644195030533,
-         "arealvektet_snitt": 170.62876678532407
+         "n_kommuner": 138,
+         "median": 159.19111570247935,
+         "p10": 82.11574587019999,
+         "p90": 293.257419576515,
+         "arealvektet_snitt": 188.2662263586951
         },
         {
          "aargang": 2025,
-         "n_kommuner": 85,
-         "median": 146.34488564613443,
-         "p10": 75.27229641101783,
-         "p90": 270.3163477662792,
-         "arealvektet_snitt": 164.17521927279358
+         "n_kommuner": 138,
+         "median": 147.38987803006822,
+         "p10": 74.84536817707139,
+         "p90": 290.12597068003396,
+         "arealvektet_snitt": 181.98259801969428
         }
        ]
       },
-      "n_panel": 85,
+      "n_panel": 138,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 85,
-       "nominell_endring_prosent": -4.332622789404694,
-       "aarlig_gjennomsnittlig_endring_prosent": -2.1902984307817674,
+       "n_panel": 138,
+       "nominell_endring_prosent": -11.355397292896807,
+       "aarlig_gjennomsnittlig_endring_prosent": -5.848737285630001,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -4830,37 +4846,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 85,
-         "median": 112.99754002500302,
-         "p10": 67.04823286734565,
-         "p90": 248.8794112727881,
-         "arealvektet_snitt": 108.49237433508407
+         "n_kommuner": 138,
+         "median": 110.38121080722993,
+         "p10": 63.779864412900125,
+         "p90": 219.2137687998307,
+         "arealvektet_snitt": 102.81142365171488
         },
         {
          "aargang": 2024,
-         "n_kommuner": 85,
-         "median": 118.79049676025917,
-         "p10": 67.20743009728416,
-         "p90": 254.53772591139142,
-         "arealvektet_snitt": 113.13396538963099
+         "n_kommuner": 138,
+         "median": 121.46980036436725,
+         "p10": 69.2045772904795,
+         "p90": 216.21020375028237,
+         "arealvektet_snitt": 109.39511201215186
         },
         {
          "aargang": 2025,
-         "n_kommuner": 85,
-         "median": 122.63224358074926,
-         "p10": 65.38129273721903,
-         "p90": 288.6555011060837,
-         "arealvektet_snitt": 113.82289058743554
+         "n_kommuner": 138,
+         "median": 121.308366526214,
+         "p10": 64.80637695099482,
+         "p90": 252.50122570495256,
+         "arealvektet_snitt": 107.39428753479716
         }
        ]
       },
-      "n_panel": 85,
+      "n_panel": 138,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 85,
-       "nominell_endring_prosent": 8.526471951171999,
-       "aarlig_gjennomsnittlig_endring_prosent": 4.1760394482205365,
+       "n_panel": 138,
+       "nominell_endring_prosent": 9.899470787711584,
+       "aarlig_gjennomsnittlig_endring_prosent": 4.8329484407033,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -4902,37 +4918,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 85,
-         "median": 440.74074074074076,
-         "p10": 193.44457032446712,
-         "p90": 1154.1583475906518,
-         "arealvektet_snitt": 639.9684479612189
+         "n_kommuner": 138,
+         "median": 437.3003722075925,
+         "p10": 190.20226002458313,
+         "p90": 1112.6846177118898,
+         "arealvektet_snitt": 629.7091565008154
         },
         {
          "aargang": 2024,
-         "n_kommuner": 85,
-         "median": 407.9347304431291,
-         "p10": 178.98999329510036,
-         "p90": 1178.387220206709,
-         "arealvektet_snitt": 793.124625524266
+         "n_kommuner": 138,
+         "median": 429.15007445561406,
+         "p10": 189.60330039700997,
+         "p90": 1101.1740834922653,
+         "arealvektet_snitt": 721.5628221734648
         },
         {
          "aargang": 2025,
-         "n_kommuner": 85,
-         "median": 460.54021427493586,
-         "p10": 200.04482999151654,
-         "p90": 1187.848282338562,
-         "arealvektet_snitt": 702.0277552103195
+         "n_kommuner": 138,
+         "median": 465.29076829449275,
+         "p10": 205.91360438278957,
+         "p90": 1156.7300520137594,
+         "arealvektet_snitt": 683.2385011529443
         }
        ]
       },
-      "n_panel": 85,
+      "n_panel": 138,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 85,
-       "nominell_endring_prosent": 4.49231752456527,
-       "aarlig_gjennomsnittlig_endring_prosent": 2.2214838106771273,
+       "n_panel": 138,
+       "nominell_endring_prosent": 6.400725420286824,
+       "aarlig_gjennomsnittlig_endring_prosent": 3.150727297623468,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -4974,37 +4990,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 85,
-         "median": 83.9145945370321,
-         "p10": 18.69747941303323,
-         "p90": 181.3947569057534,
-         "arealvektet_snitt": 243.04344676874263
+         "n_kommuner": 138,
+         "median": 89.05709427875449,
+         "p10": 24.033925820474256,
+         "p90": 204.83972339845494,
+         "arealvektet_snitt": 196.43818024439236
         },
         {
          "aargang": 2024,
-         "n_kommuner": 85,
-         "median": 84.12048698572627,
-         "p10": 25.778294251756137,
-         "p90": 304.67003520626133,
-         "arealvektet_snitt": 178.91569449829063
+         "n_kommuner": 138,
+         "median": 89.88736386196251,
+         "p10": 25.89090941293505,
+         "p90": 276.4680623180743,
+         "arealvektet_snitt": 163.36164562393117
         },
         {
          "aargang": 2025,
-         "n_kommuner": 85,
-         "median": 93.33333333333333,
-         "p10": 28.89954593657408,
-         "p90": 296.03107516966736,
-         "arealvektet_snitt": 203.96846451013877
+         "n_kommuner": 138,
+         "median": 95.39951485704786,
+         "p10": 25.874759152215802,
+         "p90": 299.9063012159571,
+         "arealvektet_snitt": 174.67495128883053
         }
        ]
       },
-      "n_panel": 85,
+      "n_panel": 138,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 85,
-       "nominell_endring_prosent": 11.224196277495778,
-       "aarlig_gjennomsnittlig_endring_prosent": 5.462882701686,
+       "n_panel": 138,
+       "nominell_endring_prosent": 7.121746593753864,
+       "aarlig_gjennomsnittlig_endring_prosent": 3.499636034989928,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -5046,37 +5062,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 85,
-         "median": 831.0046573519627,
-         "p10": 469.85461243284726,
-         "p90": 1795.7439206981207,
-         "arealvektet_snitt": 1184.204900989137
+         "n_kommuner": 138,
+         "median": 852.0468841794552,
+         "p10": 470.34557175748273,
+         "p90": 1782.4222373561404,
+         "arealvektet_snitt": 1137.9146990202576
         },
         {
          "aargang": 2024,
-         "n_kommuner": 85,
-         "median": 850.5344021376086,
-         "p10": 459.2096897548599,
-         "p90": 1771.8632231453942,
-         "arealvektet_snitt": 1255.8030521975118
+         "n_kommuner": 138,
+         "median": 892.8107845111945,
+         "p10": 505.0034762510112,
+         "p90": 1749.4610233374024,
+         "arealvektet_snitt": 1182.585806168243
         },
         {
          "aargang": 2025,
-         "n_kommuner": 85,
-         "median": 835.4324097397146,
-         "p10": 484.1301492952559,
-         "p90": 1891.7055338167802,
-         "arealvektet_snitt": 1183.9943295806875
+         "n_kommuner": 138,
+         "median": 859.1714415926913,
+         "p10": 487.04732198680097,
+         "p90": 1883.567390946282,
+         "arealvektet_snitt": 1147.2903379962663
         }
        ]
       },
-      "n_panel": 85,
+      "n_panel": 138,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 85,
-       "nominell_endring_prosent": 0.5328192024652623,
-       "aarlig_gjennomsnittlig_endring_prosent": 0.2660556731266084,
+       "n_panel": 138,
+       "nominell_endring_prosent": 0.836169645769802,
+       "aarlig_gjennomsnittlig_endring_prosent": 0.4172144832596869,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -5089,27 +5105,27 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 171,
-         "median": 916.8058598076311,
-         "p10": 512.6429552890946,
-         "p90": 1760.5504358406638,
-         "arealvektet_snitt": 1202.6528252625233
+         "n_kommuner": 156,
+         "median": 942.3801862941157,
+         "p10": 530.1665276931587,
+         "p90": 1767.617945735164,
+         "arealvektet_snitt": 1215.2003656308173
         },
         {
          "aargang": 2024,
-         "n_kommuner": 175,
-         "median": 955.6280977763189,
-         "p10": 535.5819909585882,
-         "p90": 1931.1904808712006,
-         "arealvektet_snitt": 1275.0535742320162
+         "n_kommuner": 163,
+         "median": 969.4200446415075,
+         "p10": 546.6549409779176,
+         "p90": 2005.240761197423,
+         "arealvektet_snitt": 1283.996024462461
         },
         {
          "aargang": 2025,
-         "n_kommuner": 173,
-         "median": 907.6458826510528,
-         "p10": 525.7217443904837,
-         "p90": 1901.9953078167498,
-         "arealvektet_snitt": 1243.6869699746603
+         "n_kommuner": 162,
+         "median": 926.8786246546002,
+         "p10": 552.6511244418589,
+         "p90": 1941.626843083816,
+         "arealvektet_snitt": 1250.0311871166243
         }
        ]
       },
@@ -5118,37 +5134,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 85,
-         "median": 948.7016130346809,
-         "p10": 536.8372475167257,
-         "p90": 1840.1023497368062,
-         "arealvektet_snitt": 1280.0232634627462
+         "n_kommuner": 128,
+         "median": 952.691341876234,
+         "p10": 555.5836917259412,
+         "p90": 1831.819643043127,
+         "arealvektet_snitt": 1245.3842243128245
         },
         {
          "aargang": 2024,
-         "n_kommuner": 85,
-         "median": 961.0727781558227,
-         "p10": 543.148607650413,
-         "p90": 1864.5113887700156,
-         "arealvektet_snitt": 1364.8792413840645
+         "n_kommuner": 129,
+         "median": 991.248828126193,
+         "p10": 556.6032448450275,
+         "p90": 1887.7447959719675,
+         "arealvektet_snitt": 1296.1221837302783
         },
         {
          "aargang": 2025,
-         "n_kommuner": 85,
+         "n_kommuner": 131,
          "median": 948.691986093048,
-         "p10": 581.2337129040905,
-         "p90": 2015.0596226366374,
-         "arealvektet_snitt": 1297.845391063771
+         "p10": 558.321206409048,
+         "p90": 2017.347935337327,
+         "arealvektet_snitt": 1261.1917373004737
         }
        ]
       },
-      "n_panel": 85,
+      "n_panel": 138,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 85,
-       "nominell_endring_prosent": -0.0010147491582901402,
-       "aarlig_gjennomsnittlig_endring_prosent": -0.0005073758662987871,
+       "n_panel": 128,
+       "nominell_endring_prosent": -0.41979554210177517,
+       "aarlig_gjennomsnittlig_endring_prosent": -0.21011852001314724,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -5179,13 +5195,14 @@
       }
      },
      "energivarefordeling": {
-      "Bioenergi": 0.0,
-      "Fjernvarme/fjernkjøling": 0.0,
-      "Fyringsolje og fyringsparafin": 0.0,
-      "Naturgass og andre fossile gasser": 0.0,
-      "Strøm": 1.0
+      "Bioenergi": 0.030352629678661692,
+      "Fjernvarme/fjernkjøling": 0.19667830063786257,
+      "Fyringsolje og fyringsparafin": 0.0036149192004288886,
+      "Naturgass og andre fossile gasser": 0.009516515497981378,
+      "Strøm": 0.7598376349850655
      },
      "fornybarandel_median": 1.0,
+     "fornybarandel_vektet": 0.9868685653015897,
      "implisitt_energipris": {
       "n": 262,
       "p10": 0.2866941909314791,
@@ -5235,37 +5252,37 @@
       "punkter": [
        {
         "aargang": 2023,
-        "n_kommuner": 147,
+        "n_kommuner": 227,
         "median": 149.20919128618323,
         "p10": 82.85092335931533,
-        "p90": 287.0548067889794,
-        "arealvektet_snitt": 164.99111599817456
+        "p90": 279.27484929395246,
+        "arealvektet_snitt": 165.2508641039987
        },
        {
         "aargang": 2024,
-        "n_kommuner": 147,
-        "median": 140.95805638322256,
-        "p10": 73.67225300974584,
-        "p90": 272.1786858496908,
-        "arealvektet_snitt": 158.33943538812622
+        "n_kommuner": 227,
+        "median": 145.6611570247934,
+        "p10": 74.21577856816302,
+        "p90": 246.83950534412634,
+        "arealvektet_snitt": 160.99611718494296
        },
        {
         "aargang": 2025,
-        "n_kommuner": 147,
-        "median": 139.39276360461733,
-        "p10": 71.64491359000003,
-        "p90": 270.62489067242893,
-        "arealvektet_snitt": 150.13071515082956
+        "n_kommuner": 227,
+        "median": 136.31156930126002,
+        "p10": 70.834017515052,
+        "p90": 260.4154723313772,
+        "arealvektet_snitt": 148.33158623230213
        }
       ]
      },
-     "n_panel": 147,
+     "n_panel": 227,
      "vekst": {
       "fra_aargang": 2023,
       "til_aargang": 2025,
-      "n_panel": 147,
-      "nominell_endring_prosent": -6.578969832185466,
-      "aarlig_gjennomsnittlig_endring_prosent": -3.3454449248176754,
+      "n_panel": 227,
+      "nominell_endring_prosent": -8.643986254295532,
+      "aarlig_gjennomsnittlig_endring_prosent": -4.419660104337108,
       "skjult_grunnet_brudd": false,
       "brudd": [],
       "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -5294,13 +5311,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.026473471162166928,
+       "Fjernvarme/fjernkjøling": 0.2294661422554331,
+       "Fyringsolje og fyringsparafin": 0.0039433373388727344,
+       "Naturgass og andre fossile gasser": 0.00821067223340948,
+       "Strøm": 0.7319063770101177
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.9878459904277178,
       "implisitt_energipris": {
        "n": 274,
        "p10": 0.12990803557967742,
@@ -5336,13 +5354,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.028859709102573843,
+       "Fjernvarme/fjernkjøling": 0.21111800508184128,
+       "Fyringsolje og fyringsparafin": 0.003477937886730654,
+       "Naturgass og andre fossile gasser": 0.007709288288972742,
+       "Strøm": 0.7488350596398815
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.9888127738242966,
       "implisitt_energipris": {
        "n": 266,
        "p10": 0.2657223520249221,
@@ -5378,13 +5397,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.030352629678661692,
+       "Fjernvarme/fjernkjøling": 0.19667830063786257,
+       "Fyringsolje og fyringsparafin": 0.0036149192004288886,
+       "Naturgass og andre fossile gasser": 0.009516515497981378,
+       "Strøm": 0.7598376349850655
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.9868685653015897,
       "implisitt_energipris": {
        "n": 262,
        "p10": 0.2866941909314791,
@@ -5422,99 +5442,99 @@
      "energi": {
       "lav": {
        "verdi": 89.28765603035033,
-       "verdi_avrundet": 90
+       "verdi_avrundet": 90.0
       },
       "sannsynlig": {
        "verdi": 158.12519720773554,
-       "verdi_avrundet": 160
+       "verdi_avrundet": 160.0
       },
       "hoy": {
        "verdi": 351.7579038450123,
-       "verdi_avrundet": 350
+       "verdi_avrundet": 350.0
       }
      },
      "renhold": {
       "lav": {
        "verdi": 88.03682523344061,
-       "verdi_avrundet": 90
+       "verdi_avrundet": 90.0
       },
       "sannsynlig": {
        "verdi": 155.91002127829208,
-       "verdi_avrundet": 155
+       "verdi_avrundet": 155.0
       },
       "hoy": {
        "verdi": 346.83012727714953,
-       "verdi_avrundet": 345
+       "verdi_avrundet": 345.0
       }
      },
      "ovrig_drift": {
       "lav": {
        "verdi": 207.36567879622436,
-       "verdi_avrundet": 205
+       "verdi_avrundet": 205.0
       },
       "sannsynlig": {
        "verdi": 367.23708865896486,
-       "verdi_avrundet": 365
+       "verdi_avrundet": 365.0
       },
       "hoy": {
        "verdi": 816.9384184300195,
-       "verdi_avrundet": 815
+       "verdi_avrundet": 820.0
       }
      },
      "vedlikehold": {
       "lav": {
        "verdi": 42.17476516441493,
-       "verdi_avrundet": 40
+       "verdi_avrundet": 40.0
       },
       "sannsynlig": {
        "verdi": 74.68997793542906,
-       "verdi_avrundet": 75
+       "verdi_avrundet": 75.0
       },
       "hoy": {
        "verdi": 166.15182488772555,
-       "verdi_avrundet": 165
+       "verdi_avrundet": 165.0
       }
      },
      "fdv": {
       "lav": {
-       "verdi": 523.1057067676398,
+       "verdi": 526.2843505146046,
        "verdi_avrundet": 525
       },
       "sannsynlig": {
-       "verdi": 853.9995741631203,
+       "verdi": 856.2417308409929,
        "verdi_avrundet": 855
       },
       "hoy": {
-       "verdi": 1799.2936060475768,
-       "verdi_avrundet": 1800
+       "verdi": 1845.019534376407,
+       "verdi_avrundet": 1845
       }
      }
     },
     "fordeling_egen": {
      "forvaltning": {
-      "n": 157,
+      "n": 151,
       "p10": {
-       "verdi": 27.724573626600947,
-       "verdi_avrundet": 30
+       "verdi": 38.679731820526044,
+       "verdi_avrundet": 40
       },
       "median": {
-       "verdi": 85.65942606355883,
-       "verdi_avrundet": 85
+       "verdi": 88.13117039316269,
+       "verdi_avrundet": 90
       },
       "p90": {
-       "verdi": 168.4025121636802,
+       "verdi": 168.9135021402338,
        "verdi_avrundet": 170
       },
       "snitt": {
-       "verdi": 89.95394592172688,
-       "verdi_avrundet": 90
+       "verdi": 93.52827489874915,
+       "verdi_avrundet": 95
       },
       "trimmet_snitt": {
-       "verdi": 86.54481279023197,
-       "verdi_avrundet": 85
+       "verdi": 89.25567485113312,
+       "verdi_avrundet": 90
       },
       "arealvektet_snitt": {
-       "verdi": 116.3882081659489,
+       "verdi": 117.24960112382534,
        "verdi_avrundet": 115
       }
      },
@@ -5654,30 +5674,30 @@
       }
      },
      "fdv": {
-      "n": 157,
+      "n": 146,
       "p10": {
-       "verdi": 523.1057067676398,
+       "verdi": 526.2843505146046,
        "verdi_avrundet": 525
       },
       "median": {
-       "verdi": 853.9995741631203,
+       "verdi": 856.2417308409929,
        "verdi_avrundet": 855
       },
       "p90": {
-       "verdi": 1799.2936060475768,
-       "verdi_avrundet": 1800
+       "verdi": 1845.019534376407,
+       "verdi_avrundet": 1845
       },
       "snitt": {
-       "verdi": 996.1792223894495,
-       "verdi_avrundet": 995
+       "verdi": 1018.4426946304217,
+       "verdi_avrundet": 1020
       },
       "trimmet_snitt": {
-       "verdi": 916.1482907132092,
-       "verdi_avrundet": 915
+       "verdi": 937.9175972079303,
+       "verdi_avrundet": 940
       },
       "arealvektet_snitt": {
-       "verdi": 1197.8071455316153,
-       "verdi_avrundet": 1200
+       "verdi": 1208.3456860015444,
+       "verdi_avrundet": 1210
       }
      }
     },
@@ -5708,27 +5728,27 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 146,
-         "median": 81.58222819664951,
-         "p10": 19.385937980864714,
-         "p90": 141.75584227671658,
-         "arealvektet_snitt": 101.2281997068303
+         "n_kommuner": 143,
+         "median": 82.85839544059623,
+         "p10": 24.364817038645263,
+         "p90": 142.47715807075406,
+         "arealvektet_snitt": 101.62776032080988
         },
         {
          "aargang": 2024,
-         "n_kommuner": 150,
-         "median": 76.33910985528584,
-         "p10": 18.704759219543117,
-         "p90": 158.356932503931,
-         "arealvektet_snitt": 113.34102224355517
+         "n_kommuner": 146,
+         "median": 77.54925024723394,
+         "p10": 26.703892127745732,
+         "p90": 158.89581792047343,
+         "arealvektet_snitt": 113.84951684997729
         },
         {
          "aargang": 2025,
-         "n_kommuner": 157,
-         "median": 85.65942606355883,
-         "p10": 27.724573626600947,
-         "p90": 168.4025121636802,
-         "arealvektet_snitt": 115.55552489374206
+         "n_kommuner": 151,
+         "median": 88.13117039316269,
+         "p10": 38.679731820526044,
+         "p90": 168.9135021402338,
+         "arealvektet_snitt": 116.4264623776478
         }
        ]
       },
@@ -5737,37 +5757,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 78,
-         "median": 76.18560580496325,
-         "p10": 4.305756241351704,
-         "p90": 143.73270190913385,
-         "arealvektet_snitt": 109.0330356103844
+         "n_kommuner": 121,
+         "median": 85.26129105383168,
+         "p10": 25.870574049037163,
+         "p90": 142.95803526677906,
+         "arealvektet_snitt": 104.55377492681117
         },
         {
          "aargang": 2024,
-         "n_kommuner": 78,
-         "median": 76.15571711941406,
-         "p10": 18.282005259278897,
-         "p90": 168.45171711045688,
-         "arealvektet_snitt": 128.88953562921367
+         "n_kommuner": 120,
+         "median": 79.03773204832179,
+         "p10": 33.074266942620724,
+         "p90": 160.2984473338039,
+         "arealvektet_snitt": 117.6161341613267
         },
         {
          "aargang": 2025,
-         "n_kommuner": 78,
-         "median": 84.41716715315428,
-         "p10": 19.382084954229736,
-         "p90": 171.05793393128158,
-         "arealvektet_snitt": 128.95690320450728
+         "n_kommuner": 119,
+         "median": 88.13117039316269,
+         "p10": 38.91495461909233,
+         "p90": 168.23218217149565,
+         "arealvektet_snitt": 119.18517270493433
         }
        ]
       },
-      "n_panel": 78,
+      "n_panel": 124,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 78,
-       "nominell_endring_prosent": 10.804614941651858,
-       "aarlig_gjennomsnittlig_endring_prosent": 5.263771042867282,
+       "n_panel": 119,
+       "nominell_endring_prosent": 3.365981565443388,
+       "aarlig_gjennomsnittlig_endring_prosent": 1.6690619438594956,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -5809,37 +5829,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 78,
-         "median": 148.58599432344255,
-         "p10": 82.85556289571937,
-         "p90": 299.11645898457016,
-         "arealvektet_snitt": 152.86494230730813
+         "n_kommuner": 124,
+         "median": 175.7058766188142,
+         "p10": 85.67781677953214,
+         "p90": 318.81341127460865,
+         "arealvektet_snitt": 162.13304076064134
         },
         {
          "aargang": 2024,
-         "n_kommuner": 78,
-         "median": 138.59580520644676,
-         "p10": 76.79609813271696,
-         "p90": 254.9313725490196,
-         "arealvektet_snitt": 120.40695939428008
+         "n_kommuner": 124,
+         "median": 147.48430537260725,
+         "p10": 75.12694382166053,
+         "p90": 269.80416626420487,
+         "arealvektet_snitt": 129.6437132460724
         },
         {
          "aargang": 2025,
-         "n_kommuner": 78,
-         "median": 141.09773931548528,
-         "p10": 74.00141441582844,
-         "p90": 258.3485855313504,
-         "arealvektet_snitt": 129.55063824132267
+         "n_kommuner": 124,
+         "median": 138.78122651297923,
+         "p10": 78.74110834004999,
+         "p90": 247.45088143217907,
+         "arealvektet_snitt": 132.69882055786434
         }
        ]
       },
-      "n_panel": 78,
+      "n_panel": 124,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 78,
-       "nominell_endring_prosent": -5.039677556457178,
-       "aarlig_gjennomsnittlig_endring_prosent": -2.5524128346202657,
+       "n_panel": 124,
+       "nominell_endring_prosent": -21.015034224462102,
+       "aarlig_gjennomsnittlig_endring_prosent": -11.12651364127888,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -5881,37 +5901,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 78,
-         "median": 152.26696557775887,
-         "p10": 72.71566104279859,
-         "p90": 331.69459065359985,
-         "arealvektet_snitt": 121.64981406485897
+         "n_kommuner": 124,
+         "median": 147.80254237461634,
+         "p10": 74.99658666685009,
+         "p90": 310.4570170220317,
+         "arealvektet_snitt": 126.44983408769676
         },
         {
          "aargang": 2024,
-         "n_kommuner": 78,
-         "median": 158.1856665891538,
-         "p10": 78.30258932338647,
-         "p90": 299.25380324149603,
-         "arealvektet_snitt": 121.00796013685606
+         "n_kommuner": 124,
+         "median": 158.0261798617314,
+         "p10": 77.48833875716721,
+         "p90": 283.664243751867,
+         "arealvektet_snitt": 131.19750978667633
         },
         {
          "aargang": 2025,
-         "n_kommuner": 78,
-         "median": 157.8763675090741,
-         "p10": 72.68605463675787,
-         "p90": 349.6385439926168,
-         "arealvektet_snitt": 130.7611083746333
+         "n_kommuner": 124,
+         "median": 150.4332250948605,
+         "p10": 74.07166334661355,
+         "p90": 316.76082834952314,
+         "arealvektet_snitt": 133.11483719852995
         }
        ]
       },
-      "n_panel": 78,
+      "n_panel": 124,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 78,
-       "nominell_endring_prosent": 3.683925735323501,
-       "aarlig_gjennomsnittlig_endring_prosent": 1.8253041907184686,
+       "n_panel": 124,
+       "nominell_endring_prosent": 1.779862969864543,
+       "aarlig_gjennomsnittlig_endring_prosent": 0.8860064478045215,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -5953,37 +5973,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 78,
-         "median": 356.32251216923476,
-         "p10": 156.39743287738787,
-         "p90": 897.2470067146362,
-         "arealvektet_snitt": 643.4226335722093
+         "n_kommuner": 124,
+         "median": 342.35337604697077,
+         "p10": 156.03447557991518,
+         "p90": 832.0163672843896,
+         "arealvektet_snitt": 523.443042136543
         },
         {
          "aargang": 2024,
-         "n_kommuner": 78,
-         "median": 315.4128770798415,
-         "p10": 129.8324378653083,
-         "p90": 1004.6871068612662,
-         "arealvektet_snitt": 724.9012790350677
+         "n_kommuner": 124,
+         "median": 306.78566429908483,
+         "p10": 133.65122302892652,
+         "p90": 864.2793522267207,
+         "arealvektet_snitt": 566.6813251245969
         },
         {
          "aargang": 2025,
-         "n_kommuner": 78,
-         "median": 373.4981343283582,
-         "p10": 142.38850378786185,
-         "p90": 1184.824002654824,
-         "arealvektet_snitt": 844.9659320547803
+         "n_kommuner": 124,
+         "median": 344.0136598472917,
+         "p10": 139.3938079570587,
+         "p90": 957.3507476570932,
+         "arealvektet_snitt": 644.3730690404087
         }
        ]
       },
-      "n_panel": 78,
+      "n_panel": 124,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 78,
-       "nominell_endring_prosent": 4.820246145706886,
-       "aarlig_gjennomsnittlig_endring_prosent": 2.3817591886889256,
+       "n_panel": 124,
+       "nominell_endring_prosent": 0.48496200606860107,
+       "aarlig_gjennomsnittlig_endring_prosent": 0.24218772855497672,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -6025,37 +6045,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 78,
-         "median": 74.260059951447,
-         "p10": 17.67926527728718,
-         "p90": 261.621501980844,
-         "arealvektet_snitt": 314.16617435950127
+         "n_kommuner": 124,
+         "median": 76.88742846259896,
+         "p10": 23.61699778068025,
+         "p90": 258.08659436473664,
+         "arealvektet_snitt": 247.6712416887496
         },
         {
          "aargang": 2024,
-         "n_kommuner": 78,
-         "median": 59.68714791094716,
-         "p10": 16.969183397549912,
-         "p90": 284.74884824794077,
-         "arealvektet_snitt": 206.21265432741353
+         "n_kommuner": 124,
+         "median": 75.14708611748642,
+         "p10": 17.548477077428355,
+         "p90": 279.29263981593897,
+         "arealvektet_snitt": 178.15803542173245
         },
         {
          "aargang": 2025,
-         "n_kommuner": 78,
-         "median": 71.32090642452766,
-         "p10": 18.835229955526998,
-         "p90": 210.6307736784752,
-         "arealvektet_snitt": 259.9174049138154
+         "n_kommuner": 124,
+         "median": 74.57855968221124,
+         "p10": 18.76254247397317,
+         "p90": 231.88299728403658,
+         "arealvektet_snitt": 206.38445705895464
         }
        ]
       },
-      "n_panel": 78,
+      "n_panel": 124,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 78,
-       "nominell_endring_prosent": -3.9579196796245886,
-       "aarlig_gjennomsnittlig_endring_prosent": -1.9989386178009716,
+       "n_panel": 124,
+       "nominell_endring_prosent": -3.0029210581686283,
+       "aarlig_gjennomsnittlig_endring_prosent": -1.5129049358082791,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -6097,37 +6117,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 78,
-         "median": 813.0465524288525,
-         "p10": 405.83112876508795,
-         "p90": 1931.7680735070621,
-         "arealvektet_snitt": 1232.1035643038776
+         "n_kommuner": 124,
+         "median": 815.7941647264261,
+         "p10": 443.2036835381584,
+         "p90": 1708.7864371468152,
+         "arealvektet_snitt": 1059.6971586736308
         },
         {
          "aargang": 2024,
-         "n_kommuner": 78,
-         "median": 758.9060962769905,
-         "p10": 398.1868015971294,
-         "p90": 1704.4725067055617,
-         "arealvektet_snitt": 1172.5288528936173
+         "n_kommuner": 124,
+         "median": 749.8784591884116,
+         "p10": 400.54265079055244,
+         "p90": 1495.2818156502371,
+         "arealvektet_snitt": 1005.6805835790781
         },
         {
          "aargang": 2025,
-         "n_kommuner": 78,
-         "median": 783.5210504115837,
-         "p10": 425.7151078523318,
-         "p90": 1878.468975698716,
-         "arealvektet_snitt": 1365.1950835845516
+         "n_kommuner": 124,
+         "median": 768.523232008567,
+         "p10": 430.8662789851788,
+         "p90": 1677.5576366414728,
+         "arealvektet_snitt": 1116.5711838557577
         }
        ]
       },
-      "n_panel": 78,
+      "n_panel": 124,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 78,
-       "nominell_endring_prosent": -3.631465126943323,
-       "aarlig_gjennomsnittlig_endring_prosent": -1.832523271168529,
+       "n_panel": 124,
+       "nominell_endring_prosent": -5.794468109944284,
+       "aarlig_gjennomsnittlig_endring_prosent": -2.9404657490797015,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -6140,27 +6160,27 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 146,
-         "median": 857.6270671012646,
-         "p10": 505.7222537543509,
-         "p90": 1790.0475926527615,
-         "arealvektet_snitt": 1135.557443388781
+         "n_kommuner": 134,
+         "median": 849.1000993657723,
+         "p10": 507.69587936311086,
+         "p90": 1794.4689864329648,
+         "arealvektet_snitt": 1140.111572610323
         },
         {
          "aargang": 2024,
-         "n_kommuner": 150,
-         "median": 800.0338319239772,
+         "n_kommuner": 140,
+         "median": 791.4655106937887,
          "p10": 467.17776544394593,
-         "p90": 1555.690828004415,
-         "arealvektet_snitt": 1078.9643934814715
+         "p90": 1611.1146218549882,
+         "arealvektet_snitt": 1084.114784399622
         },
         {
          "aargang": 2025,
-         "n_kommuner": 157,
-         "median": 853.9995741631203,
-         "p10": 523.1057067676398,
-         "p90": 1799.2936060475768,
-         "arealvektet_snitt": 1197.8071455316153
+         "n_kommuner": 146,
+         "median": 856.2417308409929,
+         "p10": 526.2843505146046,
+         "p90": 1845.019534376407,
+         "arealvektet_snitt": 1208.3456860015444
         }
        ]
       },
@@ -6169,37 +6189,37 @@
        "punkter": [
         {
          "aargang": 2023,
-         "n_kommuner": 78,
-         "median": 866.1654040066815,
-         "p10": 492.9311630085097,
-         "p90": 2017.7741922697448,
-         "arealvektet_snitt": 1341.1365999142622
+         "n_kommuner": 113,
+         "median": 865.5933444615524,
+         "p10": 539.8343254642712,
+         "p90": 1796.6796833230665,
+         "arealvektet_snitt": 1168.6881133057054
         },
         {
          "aargang": 2024,
-         "n_kommuner": 78,
-         "median": 827.7621059615803,
-         "p10": 491.85798144381675,
-         "p90": 1804.862438279388,
-         "arealvektet_snitt": 1301.418388522831
+         "n_kommuner": 116,
+         "median": 816.5892663428458,
+         "p10": 490.62954999650594,
+         "p90": 1679.0091267079113,
+         "arealvektet_snitt": 1126.95184027197
         },
         {
          "aargang": 2025,
-         "n_kommuner": 78,
-         "median": 890.8362835980442,
-         "p10": 509.3125665963179,
-         "p90": 1977.8993815525535,
-         "arealvektet_snitt": 1494.1519867890588
+         "n_kommuner": 117,
+         "median": 859.0774695329368,
+         "p10": 527.2870813182742,
+         "p90": 1841.443660401355,
+         "arealvektet_snitt": 1240.699921005984
         }
        ]
       },
-      "n_panel": 78,
+      "n_panel": 124,
       "vekst": {
        "fra_aargang": 2023,
        "til_aargang": 2025,
-       "n_panel": 78,
-       "nominell_endring_prosent": 2.848287345262346,
-       "aarlig_gjennomsnittlig_endring_prosent": 1.4141446472149433,
+       "n_panel": 113,
+       "nominell_endring_prosent": -0.7527639821062748,
+       "aarlig_gjennomsnittlig_endring_prosent": -0.37709298665605795,
        "skjult_grunnet_brudd": false,
        "brudd": [],
        "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -6230,13 +6250,14 @@
       }
      },
      "energivarefordeling": {
-      "Bioenergi": 0.0,
-      "Fjernvarme/fjernkjøling": 0.0,
-      "Fyringsolje og fyringsparafin": 0.0,
-      "Naturgass og andre fossile gasser": 0.0,
-      "Strøm": 1.0
+      "Bioenergi": 0.011687203502605622,
+      "Fjernvarme/fjernkjøling": 0.2323168192115074,
+      "Fyringsolje og fyringsparafin": 0.000700927459087169,
+      "Naturgass og andre fossile gasser": 0.004891254660151766,
+      "Strøm": 0.750403795166648
      },
      "fornybarandel_median": 1.0,
+     "fornybarandel_vektet": 0.994407817880761,
      "implisitt_energipris": {
       "n": 227,
       "p10": 0.1291735537190083,
@@ -6286,37 +6307,37 @@
       "punkter": [
        {
         "aargang": 2023,
-        "n_kommuner": 115,
-        "median": 124.945295404814,
-        "p10": 76.66446532224958,
-        "p90": 204.76963613567852,
-        "arealvektet_snitt": 127.01986392495664
+        "n_kommuner": 184,
+        "median": 127.65567765567766,
+        "p10": 78.78980955254698,
+        "p90": 223.2312751530358,
+        "arealvektet_snitt": 131.2742195844299
        },
        {
         "aargang": 2024,
-        "n_kommuner": 115,
-        "median": 119.48790896159318,
-        "p10": 76.65649548789197,
-        "p90": 189.16433818303017,
-        "arealvektet_snitt": 115.78188905336744
+        "n_kommuner": 184,
+        "median": 123.32875457875457,
+        "p10": 76.93283088048072,
+        "p90": 211.12341459445014,
+        "arealvektet_snitt": 121.87001258259028
        },
        {
         "aargang": 2025,
-        "n_kommuner": 115,
-        "median": 116.26694473409802,
-        "p10": 72.05752342463678,
-        "p90": 184.0187822577516,
-        "arealvektet_snitt": 125.13556569163151
+        "n_kommuner": 184,
+        "median": 118.86880112145687,
+        "p10": 75.45949197158875,
+        "p90": 184.6074957961357,
+        "arealvektet_snitt": 123.25567548256487
        }
       ]
      },
-     "n_panel": 115,
+     "n_panel": 184,
      "vekst": {
       "fra_aargang": 2023,
       "til_aargang": 2025,
-      "n_panel": 115,
-      "nominell_endring_prosent": -6.945720239084419,
-      "aarlig_gjennomsnittlig_endring_prosent": -3.5353537502388455,
+      "n_panel": 184,
+      "nominell_endring_prosent": -6.883263396964923,
+      "aarlig_gjennomsnittlig_endring_prosent": -3.5029862622500185,
       "skjult_grunnet_brudd": false,
       "brudd": [],
       "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."
@@ -6345,13 +6366,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.019403640070026755,
+       "Fjernvarme/fjernkjøling": 0.21537946102048425,
+       "Fyringsolje og fyringsparafin": 0.0009248816764896022,
+       "Naturgass og andre fossile gasser": 0.008932658232626617,
+       "Strøm": 0.7553593590003728
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.9901424600908838,
       "implisitt_energipris": {
        "n": 234,
        "p10": 0.10375975359342918,
@@ -6387,13 +6409,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.016160057756877174,
+       "Fjernvarme/fjernkjøling": 0.2053336102498677,
+       "Fyringsolje og fyringsparafin": 0.0006477868929470348,
+       "Naturgass og andre fossile gasser": 0.009271758963936566,
+       "Strøm": 0.7685867861363715
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.9900804541431164,
       "implisitt_energipris": {
        "n": 228,
        "p10": 0.20306213429924772,
@@ -6429,13 +6452,14 @@
        }
       },
       "energivarefordeling": {
-       "Bioenergi": 0.0,
-       "Fjernvarme/fjernkjøling": 0.0,
-       "Fyringsolje og fyringsparafin": 0.0,
-       "Naturgass og andre fossile gasser": 0.0,
-       "Strøm": 1.0
+       "Bioenergi": 0.011687203502605622,
+       "Fjernvarme/fjernkjøling": 0.2323168192115074,
+       "Fyringsolje og fyringsparafin": 0.000700927459087169,
+       "Naturgass og andre fossile gasser": 0.004891254660151766,
+       "Strøm": 0.750403795166648
       },
       "fornybarandel_median": 1.0,
+      "fornybarandel_vektet": 0.994407817880761,
       "implisitt_energipris": {
        "n": 227,
        "p10": 0.1291735537190083,
@@ -7150,8 +7174,11 @@
    }
   },
   "forvaltning": {
-   "n_kjerne": 305,
-   "n_grunnlag": 323
+   "n_kjerne": 311,
+   "n_grunnlag": 330
+  },
+  "kommunenummer_overgang": {
+   "2024": 113
   }
  },
  "forbehold": [
@@ -7167,19 +7194,19 @@
  ],
  "forvaltning": {
   "forklaring": "Funksjon 121 dekker forvaltning av hele eiendomsmassen og har ikke eget areal. Leddet er derfor identisk for alle bygningstyper og publiseres som ett porteføljetall, delt på eid areal for alle seks funksjonene.",
-  "n_kjerne": 305,
+  "n_kjerne": 311,
   "tre_punkt": {
    "lav": {
-    "verdi": 34.100697991564694,
+    "verdi": 33.808797909407666,
     "verdi_avrundet": 35
    },
    "sannsynlig": {
-    "verdi": 81.52207567032015,
+    "verdi": 81.64467731414263,
     "verdi_avrundet": 80
    },
    "hoy": {
-    "verdi": 166.05102846980705,
-    "verdi_avrundet": 165
+    "verdi": 168.06185217931113,
+    "verdi_avrundet": 170
    }
   },
   "historikk": {
@@ -7189,26 +7216,26 @@
     "punkter": [
      {
       "aargang": 2023,
-      "n_kommuner": 328,
-      "median": 71.0742206655147,
-      "p10": 21.147441838036944,
-      "p90": 148.15547181417966,
+      "n_kommuner": 317,
+      "median": 74.57975692312087,
+      "p10": 26.41428894785927,
+      "p90": 148.49522324831364,
       "arealvektet_snitt": null
      },
      {
       "aargang": 2024,
-      "n_kommuner": 319,
-      "median": 74.53888073779082,
-      "p10": 23.020978210044962,
-      "p90": 157.7447408210923,
+      "n_kommuner": 313,
+      "median": 75.76662143826323,
+      "p10": 25.61788585625935,
+      "p90": 157.9862625544422,
       "arealvektet_snitt": null
      },
      {
       "aargang": 2025,
-      "n_kommuner": 323,
-      "median": 78.96909344203085,
-      "p10": 27.94608076170049,
-      "p90": 168.74317214804927,
+      "n_kommuner": 311,
+      "median": 81.64467731414263,
+      "p10": 33.808797909407666,
+      "p90": 168.06185217931113,
       "arealvektet_snitt": null
      }
     ]
@@ -7218,37 +7245,37 @@
     "punkter": [
      {
       "aargang": 2023,
-      "n_kommuner": 181,
-      "median": 74.87599563669295,
+      "n_kommuner": 281,
+      "median": 77.89919779127128,
       "p10": 31.141868512110726,
-      "p90": 141.6271186440678,
+      "p90": 147.1362175117779,
       "arealvektet_snitt": null
      },
      {
       "aargang": 2024,
-      "n_kommuner": 181,
-      "median": 78.63335201239411,
-      "p10": 33.07895870515109,
+      "n_kommuner": 281,
+      "median": 78.97359848300675,
+      "p10": 31.410825199645075,
       "p90": 158.2222111497954,
       "arealvektet_snitt": null
      },
      {
       "aargang": 2025,
-      "n_kommuner": 181,
-      "median": 84.7457627118644,
-      "p10": 39.548022598870055,
-      "p90": 168.9135021402338,
+      "n_kommuner": 281,
+      "median": 84.69965825068148,
+      "p10": 36.994219653179194,
+      "p90": 168.06185217931113,
       "arealvektet_snitt": null
      }
     ]
    },
-   "n_panel": 181,
+   "n_panel": 281,
    "vekst": {
     "fra_aargang": 2023,
     "til_aargang": 2025,
-    "n_panel": 181,
-    "nominell_endring_prosent": 13.1814835866233,
-    "aarlig_gjennomsnittlig_endring_prosent": 6.386786579266168,
+    "n_panel": 281,
+    "nominell_endring_prosent": 8.729820912446161,
+    "aarlig_gjennomsnittlig_endring_prosent": 4.273592492273015,
     "skjult_grunnet_brudd": false,
     "brudd": [],
     "merknad": "Løpende kroner. Nominell vekst inkluderer generell prisstigning."

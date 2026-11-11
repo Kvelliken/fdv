@@ -512,6 +512,88 @@ def bygg_rader(
     return kostnadsrader, energirader
 
 
+# -- Kommunenummer på tvers av årganger -------------------------------------
+
+
+def _navnedeler(etikett: str) -> frozenset[str]:
+    """Kommunenavnet som mengde av navnedeler, uten parenteser.
+
+    «Våler (Viken) (2020-2023)» og «Våler (Østfold)» blir begge {våler}.
+    «Kárásjohka-Karasjok» og «Kárásjohka - Karasjok» blir samme mengde.
+    """
+    import re
+
+    uten_parentes = re.sub(r"\([^)]*\)", " ", etikett).replace("\xa0", " ")
+    return frozenset(d.strip().lower() for d in uten_parentes.split("-") if d.strip())
+
+
+def kommunenummer_overgang(
+    etiketter: Mapping[str, str], konfig: Mapping[str, Any]
+) -> dict[int, dict[str, str]]:
+    """Gammelt -> gjeldende kommunenummer for rene nummerendringer.
+
+    Da Viken, Vestfold og Telemark og Troms og Finnmark ble delt i 2024, fikk
+    113 kommuner nytt nummer uten at grensene endret seg. Uten denne
+    overgangen ser de ut som kommuner som forsvinner og oppstår, og hele
+    Østlandet rundt Oslo og de to nordligste fylkene faller ut av panelet som
+    vekstratene regnes på.
+
+    Overgangen bygges fra kommunenavnene i statistikkbankens metadata, men
+    bare innenfor fylkesparene som står i `config.yaml`. Treffet må være
+    entydig begge veier. Kommuner som faktisk har endret grenser, som Ålesund
+    da Haram ble skilt ut, står ikke i config og kobles derfor ikke.
+
+    Returnerer {første år med nytt nummer: {gammelt nummer: nytt nummer}}.
+    """
+    import re
+
+    er_kommune = re.compile(konfig["region"]["kommune_monster"]).match
+    ut: dict[int, dict[str, str]] = {}
+    for endring in (konfig.get("kommunenummer") or {}).get("endringer") or []:
+        overgang: dict[str, str] = {}
+        uten_treff: list[str] = []
+        for gammelt_fylke, nye_fylker in endring["fylker"].items():
+            gamle = {k: _navnedeler(v) for k, v in etiketter.items()
+                     if er_kommune(k) and k.startswith(str(gammelt_fylke))}
+            nye = {k: _navnedeler(v) for k, v in etiketter.items()
+                   if er_kommune(k) and any(k.startswith(str(f)) for f in nye_fylker)}
+            brukt: dict[str, str] = {}
+            for kode, deler in gamle.items():
+                treff = [n for n, nd in nye.items() if nd == deler]
+                if not treff:
+                    treff = [n for n, nd in nye.items() if nd <= deler or deler <= nd]
+                if len(treff) == 1 and treff[0] not in brukt:
+                    overgang[kode] = treff[0]
+                    brukt[treff[0]] = kode
+                else:
+                    uten_treff.append(f"{kode} {etiketter[kode]}")
+        if uten_treff:
+            logg.warning(
+                "Kommunenummer-overgang %s: %d kommuner uten entydig treff, de "
+                "holdes utenfor panelet: %s",
+                endring["fra_aar"], len(uten_treff), uten_treff,
+            )
+        logg.info(
+            "Kommunenummer-overgang %s: %d kommuner koblet til nytt nummer",
+            endring["fra_aar"], len(overgang),
+        )
+        ut[int(endring["fra_aar"])] = overgang
+    return ut
+
+
+def _regionetiketter(grunnlag: Mapping[str, Any]) -> dict[str, str]:
+    ds = grunnlag["areal"]
+    return dict(ds["dimension"][finn_dim(ds, DIM_REGION)]["category"].get("label") or {})
+
+
+def _panelnokkel(kommune: str, aar: int, overganger: Mapping[int, Mapping[str, str]]) -> str:
+    """Følger en kommune fram til gjeldende nummer, gjennom alle senere overganger."""
+    for fra_aar in sorted(overganger):
+        if aar < fra_aar:
+            kommune = overganger[fra_aar].get(kommune, kommune)
+    return kommune
+
+
 # -- Beregning for alle årganger -------------------------------------------
 
 
@@ -532,12 +614,38 @@ def beregn_alle(
     ener: dict[int, dict[str, energimodul.Energiaar]] = {}
     kodevalg: list[dict[str, Any]] = []
 
+    alle_grunnlag = {aar: les_frosset(rot, aar) for aar in aargang}
+    # Navnene tas fra nyeste årgang: metadata der dekker også utgåtte numre.
+    overganger = kommunenummer_overgang(_regionetiketter(alle_grunnlag[max(aargang)]), konfig)
+    forvaltning_per_aar: dict[int, dict[str, float]] = {}
+    forvaltning_kjerne: dict[int, list[str]] = {}
+    forvaltning_fordeling: dict[int, beregning.Fordeling | None] = {}
+    panelnokler: dict[int, dict[str, str]] = {}
+
     for aar in aargang:
-        grunnlag = les_frosset(rot, aar)
+        grunnlag = alle_grunnlag[aar]
         kodevalg = grunnlag["kodevalg"]
         kostnadsrader, energirader = bygg_rader(grunnlag, konfig, aar)
         kost[aar] = {}
         ener[aar] = {}
+
+        # Forvaltning er ett porteføljetall per kommune. Kjernen bestemmes
+        # først, slik at FDV-summen per bygningstype bare regnes der
+        # forvaltningstallet holder mål.
+        forste = kostnadsrader[next(iter(funksjoner))]
+        forvaltning_per_aar[aar] = beregning.forvaltning_per_kommune(forste)
+        forvaltning_fordeling[aar], forvaltning_kjerne[aar] = beregning.beregn_forvaltning(
+            forvaltning_per_aar[aar], dict(konfig)
+        )
+        i_kjerne = set(forvaltning_kjerne[aar])
+        panelnokler[aar] = {r.kommune: _panelnokkel(r.kommune, aar, overganger) for r in forste}
+        for funksjon in funksjoner:
+            for rad in kostnadsrader[funksjon]:
+                rad.forvaltning_i_kjerne = rad.kommune in i_kjerne
+                rad.panelnokkel = panelnokler[aar][rad.kommune]
+            for erad in energirader[funksjon]:
+                erad.panelnokkel = panelnokler[aar][erad.kommune]
+
         for funksjon in funksjoner:
             kost[aar][funksjon] = beregning.beregn_funksjonsaar(
                 kostnadsrader[funksjon], dict(konfig), dict(terskler) if terskler else None
@@ -561,6 +669,16 @@ def beregn_alle(
             if post == "forvaltning":
                 continue  # publiseres én gang, på porteføljenivå
             normtall[post] = utdata.avrund_tre_punkt(punkt, kr_naer)
+        # Delpostene avrundes slik at de summerer til avrundet D+V. Ellers går
+        # ikke budsjettabellen opp, selv om de uavrundede tallene gjør det.
+        delposter = [p for p in ("energi", "renhold", "ovrig_drift", "vedlikehold") if p in normtall]
+        if "dv" in normtall and len(delposter) == 4:
+            for nivaa in ("lav", "sannsynlig", "hoy"):
+                avrundet = utdata.avrund_summerbart(
+                    {p: siste_kost.forankret[p][nivaa] for p in delposter}, kr_naer
+                )
+                for p in delposter:
+                    normtall[p][nivaa]["verdi_avrundet"] = avrundet[p]
         egne = {
             post: {
                 "n": f.n,
@@ -575,18 +693,21 @@ def beregn_alle(
         }
 
         # Historikk per post, kostnad
+        # Alt som sammenlignes mellom år nøkles på panelnøkkelen, ikke på
+        # kommunenummeret: 113 kommuner skiftet nummer i 2024.
         hist: dict[str, Any] = {}
-        kjerne_per_aar = {a: kost[a][funksjon].kommuner_kjerne for a in vist}
+        kjernerader = {
+            a: [r for r in kost[a][funksjon].rader
+                if r.kommune in set(kost[a][funksjon].kommuner_kjerne)]
+            for a in vist
+        }
+        kjerne_per_aar = {a: [r.panelnokkel for r in kjernerader[a]] for a in vist}
         arealer_per_aar = {
-            a: {r.kommune: r.areal or 0.0 for r in kost[a][funksjon].rader} for a in vist
+            a: {r.panelnokkel: r.areal or 0.0 for r in kost[a][funksjon].rader} for a in vist
         }
         for post in beregning.POSTER:
             verdier = {
-                a: {
-                    r.kommune: r.per_m2[post]
-                    for r in kost[a][funksjon].rader
-                    if r.kommune in set(kost[a][funksjon].kommuner_kjerne) and post in r.per_m2
-                }
+                a: {r.panelnokkel: r.per_m2[post] for r in kjernerader[a] if post in r.per_m2}
                 for a in vist
             }
             if not any(verdier.values()):
@@ -596,17 +717,17 @@ def beregn_alle(
             )
 
         # Historikk, energi
-        energi_kjerne = {a: ener[a][funksjon].kommuner_kjerne for a in vist}
-        energi_verdier = {
-            a: {
-                r.kommune: r.kwh_m2
-                for r in ener[a][funksjon].rader
-                if r.kommune in set(ener[a][funksjon].kommuner_kjerne) and r.kwh_m2 is not None
-            }
+        energi_kjernerader = {
+            a: [r for r in ener[a][funksjon].rader
+                if r.kommune in set(ener[a][funksjon].kommuner_kjerne) and r.kwh_m2 is not None]
             for a in vist
         }
+        energi_kjerne = {a: [r.panelnokkel for r in energi_kjernerader[a]] for a in vist}
+        energi_verdier = {
+            a: {r.panelnokkel: r.kwh_m2 for r in energi_kjernerader[a]} for a in vist
+        }
         energi_arealer = {
-            a: {r.kommune: r.areal or 0.0 for r in ener[a][funksjon].rader} for a in vist
+            a: {r.panelnokkel: r.areal or 0.0 for r in ener[a][funksjon].rader} for a in vist
         }
         energihistorikk = historikk.bygg_historikk(
             energi_verdier, energi_kjerne, funksjon, "kwh_per_m2",
@@ -634,16 +755,17 @@ def beregn_alle(
 
     # Forvaltning er ett porteføljetall. Det beregnes én gang, ikke som seks
     # nesten like tall som bare skiller seg fordi kjerneutvalget varierer.
-    forste_funksjon = next(iter(funksjoner))
-    forvaltning_per_aar = {
-        a: beregning.forvaltning_per_kommune(kost[a][forste_funksjon].rader) for a in vist
+    siste = vist[-1]
+    fordeling_forvaltning = forvaltning_fordeling[siste]
+    # Nivå- og panelserien regnes på kjernen, samme utvalg som tre-punktstallet.
+    # Ellers viser tidsserien og hovedtallet to ulike medianer for samme år.
+    forvaltning_verdier = {
+        a: {
+            panelnokler[a][k]: forvaltning_per_aar[a][k] for k in forvaltning_kjerne[a]
+        }
+        for a in vist
     }
-    fordeling_forvaltning, kjerne_forvaltning = beregning.beregn_forvaltning(
-        forvaltning_per_aar[vist[-1]], dict(konfig)
-    )
-    kjerne_forvaltning_per_aar = {
-        a: beregning.beregn_forvaltning(forvaltning_per_aar[a], dict(konfig))[1] for a in vist
-    }
+    kjerne_forvaltning_per_aar = {a: list(forvaltning_verdier[a]) for a in vist}
     forvaltning_blokk = {
         "forklaring": (
             "Funksjon 121 dekker forvaltning av hele eiendomsmassen og har ikke eget "
@@ -660,7 +782,7 @@ def beregn_alle(
             kr_naer,
         ),
         "historikk": historikk.bygg_historikk(
-            forvaltning_per_aar,
+            forvaltning_verdier,
             kjerne_forvaltning_per_aar,
             "121",
             "forvaltning",
@@ -697,6 +819,9 @@ def beregn_alle(
         "n_kjerne": forvaltning_blokk["n_kjerne"],
         "n_grunnlag": len(forvaltning_per_aar[vist[-1]]),
     }
+    datakvalitet["kommunenummer_overgang"] = {
+        str(fra_aar): len(overgang) for fra_aar, overgang in overganger.items()
+    }
 
     normtall = utdata.bygg_normtall(
         konfig=konfig,
@@ -724,6 +849,7 @@ def _energi_ut(e: energimodul.Energiaar, kwh_naer: int) -> dict[str, Any]:
         },
         "energivarefordeling": e.energivarer,
         "fornybarandel_median": e.fornybarandel_median,
+        "fornybarandel_vektet": e.fornybarandel_vektet,
         "implisitt_energipris": e.implisitt_pris,
         "temperaturkorrigert": False,
     }

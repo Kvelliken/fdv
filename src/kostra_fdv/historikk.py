@@ -180,7 +180,7 @@ def vekstrater(
     if serie.navn != "panel":
         raise ValueError(
             f"Vekstrater skal regnes på panelserien, ikke på {serie.navn!r}. "
-            "Se METODE.md kap. 4.2."
+            "Se METODE.md kap. 9."
         )
     gyldige = [p for p in serie.punkter if p.median is not None and p.n > 0]
     if len(gyldige) < 2:

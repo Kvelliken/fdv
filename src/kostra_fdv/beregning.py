@@ -112,13 +112,42 @@ class Kommunerad:
     portefoljeareal: float | None = None
     kroner: dict[str, float | None] = field(default_factory=dict)
     forvaltning_kroner: float | None = None
+    # Settes til False av pipelinen når kommunens forvaltningstall er en
+    # uteligger på porteføljenivå. Da inngår det ikke i FDV-summen.
+    forvaltning_i_kjerne: bool = True
+    # Identitet på tvers av årganger. Lik kommunenummeret, bortsett fra for
+    # kommuner som har skiftet nummer uten å endre grenser: da er dette det
+    # gjeldende nummeret, slik at kommunen ikke faller ut av panelet.
+    panelnokkel: str = ""
     flagg: list[str] = field(default_factory=list)
     per_m2: dict[str, float] = field(default_factory=dict)
 
+    def __post_init__(self) -> None:
+        if not self.panelnokkel:
+            self.panelnokkel = self.kommune
+
     # -- avledede størrelser --
+
+    def forvaltning_per_m2(self) -> float | None:
+        """Forvaltning delt på porteføljearealet. None = ikke rapportert.
+
+        Null kroner på funksjon 121 betyr at forvaltningen er ført et annet
+        sted, ikke at den er gratis. Det behandles som manglende, på linje
+        med `drift_null`.
+        """
+        if self.forvaltning_kroner is None or self.forvaltning_kroner <= 0:
+            return None
+        if not self.portefoljeareal or self.portefoljeareal <= 0:
+            return None
+        return self.forvaltning_kroner / self.portefoljeareal
 
     def beregn_per_m2(self) -> None:
         self.per_m2 = {}
+        # Forvaltning er et porteføljetall og avhenger ikke av om kommunen
+        # har areal i akkurat denne bygningsfunksjonen.
+        forvaltning = self.forvaltning_per_m2()
+        if forvaltning is not None:
+            self.per_m2["forvaltning"] = forvaltning
         areal = self.areal
         if not areal or areal <= 0:
             return
@@ -142,12 +171,11 @@ class Kommunerad:
 
         # Forvaltning er et porteføljetall: funksjon 121 har ikke eget areal,
         # og deles derfor på eid areal for alle seks funksjonene. Leddet blir
-        # identisk for alle bygningstyper i samme kommune.
-        if self.forvaltning_kroner is not None and self.portefoljeareal:
-            forvaltning = self.forvaltning_kroner / self.portefoljeareal
-            self.per_m2["forvaltning"] = forvaltning
-            if "dv" in self.per_m2:
-                self.per_m2["fdv"] = self.per_m2["dv"] + forvaltning
+        # identisk for alle bygningstyper i samme kommune. FDV regnes bare
+        # der forvaltningstallet er rapportert og ikke er en uteligger:
+        # ellers er «FDV» i praksis bare D+V, og trekker fordelingen ned.
+        if forvaltning is not None and self.forvaltning_i_kjerne and "dv" in self.per_m2:
+            self.per_m2["fdv"] = self.per_m2["dv"] + forvaltning
 
     @property
     def ren(self) -> bool:
@@ -380,8 +408,8 @@ def forvaltning_per_kommune(rader: Iterable[Kommunerad]) -> dict[str, float]:
     """
     ut: dict[str, float] = {}
     for rad in rader:
-        verdi = rad.per_m2.get("forvaltning")
-        if verdi is not None and verdi > 0:
+        verdi = rad.forvaltning_per_m2()
+        if verdi is not None:
             ut[rad.kommune] = verdi
     return ut
 

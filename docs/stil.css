@@ -224,7 +224,65 @@ code {
   padding: 0.1em 0.3em;
 }
 
+/* Lesehjelp */
+.lesehjelp { padding: 1.75rem 0; }
+.trepunkt { display: grid; gap: 1.25rem 2rem; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); margin: 0; }
+.trepunkt dt { font-weight: 700; }
+.trepunkt dd { margin: 0.2rem 0 0; color: var(--demp); font-size: 0.95rem; }
+
+/* Kalkulator */
+.skjemarad { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: flex-end; margin: 1.5rem 0 0.75rem; }
+.felt { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.85rem; color: var(--demp); border: 0; padding: 0; margin: 0; min-width: 0; }
+.felt-bred { flex: 1 1 260px; max-width: 380px; }
+.felt legend { padding: 0; margin-bottom: 0.3rem; }
+.felt.valg label { color: var(--blekk); font-size: 0.95rem; display: flex; gap: 0.4rem; align-items: center; }
+input[type="search"], input[type="number"], input[type="text"] {
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  color: var(--blekk);
+  background: var(--flate);
+  border: 1px solid var(--linje);
+  border-radius: 2px;
+  padding: 0.45rem 0.6rem;
+  width: 100%;
+}
+input[type="number"] { width: 7.5rem; }
+input:focus-visible { outline: 2px solid var(--signal); outline-offset: 1px; }
+input[type="radio"] { accent-color: var(--signal); }
+.arealfelt { text-align: right; width: 7rem; min-width: 7rem; padding: 0.3rem 0.5rem; }
+
+.resultat { background: var(--flate); border-left: 3px solid var(--signal); padding: 1.1rem 1.25rem; margin: 1.25rem 0 0.5rem; }
+.resultat-tall { font-size: clamp(2.2rem, 7vw, 3.75rem); line-height: 1; letter-spacing: -0.02em; margin: 0.3rem 0 0.6rem; }
+.resultat .hero-under { margin: 0; }
+
+tfoot td, tfoot th { border-bottom: 0; border-top: 1px solid var(--blekk); font-weight: 700; }
+#kalkulator td, #kalkulator th { vertical-align: middle; }
+.egen-kol, .kr-kol { display: none; }
+table.med-egen .egen-kol, table.med-kr .kr-kol { display: table-cell; }
+.egenmerke { display: block; }
+.egenmerke.utenfor { color: var(--varsel); }
+.egenmerke.usikker { color: var(--varsel); text-decoration: underline dotted; cursor: help; }
+.spenn .egenprikk { stroke: var(--varsel); stroke-width: 6; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+
+.knapper { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem; }
+.knapp {
+  font: inherit;
+  color: var(--papir);
+  background: var(--blekk);
+  border: 1px solid var(--blekk);
+  border-radius: 2px;
+  padding: 0.45rem 0.9rem;
+  cursor: pointer;
+}
+.knapp-stille { background: transparent; color: var(--blekk); border-color: var(--linje); }
+.knapp:hover { border-color: var(--signal); }
+
+.velger h2 { margin-bottom: 0.25rem; }
+.velger { padding-top: 2.75rem; }
+.seksjonstittel { font-size: 1.4rem; letter-spacing: -0.01em; margin: 0 0 0.35rem; }
+
 @media (max-width: 640px) {
   body { font-size: 16px; }
   .lenker { columns: 1; }
 }
+#kalkulator { min-width: 720px; }

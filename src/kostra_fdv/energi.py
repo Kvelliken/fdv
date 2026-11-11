@@ -38,11 +38,16 @@ class Energirad:
     # fjernvarmen i den enkelte kommunen er.
     fornybar_kwh: float | None = None
     energiutgift_kr: float | None = None
+    panelnokkel: str = ""  # se Kommunerad.panelnokkel
     flagg: list[str] = field(default_factory=list)
     kwh_m2: float | None = None
     andeler: dict[str, float] = field(default_factory=dict)
     fornybarandel: float | None = None
     implisitt_pris: float | None = None
+
+    def __post_init__(self) -> None:
+        if not self.panelnokkel:
+            self.panelnokkel = self.kommune
 
     @property
     def sum_kwh(self) -> float | None:
@@ -131,11 +136,12 @@ class Energiaar:
     n_kjerne: int
     frafall: dict[str, int]
     kwh_m2: Fordeling | None
-    energivarer: dict[str, float]          # medianandel per vare
+    energivarer: dict[str, float]          # andel av samlet kWh per vare
     fornybarandel_median: float | None
     implisitt_pris: dict[str, float]       # fordeling som kvalitetsindikator
     kommuner_kjerne: list[str]
     rader: list[Energirad] = field(default_factory=list)
+    fornybarandel_vektet: float | None = None  # andel av samlet kWh
 
     def som_dict(self) -> dict[str, Any]:
         return {
@@ -147,6 +153,7 @@ class Energiaar:
             "kwh_per_m2": self.kwh_m2.som_dict() if self.kwh_m2 else None,
             "energivarefordeling": self.energivarer,
             "fornybarandel_median": self.fornybarandel_median,
+            "fornybarandel_vektet": self.fornybarandel_vektet,
             "implisitt_energipris": self.implisitt_pris,
             "temperaturkorrigert": False,
             "gratisvarme_inkludert": False,
@@ -199,16 +206,26 @@ def beregn_energiaar(
             arealvektet=arealvektet([v * a for v, a in zip(verdier, arealer)], arealer),
         )
 
+    # Fordelingen på energivare er samlet kWh per vare delt på samlet kWh i
+    # kjernen. Medianen av kommunenes andeler duger ikke her: de fleste
+    # kommuner har null fjernvarme og null bio, så medianandelen blir null for
+    # alt annet enn strøm, og fordelingen viser 100 % strøm uansett hvor mye
+    # fjernvarme som faktisk brukes.
     varer: dict[str, float] = {}
-    alle_varer = sorted({vare for r in kjerne for vare in r.andeler})
-    for vare in alle_varer:
-        andeler = [r.andeler.get(vare, 0.0) for r in kjerne]
-        if andeler:
-            varer[vare] = median(andeler)
-    # Medianandelene normaliseres slik at de summerer til 1.
-    sum_andeler = sum(varer.values())
-    if sum_andeler > 0:
-        varer = {v: a / sum_andeler for v, a in varer.items()}
+    sum_alle = sum(r.sum_kwh or 0.0 for r in kjerne)
+    if sum_alle > 0:
+        for vare in sorted({vare for r in kjerne for vare in r.kwh}):
+            varer[vare] = sum(r.kwh.get(vare) or 0.0 for r in kjerne) / sum_alle
+
+    # Samme begrunnelse for fornybarandelen: medianen er 100 % så snart over
+    # halvparten av kommunene bare bruker strøm.
+    med_fornybar = [r for r in kjerne if r.fornybarandel is not None and r.sum_kwh]
+    sum_fornybar_grunnlag = sum(r.sum_kwh for r in med_fornybar)
+    fornybar_vektet = (
+        sum(r.fornybarandel * r.sum_kwh for r in med_fornybar) / sum_fornybar_grunnlag
+        if sum_fornybar_grunnlag > 0
+        else None
+    )
 
     fornybar = [r.fornybarandel for r in kjerne if r.fornybarandel is not None]
     priser = [r.implisitt_pris for r in kjerne if r.implisitt_pris is not None]
@@ -236,6 +253,7 @@ def beregn_energiaar(
         kwh_m2=fordeling,
         energivarer=varer,
         fornybarandel_median=median(fornybar) if fornybar else None,
+        fornybarandel_vektet=fornybar_vektet,
         implisitt_pris=pris,
         kommuner_kjerne=sorted(r.kommune for r in kjerne),
         rader=rader,

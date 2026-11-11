@@ -170,6 +170,19 @@ region:
   landsaggregat_krev: ["landet"]
   landsaggregat_unnta: ["uten"]
 
+# Rene nummerendringer: kommuner som fikk nytt nummer uten at grensene endret
+# seg. Da Viken, Vestfold og Telemark og Troms og Finnmark ble delt 1.1.2024,
+# gjaldt det 113 kommuner. De kobles på navn innenfor fylkesparene under, slik
+# at de ikke faller ut av det balanserte panelet. Kommuner som faktisk endret
+# grenser (Ålesund/Haram 2024) skal IKKE stå her.
+kommunenummer:
+  endringer:
+    - fra_aar: 2024
+      fylker:
+        "30": ["31", "32", "33"]   # Viken -> Østfold, Akershus, Buskerud
+        "38": ["39", "40"]         # Vestfold og Telemark -> Vestfold, Telemark
+        "54": ["55", "56"]         # Troms og Finnmark -> Troms, Finnmark
+
 enheter:  # ANTAKELSER, verifiseres av avstemmingstesten ved første kjøring.
   kroner_faktor: 1000     # statistikkbanken oppgir beløp i 1000 kr
   energi_faktor: 1000     # MWh -> kWh

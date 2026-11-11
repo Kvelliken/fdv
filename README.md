@@ -11,7 +11,7 @@ i [METODE.md](METODE.md).
 
 ```bash
 pip install -e ".[test]"
-pytest -q                                  # 81 tester, ingen nett
+pytest -q                                  # ingen nett
 python -m kostra_fdv.cli hent --aargang alle
 KOSTRA_NETT=1 pytest tests/test_nett.py -q  # blokkerende avstemming
 python -m kostra_fdv.cli beregn
@@ -55,7 +55,7 @@ tests/                   enhetstester, syntetisk grunnlag, nett-tester
 det ingenting å regne på mellom KOSTRA-publiseringene, så de fleste kjøringene
 ender uten commit. Det er forventet.
 
-## Fem ting som er lette å gjøre feil
+## Seks ting som er lette å gjøre feil
 
 1. **Summere energi + renhold + drift.** Drift inneholder de to andre. Bare
    drift og vedlikehold kan summeres.
@@ -70,6 +70,9 @@ ender uten commit. Det er forventet.
 5. **Summere delpostenes lav og høy.** Delpostene er nesten ukorrelerte, så
    summen av P10 blir for lav og summen av P90 for høy. Bruk det forankrede
    settet.
+
+6. **Følge kommuner på kommunenummer over tid.** 113 kommuner skiftet nummer
+   i 2024 uten å endre grenser. Bruk `panelnokkel`.
 
 ## Lisens og kilde
 

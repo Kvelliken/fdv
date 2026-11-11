@@ -67,6 +67,13 @@ porteføljetall med eget kjerneutvalg, og ikke som seks nesten like tall. Seks
 varianter ville bare skilt seg fordi kjerneutvalget varierer per bygningstype,
 og det ville vært en forskjell uten innhold.
 
+Null kroner på funksjon 121 betyr at forvaltningen er ført et annet sted, ikke
+at den er gratis. Slike kommuner behandles som ikke rapportert, på linje med
+`drift_null`. FDV-summen per bygningstype regnes bare for kommuner som har et
+forvaltningstall innenfor porteføljekjernen. Ellers ville «FDV» for disse
+kommunene i praksis vært D+V alene, og trukket FDV-fordelingen ned. FDV har
+derfor et litt mindre utvalg enn D+V, og antallet står ved tallet.
+
 Energibruk har ikke denne begrensningen: skjema 35 fordeler kWh på de samme
 seks funksjonene som arealskjemaet. Se kapittel 9 om hva som gjenstår å
 verifisere.
@@ -145,6 +152,11 @@ Begge sett publiseres: `normtall_forankret` er det som skal summeres,
 JSON sier hvilket som er hvilket. Medianandelene normaliseres slik at
 nedbrytingen summerer eksakt til D+V.
 
+De fire delpostene avrundes samlet, med største rests metode, slik at også de
+avrundede tallene summerer til avrundet D+V. Avrundes hver post for seg til
+nærmeste 5, kan summen bomme med 5 eller 10 kr/m², og da går ikke en
+budsjettabell opp. Ingen post flyttes mer enn ett trinn fra sin egen avrunding.
+
 ### Vedlikehold krever eget sentralmål
 
 Vedlikehold er periodisk. Samme kommune kan ligge på 30 kr/m² tre år på rad og
@@ -161,6 +173,13 @@ trimmet snitt**, og det står i JSON som
 Samme metode som kostnadssiden: kWh delt på eid areal, per funksjon, med
 log-Tukey og tre-punktsmodell. Publisert per bygningstype: total kWh/m²,
 fordeling på energivare, og andel fornybar.
+
+Fordelingen på energivare og fornybarandelen er andeler av samlet kWh i
+kjernen, ikke medianer over kommuner. De fleste kommuner har verken fjernvarme
+eller bio, så medianandelen er null for alt annet enn strøm, og en
+medianbasert fordeling viser 100 % strøm uansett hvor mye fjernvarme som
+faktisk brukes. Medianen av fornybarandelen ligger fortsatt i JSON, som
+`fornybarandel_median`, men vises ikke.
 
 Feilmodusen er en annen enn på kostnadssiden. Der oppstår nuller fordi
 kostnaden er ført et annet sted. Her ber SSB rapportøren anslå tall når
@@ -272,8 +291,26 @@ en kort beskrivelse. Berører et brudd en publisert serie, markeres bruddet på
 nettsiden og vekstraten over bruddpunktet skjules.
 
 Listen er tom inntil et brudd faktisk er dokumentert. Den skal ikke fylles med
-gjetninger. Kommunestrukturen har vært stabil siden 2020, så for fem årganger
-bakover er det først og fremst kontoplanendringer som er aktuelle.
+gjetninger.
+
+### Kommunenummer som skifter
+
+Kommunegrensene har stort sett ligget fast siden 2020, men kommunenumrene har
+ikke det. Da Viken, Vestfold og Telemark og Troms og Finnmark ble delt
+1.1.2024, fikk 113 kommuner nytt nummer. Statistikkbanken fører dem som to
+ulike regioner: «Halden (2020-2023)» med nummer 3001 og «Halden» med 3101.
+
+Nøkles panelet på kommunenummer, faller alle 113 ut, og vekstratene regnes
+uten Østfold, Akershus, Buskerud, Vestfold, Telemark, Troms og Finnmark.
+Feilen gir ingen feilmelding, bare et panel på omtrent to tredeler av det det
+skulle vært.
+
+Derfor har hver rad en `panelnokkel`: gjeldende kommunenummer. Overgangen
+bygges fra kommunenavnene i statistikkbankens metadata, men bare innenfor
+fylkesparene som står under `kommunenummer` i `config.yaml`, og treffet må
+være entydig begge veier. Kommuner som faktisk endret grenser kobles ikke:
+Ålesund før og etter at Haram ble skilt ut er to ulike kommuner. Revisjonsfilen
+har både nummeret tallet står under i statistikkbanken og det gjeldende.
 
 ### Avrunding
 
@@ -323,6 +360,14 @@ Blokkerende:
   hentet for ulik årgang, ulik sektor eller ulikt arealgrunnlag.
 * **Panelkonsistens.** Panelet skal ha like mange kommuner i alle år og være en
   delmengde av hvert års nivåutvalg.
+
+* **Avstemming av frosset grunnlag.** Samme avstemming mot landsaggregatet,
+  men kjørt uten nett på det frosne grunnlaget, for alle årganger, ved hver
+  push. Landsraden ligger i de samme filene.
+* **Uavhengig etterregning.** Publiserte normtall regnes på nytt fra
+  revisjonsfilene med en egen, enkel implementasjon, og skal stemme eksakt.
+* **Panelstørrelse.** Panelet skal være minst tre firedeler av nivåutvalget.
+  Fanger at kommuner faller ut på grunn av nummerendring.
 
 De to første krever nett og kjøres av `grunnlag.yml` ved hver henting, eller
 lokalt med `KOSTRA_NETT=1 pytest tests/test_nett.py`.
@@ -429,3 +474,47 @@ graddagskorreksjonen selv, og den koster ett ekstra uttrekk.
 **Andre skjæringer.** Kommunegruppe, fylke, innbyggertall. Store kommuner
 rapporterer systematisk høyere vedlikehold og har halvparten så stor spredning
 som små, så gruppering på størrelse vil gi bedre normtall enn ett landstall.
+
+## 14. Kvalitetssikring november 2026
+
+Hele kjeden ble gjennomgått og etterregnet fra det frosne grunnlaget.
+
+### Bekreftet
+
+* **Enhet og sektor.** Summen av kommunene avviker fra landsaggregatet med
+  0–3 % for kroner, areal og kWh, i alle fem årganger og alle seks
+  funksjoner. Feil enhet eller dobbelttelling ville gitt faktor 2 til 1000.
+* **Statistikken.** P10, median og P90 for D+V og FDV er regnet på nytt fra
+  revisjonsfilene med en uavhengig implementasjon, og stemmer eksakt.
+* **Ingen stille frafall.** Alle kommuner utenfor kjernen har et flagg som
+  forklarer hvorfor.
+
+### Feil som ble rettet
+
+| Feil | Virkning | Rettet ved |
+|---|---|---|
+| Kommunenummer skiftet i 2024 | Panelet mistet 113 kommuner. Vekst i D+V for skolelokaler var +1,9 %, er −0,6 %. Forvaltning var +13,2 %, er +8,7 %. | `panelnokkel`, se kapittel 9 |
+| Forvaltning på null kroner regnet som gratis | FDV for lavt for 5–11 kommuner per bygningstype. Lav FDV flyttet seg opptil 27 kr/m². | Null er ikke rapportert, se kapittel 3 |
+| Forvaltning hentet via administrasjonslokalenes areal | Kommuner uten slikt areal mistet forvaltningstallet. | Regnes direkte på porteføljen |
+| Tidsserien for forvaltning regnet på et annet utvalg enn hovedtallet | To ulike medianer for samme år. | Begge regnes på kjernen |
+| Energivarefordeling som median av andeler | Viste 100 % strøm. Riktig er 75–91 %, resten mest fjernvarme. | Andel av samlet kWh, se kapittel 8 |
+| Delposter avrundet hver for seg | Summen bommet på D+V med 5–10 kr/m². | Samlet avrunding, se kapittel 7 |
+
+Normtallene for D+V er uendret av rettelsene. FDV, vekstratene og
+energivarefordelingen er endret.
+
+### Ikke avklart
+
+* **Nevneren er eid areal, telleren kan inneholde leide bygg.** Utgifter på en
+  byggfunksjon omfatter også lokaler kommunen leier, mens arealet her er eid.
+  En kommune som leier mye får for høye kr/m². Avklares av
+  `test_sammenlign_med_ssbs_egen_kr_per_m2`, som krever nett.
+* **Filteret på renhold fjerner mange.** For idrettsbygg og kulturbygg holdes
+  rundt 125 av 344 kommuner ute fordi renhold er under 50 kr/m². Kjernen er
+  da kommunene med mest fullstendig rapportering, og de er ikke nødvendigvis
+  representative. Med halverte terskler faller median D+V for idrettsbygg fra
+  838 til 773 kr/m². Normtallene for disse to bygningstypene er derfor
+  vesentlig mer usikre enn for skoler og barnehager.
+* **Energibruk for administrasjonslokaler i 2024** er 60 % høyere enn årene
+  rundt på landsnivå. Det ser ut som én kommune har rapportert i feil enhet.
+  Flagget `kwh_urimelig_hoy` holder den ute av normtallet.
