@@ -1,288 +1,158 @@
-:root {
-  --papir: #edf0ee;
-  --flate: #f7f9f8;
-  --blekk: #16302b;
-  --demp: #566661;
-  --linje: #c7d2cd;
-  --spenn: #bacbc2;
-  --signal: #0c5c8a;
-  --varsel: #8a5b00;
-  --maal: 74ch;
-  --bredde: 1080px;
-}
+/* Sideoppsett for FDV-normtall. Farger, skrift, avstander og komponenter
+   kommer fra Vargvind designsystem i vargvind.css. Her står bare det som er
+   særegent for denne siden. Vargvind har ett tema, lyst: logoen skal ikke stå
+   på mørk bakgrunn, så siden følger ikke mørk modus. */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --papir: #101917;
-    --flate: #172422;
-    --blekk: #e6ece9;
-    --demp: #9aada7;
-    --linje: #2c3b37;
-    --spenn: #2f4b43;
-    --signal: #63b3e0;
-    --varsel: #d9a441;
-  }
-}
+:root { color-scheme: light; --maal: 68ch; --bredde: 1080px; }
 
 * { box-sizing: border-box; }
-
 html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  padding: 0 1.25rem 5rem;
-  background: var(--papir);
-  color: var(--blekk);
-  font-family: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
-  font-size: 17px;
-  line-height: 1.55;
+  padding-block: 0 var(--space-16);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  background: var(--bg-100);
+  color: var(--ink-700);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 26px;
   font-variant-numeric: tabular-nums;
 }
 
-.hopp {
-  position: absolute;
-  left: -9999px;
+.hopp { position: absolute; left: -9999px; }
+.hopp:focus { left: 1rem; top: 1rem; background: var(--bg-000); padding: var(--space-2) var(--space-3); z-index: 10; }
+
+.topp, main, footer { max-width: var(--bredde); margin: 0 auto; }
+.topp { padding: var(--space-8) 0 var(--space-12); border-bottom: 1px solid var(--line-200); }
+.logo { display: block; width: 200px; height: auto; margin: 0 0 var(--space-12) -8px; }
+
+h1, h2, .seksjonstittel {
+  font-family: var(--font-display);
+  color: var(--ink-900);
+  text-wrap: balance;
 }
-.hopp:focus {
-  left: 1rem;
-  top: 1rem;
-  background: var(--flate);
-  padding: 0.5rem 0.75rem;
-  z-index: 10;
+h1 { font-size: clamp(38px, 6vw, 56px); line-height: 1.05; font-weight: 500; margin: var(--space-2) 0 var(--space-4); max-width: 18ch; }
+h2, .seksjonstittel { font-size: 28px; line-height: 1.2; font-weight: 600; margin: 0 0 var(--space-2); }
+h3 { font-size: 16px; line-height: 24px; font-weight: 600; color: var(--ink-900); margin: var(--space-8) 0 var(--space-3); }
+
+p { margin: 0 0 var(--space-4); max-width: var(--maal); }
+a { color: var(--brand-600); }
+strong { color: var(--ink-900); font-weight: 600; }
+
+.overline, .kilde, .hero-merke, .felt > span, .felt legend {
+  font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--ink-500); margin: 0;
 }
+.ingress { font-size: 18px; line-height: 28px; }
+.fotnote { font-size: 12px; line-height: 18px; font-weight: 500; color: var(--ink-500); }
 
-.topp, main, footer {
-  max-width: var(--bredde);
-  margin: 0 auto;
-}
+section { padding: var(--space-12) 0; border-bottom: 1px solid var(--line-200); }
+.skjult { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-.topp { padding: 3.5rem 0 2rem; border-bottom: 1px solid var(--linje); }
-
-h1 {
-  font-size: clamp(1.9rem, 4.5vw, 3rem);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  margin: 0.4rem 0 1rem;
-  max-width: 20ch;
-}
-
-h2 {
-  font-size: 1.4rem;
-  letter-spacing: -0.01em;
-  margin: 0 0 0.35rem;
-}
-
-h3 {
-  font-size: 1.05rem;
-  margin: 2rem 0 0.6rem;
-}
-
-p { margin: 0 0 1rem; max-width: var(--maal); }
-
-.kilde, .hero-merke, .velger-tittel {
-  font-size: 0.85rem;
-  color: var(--demp);
-  margin: 0;
-}
-
-.ingress { font-size: 1.08rem; }
-
-.forklaring { color: var(--demp); }
-
-.fotnote { font-size: 0.86rem; color: var(--demp); }
-
-.advarsel {
-  border-left: 3px solid var(--varsel);
-  padding-left: 0.9rem;
-  color: var(--blekk);
-}
-
-section { padding: 2.75rem 0; border-bottom: 1px solid var(--linje); }
-
-.skjult {
-  position: absolute;
-  width: 1px; height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
-
-/* Bygningstypevelger */
-.velger { padding: 1.75rem 0 0; }
-.knapperad { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
-
-.knapperad button {
-  font: inherit;
-  color: var(--blekk);
-  background: transparent;
-  border: 1px solid var(--linje);
-  border-radius: 2px;
-  padding: 0.4rem 0.8rem;
-  cursor: pointer;
-}
-.knapperad button:hover { border-color: var(--signal); }
-.knapperad button[aria-selected="true"] {
-  background: var(--blekk);
-  color: var(--papir);
-  border-color: var(--blekk);
-}
-button:focus-visible, a:focus-visible {
-  outline: 2px solid var(--signal);
-  outline-offset: 2px;
-}
-
-/* Hero */
-.hero { padding-top: 2.25rem; border-bottom: 1px solid var(--linje); }
-.hero-tall {
-  font-size: clamp(3rem, 11vw, 6rem);
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  margin: 0.2rem 0 1.25rem;
-}
-.hero-tall .enhet {
-  font-size: 1rem;
-  letter-spacing: 0;
-  color: var(--demp);
-}
-.hero-under { max-width: 62ch; color: var(--demp); }
-
-/* Spennbar */
-.spenn { width: 100%; height: 34px; display: block; }
-.spenn .bane { fill: var(--spenn); }
-.spenn .tick { stroke: var(--signal); stroke-width: 3; }
-.spenn .merke { fill: var(--demp); font-size: 11px; }
-
-.hero .spenn { height: 58px; }
-
-/* Tabeller */
-.tabellramme { overflow-x: auto; }
-table {
-  border-collapse: collapse;
-  width: 100%;
-  min-width: 560px;
-  margin: 1.25rem 0 0.75rem;
-  font-size: 0.95rem;
-}
-th, td {
-  text-align: left;
-  padding: 0.55rem 0.7rem 0.55rem 0;
-  border-bottom: 1px solid var(--linje);
-  vertical-align: baseline;
-}
-thead th {
-  font-size: 0.8rem;
-  color: var(--demp);
-  font-weight: 400;
-  border-bottom: 1px solid var(--blekk);
-}
-td.tall, th.tall { text-align: right; }
-tbody tr.sum td { font-weight: 700; }
-tbody tr.portefolje td { color: var(--demp); }
-td.spennkol, th.spennkol { width: 34%; min-width: 180px; }
-.postnavn { display: block; }
-.postmerke { font-size: 0.78rem; color: var(--demp); }
-
-.vekst-opp { color: var(--blekk); }
-.brudd { color: var(--varsel); }
-
-/* Energivarer */
-.varestabel { display: flex; height: 26px; width: 100%; max-width: 640px; border: 1px solid var(--linje); }
-.varestabel span { display: block; height: 100%; }
-.varelegende { list-style: none; padding: 0; margin: 0.75rem 0 0; display: flex; flex-wrap: wrap; gap: 0.25rem 1.4rem; font-size: 0.88rem; }
-.varelegende li { display: flex; align-items: center; gap: 0.45rem; }
-.prikk { width: 11px; height: 11px; display: inline-block; border-radius: 2px; }
-
-/* Små kart */
-.smaakart { display: grid; gap: 1.75rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-.kort h3 { margin-top: 0; }
-.kort .endring { font-size: 0.88rem; color: var(--demp); }
-.linjekart { width: 100%; height: 120px; }
-.linjekart path { fill: none; stroke: var(--signal); stroke-width: 2; }
-.linjekart .akse { stroke: var(--linje); stroke-width: 1; }
-.linjekart text { font-size: 11px; fill: var(--demp); }
-
-.forbehold { max-width: var(--maal); padding-left: 1.1rem; }
-.forbehold li { margin-bottom: 0.6rem; }
-
-.lenker { list-style: none; padding: 0; columns: 2; column-gap: 2rem; max-width: 640px; }
-.lenker li { margin-bottom: 0.35rem; break-inside: avoid; }
-a { color: var(--signal); }
-
-footer {
-  padding: 2.5rem 0;
-  font-size: 0.85rem;
-  color: var(--demp);
-}
-footer p { max-width: var(--maal); }
-
-.tom { padding: 4rem 0; }
-
-code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.92em;
-  background: var(--flate);
-  padding: 0.1em 0.3em;
-}
+button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
 
 /* Lesehjelp */
-.lesehjelp { padding: 1.75rem 0; }
-.trepunkt { display: grid; gap: 1.25rem 2rem; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); margin: 0; }
-.trepunkt dt { font-weight: 700; }
-.trepunkt dd { margin: 0.2rem 0 0; color: var(--demp); font-size: 0.95rem; }
+.lesehjelp { padding: var(--space-8) 0; }
+.trepunkt { display: grid; gap: var(--space-6) var(--space-8); grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); margin: 0; }
+.trepunkt dt { font-weight: 600; color: var(--ink-900); }
+.trepunkt dd { margin: var(--space-1) 0 0; font-size: 14px; line-height: 22px; }
 
 /* Kalkulator */
-.skjemarad { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: flex-end; margin: 1.5rem 0 0.75rem; }
-.felt { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.85rem; color: var(--demp); border: 0; padding: 0; margin: 0; min-width: 0; }
+.skjemarad { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-6); align-items: flex-end; margin: var(--space-6) 0 var(--space-3); }
+.felt { display: flex; flex-direction: column; gap: var(--space-2); border: 0; padding: 0; margin: 0; min-width: 0; }
 .felt-bred { flex: 1 1 260px; max-width: 380px; }
-.felt legend { padding: 0; margin-bottom: 0.3rem; }
-.felt.valg label { color: var(--blekk); font-size: 0.95rem; display: flex; gap: 0.4rem; align-items: center; }
+.felt legend { padding: 0; margin-bottom: var(--space-2); }
+.felt.valg label { color: var(--ink-900); font-size: 14px; line-height: 22px; display: flex; gap: var(--space-2); align-items: center; }
 input[type="search"], input[type="number"], input[type="text"] {
-  font: inherit;
-  font-variant-numeric: tabular-nums;
-  color: var(--blekk);
-  background: var(--flate);
-  border: 1px solid var(--linje);
-  border-radius: 2px;
-  padding: 0.45rem 0.6rem;
-  width: 100%;
+  font: inherit; font-size: 14px; font-variant-numeric: tabular-nums;
+  color: var(--ink-900); background: var(--bg-000);
+  border: 1px solid var(--line-400); border-radius: var(--radius-md);
+  min-height: 44px; padding: 0 var(--space-3); width: 100%;
 }
 input[type="number"] { width: 7.5rem; }
-input:focus-visible { outline: 2px solid var(--signal); outline-offset: 1px; }
-input[type="radio"] { accent-color: var(--signal); }
-.arealfelt { text-align: right; width: 7rem; min-width: 7rem; padding: 0.3rem 0.5rem; }
+input[type="radio"] { accent-color: var(--brand-900); }
+input:disabled { background: var(--bg-200); color: var(--ink-500); }
+.arealfelt { text-align: right; width: 7rem; min-width: 7rem; min-height: 36px !important; }
 
-.resultat { background: var(--flate); border-left: 3px solid var(--signal); padding: 1.1rem 1.25rem; margin: 1.25rem 0 0.5rem; }
-.resultat-tall { font-size: clamp(2.2rem, 7vw, 3.75rem); line-height: 1; letter-spacing: -0.02em; margin: 0.3rem 0 0.6rem; }
-.resultat .hero-under { margin: 0; }
+.resultat { max-width: 640px; margin: var(--space-6) 0; }
+.resultat .vv-kpi__value { font-size: clamp(40px, 8vw, 56px); }
+.resultat .vv-kpi__delta { display: block; margin: 0; max-width: none; }
 
-tfoot td, tfoot th { border-bottom: 0; border-top: 1px solid var(--blekk); font-weight: 700; }
-#kalkulator td, #kalkulator th { vertical-align: middle; }
+.knapper { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-6); max-width: none; }
+#kopiert { align-self: center; }
+
+/* Bygningstypevelger */
+.velger { padding-top: var(--space-12); }
+.knapperad { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+.knapperad .vv-btn { padding: 0 var(--space-4); }
+.knapperad .vv-btn[aria-selected="true"] { background: var(--brand-900); color: var(--bg-000); border-color: var(--brand-900); }
+
+/* Hovedtall per bygningstype */
+.hero { padding-top: var(--space-8); }
+.hero-tall { font-family: var(--font-display); font-weight: 500; color: var(--ink-900); font-size: clamp(64px, 12vw, 96px); line-height: 1; margin: var(--space-2) 0 var(--space-6); max-width: none; }
+.hero-tall .enhet { font-family: var(--font-sans); font-size: 14px; font-weight: 400; color: var(--ink-500); }
+.hero-under { max-width: 62ch; }
+
+/* Spennbar: lav til høy som isblå flate, sannsynlig som nattblå strek,
+   kommunens eget tall i rav. Rav er det ene leseren skal se først. */
+.spenn { width: 100%; height: 34px; display: block; }
+.spenn .bane { fill: var(--brand-300); }
+.spenn .tick { stroke: var(--brand-900); stroke-width: 3; vector-effect: non-scaling-stroke; }
+.spenn .merke { fill: var(--ink-500); font-size: 12px; font-family: var(--font-sans); }
+.spenn .egenprikk { stroke: var(--accent-500); stroke-width: 7; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.hero .spenn { height: 58px; max-width: 720px; }
+
+/* Tabeller: vv-table fra designsystemet, med sidens egne tillegg. */
+.tabellramme { overflow-x: auto; margin: var(--space-6) 0 var(--space-2); border: 1px solid var(--line-200); border-radius: var(--radius-lg); background: var(--bg-000); }
+.vv-table { min-width: 560px; }
+.vv-table th, .vv-table td { vertical-align: middle; }
+.vv-table tbody th { color: var(--ink-900); }
+.vv-table tbody tr.sum th, .vv-table tbody tr.sum td { font-weight: 600; border-top: 1px solid var(--line-400); }
+.vv-table tbody tr.portefolje td, .vv-table tbody tr.portefolje th { color: var(--ink-700); }
+.vv-table tbody tr:last-child th, .vv-table tbody tr:last-child td { border-bottom: 0; }
+#kalkulator { min-width: 720px; }
+td.spennkol, th.spennkol { width: 30%; min-width: 180px; }
+.postnavn { display: block; }
+span.postmerke { display: block; }
+.postmerke { font-size: 12px; line-height: 18px; font-weight: 500; color: var(--ink-500); }
 .egen-kol, .kr-kol { display: none; }
 table.med-egen .egen-kol, table.med-kr .kr-kol { display: table-cell; }
-.egenmerke { display: block; }
-.egenmerke.utenfor { color: var(--varsel); }
-.egenmerke.usikker { color: var(--varsel); text-decoration: underline dotted; cursor: help; }
-.spenn .egenprikk { stroke: var(--varsel); stroke-width: 6; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.egenmerke { margin-left: var(--space-2); }
+.egenmerke.usikker { cursor: help; }
+.brudd { color: var(--accent-600); }
 
-.knapper { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem; }
-.knapp {
-  font: inherit;
-  color: var(--papir);
-  background: var(--blekk);
-  border: 1px solid var(--blekk);
-  border-radius: 2px;
-  padding: 0.45rem 0.9rem;
-  cursor: pointer;
-}
-.knapp-stille { background: transparent; color: var(--blekk); border-color: var(--linje); }
-.knapp:hover { border-color: var(--signal); }
+/* Energivarer */
+.varestabel { display: flex; height: 24px; width: 100%; max-width: 640px; border-radius: var(--radius-sm); overflow: hidden; gap: 2px; background: var(--bg-000); }
+.varestabel span { display: block; height: 100%; }
+.varelegende { margin-top: var(--space-3); }
 
-.velger h2 { margin-bottom: 0.25rem; }
-.velger { padding-top: 2.75rem; }
-.seksjonstittel { font-size: 1.4rem; letter-spacing: -0.01em; margin: 0 0 0.35rem; }
+/* Små linjediagram */
+.smaakart { display: grid; gap: var(--space-6); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: var(--space-6); }
+.kort h3 { margin: 0; }
+.kort .endring { margin: var(--space-3) 0 0; }
+
+.vv-callout { max-width: 720px; margin: var(--space-4) 0; }
+.vv-callout p { max-width: none; }
+
+.forbehold { max-width: var(--maal); padding-left: 1.1rem; font-size: 14px; line-height: 22px; }
+.forbehold li { margin-bottom: var(--space-2); }
+.lenker { list-style: none; padding: 0; columns: 2; column-gap: var(--space-8); max-width: 640px; font-size: 14px; }
+.lenker li { margin-bottom: var(--space-1); break-inside: avoid; }
+
+footer { padding: var(--space-12) 0 0; font-size: 12px; line-height: 18px; font-weight: 500; color: var(--ink-500); }
+footer p { max-width: var(--maal); }
+.fot-symbol { width: 32px; height: 32px; display: block; margin-bottom: var(--space-4); }
+
+.tom { padding: var(--space-16) 0; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em; background: var(--bg-200); padding: 0.1em 0.3em; border-radius: var(--radius-sm); }
+
+/* På claude.ai kan siden ikke starte nedlastinger. */
+:root[data-miljo="artifact"] .kun-nett { display: none; }
 
 @media (max-width: 640px) {
-  body { font-size: 16px; }
   .lenker { columns: 1; }
+  .logo { width: 170px; }
 }
-#kalkulator { min-width: 720px; }
+@media (prefers-reduced-motion: no-preference) { .vv-btn { transition: background-color 120ms; } }

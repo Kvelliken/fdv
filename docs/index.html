@@ -7,13 +7,16 @@
 <meta name="description" content="Forvaltning, drift og vedlikehold per kvadratmeter for kommunale formålsbygg, regnet fra KOSTRA.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="vargvind-symbol.svg" type="image/svg+xml">
+<link rel="stylesheet" href="vargvind.css">
 <link rel="stylesheet" href="stil.css">
 </head>
 <body>
 <a class="hopp" href="#innhold">Hopp til innholdet</a>
 
 <header class="topp">
+  <img class="logo" src="vargvind-logo.svg" alt="Vargvind Analyse" width="200" height="57">
   <p class="kilde" id="merking">Laster grunnlaget …</p>
   <h1>Hva koster det å drifte kommunens bygg?</h1>
   <p class="ingress">
@@ -84,24 +87,24 @@
       </div>
       <p class="fotnote" id="pris-note"></p>
 
-      <div class="resultat" aria-live="polite">
-        <p class="hero-merke" id="res-merke"></p>
-        <p class="resultat-tall"><span id="res-sannsynlig">–</span></p>
-        <p class="hero-under" id="res-spenn">Legg inn areal for å se årsbeløpet.</p>
+      <div class="resultat vv-kpi" aria-live="polite">
+        <span class="vv-kpi__label" id="res-merke"></span>
+        <span class="vv-kpi__value" id="res-sannsynlig">–</span>
+        <span class="vv-kpi__delta" id="res-spenn">Legg inn areal for å se årsbeløpet.</span>
       </div>
 
       <div class="tabellramme">
-        <table id="kalkulator">
+        <table class="vv-table" id="kalkulator">
           <caption class="skjult">Årlig kostnad per bygningstype</caption>
           <thead>
             <tr>
               <th scope="col">Bygningstype</th>
-              <th scope="col" class="tall">Eid areal, m²</th>
-              <th scope="col" class="tall">Normtall, kr/m²</th>
-              <th scope="col" class="tall egen-kol">Egne tall, kr/m²</th>
-              <th scope="col" class="tall">Lav</th>
-              <th scope="col" class="tall">Sannsynlig</th>
-              <th scope="col" class="tall">Høy</th>
+              <th scope="col" class="vv-num tall">Eid areal, m²</th>
+              <th scope="col" class="vv-num tall">Normtall, kr/m²</th>
+              <th scope="col" class="vv-num tall egen-kol">Egne tall, kr/m²</th>
+              <th scope="col" class="vv-num tall">Lav</th>
+              <th scope="col" class="vv-num tall">Sannsynlig</th>
+              <th scope="col" class="vv-num tall">Høy</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -116,8 +119,10 @@
       </p>
       <p class="fotnote" id="egen-note" hidden></p>
       <p class="knapper">
-        <button type="button" id="last-ned-budsjett" class="knapp">Last ned som CSV</button>
-        <button type="button" id="nullstill" class="knapp knapp-stille">Nullstill</button>
+        <button type="button" id="kopier-budsjett" class="vv-btn vv-btn--primary">Kopier tabellen til Excel</button>
+        <button type="button" id="last-ned-budsjett" class="vv-btn vv-btn--secondary kun-nett">Last ned som CSV</button>
+        <button type="button" id="nullstill" class="vv-btn vv-btn--ghost">Nullstill</button>
+        <span id="kopiert" class="fotnote" role="status"></span>
       </p>
     </section>
 
@@ -149,16 +154,16 @@
         samlet.
       </p>
       <div class="tabellramme">
-        <table id="normtall">
+        <table class="vv-table" id="normtall">
           <caption class="skjult">Kroner per kvadratmeter, siste årgang</caption>
           <thead>
             <tr>
               <th scope="col">Post</th>
-              <th scope="col" class="tall">Lav</th>
-              <th scope="col" class="tall">Sannsynlig</th>
-              <th scope="col" class="tall">Høy</th>
-              <th scope="col" class="tall egen-kol">Egne tall</th>
-              <th scope="col" class="tall kr-kol">Sannsynlig, kr/år</th>
+              <th scope="col" class="vv-num tall">Lav</th>
+              <th scope="col" class="vv-num tall">Sannsynlig</th>
+              <th scope="col" class="vv-num tall">Høy</th>
+              <th scope="col" class="vv-num tall egen-kol">Egne tall</th>
+              <th scope="col" class="vv-num tall kr-kol">Sannsynlig, kr/år</th>
               <th scope="col" class="spennkol">Spenn i kr/m²</th>
             </tr>
           </thead>
@@ -185,7 +190,7 @@
         viser reell utvikling og ikke at utvalget har skiftet.
       </p>
       <div class="tabellramme">
-        <table id="tidsserie">
+        <table class="vv-table" id="tidsserie">
           <caption class="skjult">Median kr/m² per årgang og nominell endring</caption>
           <thead><tr><th scope="col">Post</th></tr></thead>
           <tbody></tbody>
@@ -196,25 +201,30 @@
 
     <section aria-labelledby="energi-tittel">
       <h2 id="energi-tittel">Energibruk</h2>
-      <p class="advarsel">
-        Tallene er ikke temperaturkorrigert. Et kaldt år løfter alle kommuner,
-        og nordlige kommuner ligger systematisk høyere enn sørlige. Det er
-        klima, ikke drift. Varme fra varmepumper og solfangere er ikke med,
-        bare elektrisiteten som driver dem, så dette er tilført energi og ikke
-        energibehov.
-      </p>
+      <div class="vv-callout">
+        <svg class="vv-callout__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6M12 7.5v.5"></path></svg>
+        <div>
+          <p class="vv-callout__title">Om tallene</p>
+          <p class="vv-callout__body">
+            Energibruken er ikke temperaturkorrigert. Et kaldt år løfter alle
+            kommuner, og nordlige kommuner ligger systematisk høyere enn
+            sørlige. Varme fra varmepumper og solfangere er ikke med, bare
+            strømmen som driver dem.
+          </p>
+        </div>
+      </div>
       <div class="tabellramme">
-        <table id="energi">
+        <table class="vv-table" id="energi">
           <caption class="skjult">Energibruk i kWh per kvadratmeter</caption>
           <thead>
             <tr>
               <th scope="col">Årgang</th>
-              <th scope="col" class="tall">Lav</th>
-              <th scope="col" class="tall">Sannsynlig</th>
-              <th scope="col" class="tall">Høy</th>
-              <th scope="col" class="tall">Arealvektet</th>
-              <th scope="col" class="tall">Fornybar andel</th>
-              <th scope="col" class="tall">Kr/kWh</th>
+              <th scope="col" class="vv-num tall">Lav</th>
+              <th scope="col" class="vv-num tall">Sannsynlig</th>
+              <th scope="col" class="vv-num tall">Høy</th>
+              <th scope="col" class="vv-num tall">Arealvektet</th>
+              <th scope="col" class="vv-num tall">Fornybar andel</th>
+              <th scope="col" class="vv-num tall">Kr/kWh</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -247,13 +257,13 @@
         kvartilene nedover og dermed beskytter seg selv.
       </p>
       <div class="tabellramme">
-        <table id="kvalitet">
+        <table class="vv-table" id="kvalitet">
           <caption class="skjult">Kommuner i grunnlaget og i kjernedatasettet</caption>
           <thead>
             <tr>
               <th scope="col">Årgang</th>
-              <th scope="col" class="tall">I grunnlaget</th>
-              <th scope="col" class="tall">I kjernen</th>
+              <th scope="col" class="vv-num tall">I grunnlaget</th>
+              <th scope="col" class="vv-num tall">I kjernen</th>
               <th scope="col">Frafall per årsak</th>
             </tr>
           </thead>
@@ -269,7 +279,7 @@
       <ul id="forbehold" class="forbehold"></ul>
     </section>
 
-    <section aria-labelledby="last-ned-tittel">
+    <section class="kun-nett" aria-labelledby="last-ned-tittel">
       <h2 id="last-ned-tittel">Last ned grunnlaget</h2>
       <p class="forklaring">
         Revisjonsfilen har én rad per kommune med kroner, kilowattimer, areal og
@@ -282,9 +292,10 @@
 </main>
 
 <footer>
+  <img class="fot-symbol" src="vargvind-symbol.svg" alt="" width="32" height="32">
   <p id="kodevalg-fot"></p>
   <p>
-    Kilde: Statistisk sentralbyrå, KOSTRA. Beregningen og denne siden er
+    Analyse: Vargvind. Kilde: Statistisk sentralbyrå, KOSTRA. Beregningen og denne siden er
     dokumentert i <code>METODE.md</code> i repoet.
   </p>
 </footer>

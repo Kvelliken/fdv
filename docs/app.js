@@ -13,7 +13,8 @@ const POSTREKKEFOLGE = [
   ["fdv", "FDV samlet", "forvaltning, drift og vedlikehold"],
 ];
 
-const VAREFARGER = ["#0c5c8a", "#4a8fae", "#8a5b00", "#3f7a5e", "#7a6a9b", "#a2493c"];
+/* Kategorisk skala fra Vargvind, brukt i rekkefølge. */
+const VAREFARGER = ["vv-bg-1", "vv-bg-2", "vv-bg-3", "vv-bg-5", "vv-bg-6", "vv-bg-4"];
 
 const nf = new Intl.NumberFormat("nb-NO");
 const pf = new Intl.NumberFormat("nb-NO", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
@@ -84,6 +85,7 @@ function lagKnapper() {
   for (const [kode, innhold] of Object.entries(data.funksjoner)) {
     const knapp = document.createElement("button");
     knapp.type = "button";
+    knapp.className = "vv-btn vv-btn--secondary";
     knapp.textContent = innhold.navn;
     knapp.setAttribute("role", "tab");
     knapp.dataset.funksjon = kode;
@@ -271,7 +273,7 @@ function lagKalkulator() {
     rad.appendChild(th);
 
     const inn = document.createElement("td");
-    inn.className = "tall";
+    inn.className = "vv-num tall";
     const felt = document.createElement("input");
     felt.type = "text";
     felt.inputMode = "numeric";
@@ -356,6 +358,7 @@ function lagKalkulator() {
     oppdaterAlt();
   });
   document.getElementById("last-ned-budsjett").addEventListener("click", lastNedBudsjett);
+  document.getElementById("kopier-budsjett").addEventListener("click", kopierBudsjett);
 }
 
 /* Én rad per bygningstype, med alt kalkulatoren viser. Brukes både av
@@ -392,16 +395,16 @@ function vurderEgen(r) {
     return {
       tekst,
       merke: "usikkert",
-      klasse: "usikker",
+      klasse: "usikker vv-badge--accent",
       tittel: "Holdt utenfor normtallet fordi " + r.flagg.map((f) => FLAGGTEKST[f] || f).join(", ") + ".",
     };
   }
-  if (r.normLav !== null && r.egen < r.normLav) return { tekst, merke: "under lav", klasse: "utenfor" };
-  if (r.normHoy !== null && r.egen > r.normHoy) return { tekst, merke: "over høy", klasse: "utenfor" };
+  if (r.normLav !== null && r.egen < r.normLav) return { tekst, merke: "▼ under lav", klasse: "vv-badge--info" };
+  if (r.normHoy !== null && r.egen > r.normHoy) return { tekst, merke: "▲ over høy", klasse: "vv-badge--info" };
   if (r.norm !== null) {
     const avvik = (r.egen / r.norm - 1) * 100;
     if (Math.abs(avvik) < 5) return { tekst, merke: "som typisk" };
-    return { tekst, merke: `${avvik > 0 ? "+" : "−"}${Math.abs(Math.round(avvik))} %` };
+    return { tekst, merke: `${avvik > 0 ? "▲ +" : "▼ −"}${Math.abs(Math.round(avvik))} %` };
   }
   return { tekst, merke: "" };
 }
@@ -423,12 +426,12 @@ function visKalkulator() {
     egen.appendChild(document.createTextNode(v.tekst));
     if (v.merke) {
       const merke = document.createElement("span");
-      merke.className = `postmerke egenmerke ${v.klasse || ""}`;
+      merke.className = `vv-badge egenmerke ${v.klasse || ""}`;
       merke.textContent = v.merke;
       if (v.tittel) merke.title = v.tittel;
       egen.appendChild(merke);
     }
-    if (v.klasse === "usikker") usikre += 1;
+    if ((v.klasse || "").includes("usikker")) usikre += 1;
     for (const nivaa of ["lav", "sannsynlig", "hoy"]) {
       tr.querySelector(`.${nivaa}`).textContent = r.areal ? kroner(r[nivaa]) : "–";
       if (r.areal && r[nivaa] !== null) sum[nivaa] += r[nivaa];
@@ -488,6 +491,36 @@ function visKalkulator() {
   }
 }
 
+/* Tabulatordelt tekst limes rett inn i Excel som en tabell. */
+async function kopierBudsjett() {
+  const rader = budsjettrader();
+  const aar = prisaar();
+  const linjer = [
+    ["Bygningstype", "Eid areal, m²", `Normtall ${data.grunnlag.siste_aargang}, kr/m²`,
+     `Lav, kr (${aar})`, `Sannsynlig, kr (${aar})`, `Høy, kr (${aar})`].join("\t"),
+  ];
+  const sum = { areal: 0, lav: 0, sannsynlig: 0, hoy: 0 };
+  for (const r of rader) {
+    const kr = (v) => (r.areal && v !== null ? Math.round(v / 1000) * 1000 : "");
+    linjer.push([r.navn, r.areal || "", r.norm ?? "", kr(r.lav), kr(r.sannsynlig), kr(r.hoy)].join("\t"));
+    if (r.areal) {
+      sum.areal += r.areal;
+      for (const n of ["lav", "sannsynlig", "hoy"]) sum[n] += Math.round((r[n] || 0) / 1000) * 1000;
+    }
+  }
+  linjer.push(["Sum", sum.areal, "", sum.lav, sum.sannsynlig, sum.hoy].join("\t"));
+  linjer.push("");
+  linjer.push(`${tilstand.modus === "fdv" ? "FDV samlet" : "Drift og vedlikehold"}. ${data.merking}`);
+  const status = document.getElementById("kopiert");
+  try {
+    await navigator.clipboard.writeText(linjer.join("\n"));
+    status.textContent = "Kopiert. Lim inn i Excel.";
+  } catch (feil) {
+    status.textContent = "Nettleseren tillot ikke kopiering. Marker tabellen og kopier den selv.";
+  }
+  setTimeout(() => (status.textContent = ""), 6000);
+}
+
 function lastNedBudsjett() {
   const rader = budsjettrader();
   const siste = data.grunnlag.siste_aargang;
@@ -532,7 +565,7 @@ function tall(par) {
 function celle(rad, tekst, klasse) {
   const td = document.createElement("td");
   td.textContent = tekst;
-  if (klasse) td.className = klasse;
+  if (klasse) td.className = /\btall\b/.test(klasse) ? `vv-num ${klasse}` : klasse;
   rad.appendChild(td);
   return td;
 }
@@ -723,14 +756,14 @@ function visTidsserie(f) {
   for (const aar of aargang) {
     const th = document.createElement("th");
     th.scope = "col";
-    th.className = "tall";
+    th.className = "vv-num tall";
     th.textContent = aar;
     hoderad.appendChild(th);
   }
   for (const navn of ["Endring, panel", "Per år"]) {
     const th = document.createElement("th");
     th.scope = "col";
-    th.className = "tall";
+    th.className = "vv-num tall";
     th.textContent = navn;
     hoderad.appendChild(th);
   }
@@ -772,8 +805,8 @@ function visTidsserie(f) {
         panelnotat.push(`Brudd i ${b.aar}: ${b.beskrivelse || b.gjelder}. Vekstraten er skjult over bruddpunktet.`);
       }
     } else {
-      celle(rad, `${pf.format(vekst.nominell_endring_prosent)} %`, "tall");
-      celle(rad, `${pf.format(vekst.aarlig_gjennomsnittlig_endring_prosent)} %`, "tall");
+      celle(rad, `${fortegn(vekst.nominell_endring_prosent)} %`, "tall");
+      celle(rad, `${fortegn(vekst.aarlig_gjennomsnittlig_endring_prosent)} %`, "tall");
     }
     kropp.appendChild(rad);
 
@@ -802,6 +835,13 @@ function visTidsserie(f) {
       "Vedlikehold er periodisk, så årlige utslag i medianen kan skyldes syklus framfor prisvekst."
   );
   document.getElementById("panel-note").textContent = panelnotat.join(" ");
+}
+
+/* Endring skrives alltid med fortegn, og minus er et ekte minustegn. */
+function fortegn(v) {
+  const t = pf.format(Math.abs(v));
+  if (Number(t.replace(",", ".")) === 0) return t;
+  return (v > 0 ? "+" : "−") + t;
 }
 
 function rund5(v) {
@@ -855,17 +895,16 @@ function visEnergi(f) {
     fordeling.map(([navn, andel]) => `${navn} ${pf.format(andel * 100)} prosent`).join(", ")
   );
   const legende = document.createElement("ul");
-  legende.className = "varelegende";
+  legende.className = "vv-legend varelegende";
   fordeling.forEach(([navn, andel], i) => {
     const del = document.createElement("span");
     del.style.width = `${andel * 100}%`;
-    del.style.background = VAREFARGER[i % VAREFARGER.length];
+    del.className = VAREFARGER[i % VAREFARGER.length];
     stabel.appendChild(del);
 
     const li = document.createElement("li");
     const prikk = document.createElement("span");
-    prikk.className = "prikk";
-    prikk.style.background = VAREFARGER[i % VAREFARGER.length];
+    prikk.className = `vv-legend__dot ${VAREFARGER[i % VAREFARGER.length]}`;
     li.appendChild(prikk);
     li.appendChild(document.createTextNode(`${navn} ${pf.format(andel * 100)} %`));
     legende.appendChild(li);
@@ -908,21 +947,21 @@ function serieFra(hist, aargang) {
 }
 
 function lagKort(tittel, enhet, verdier, aargang, vekst) {
-  const kort = document.createElement("div");
-  kort.className = "kort";
+  const kort = document.createElement("figure");
+  kort.className = "kort vv-chart";
   const h = document.createElement("h3");
   h.textContent = `${tittel} (${enhet})`;
   kort.appendChild(h);
   kort.appendChild(linjekart(verdier, aargang, enhet));
 
   const under = document.createElement("p");
-  under.className = "endring";
+  under.className = "endring vv-chart__source";
   const gyldige = verdier.filter((v) => v !== null);
   if (vekst && !vekst.skjult_grunnet_brudd && vekst.nominell_endring_prosent !== null) {
-    under.textContent = `${pf.format(vekst.nominell_endring_prosent)} % fra ${vekst.fra_aargang} til ${vekst.til_aargang}, regnet på panelet.`;
+    under.textContent = `${fortegn(vekst.nominell_endring_prosent)} % fra ${vekst.fra_aargang} til ${vekst.til_aargang}, regnet på panelet.`;
   } else if (gyldige.length >= 2) {
     const endring = (gyldige[gyldige.length - 1] / gyldige[0] - 1) * 100;
-    under.textContent = `${pf.format(endring)} % fra ${aargang[0]} til ${aargang[aargang.length - 1]}.`;
+    under.textContent = `${fortegn(endring)} % fra ${aargang[0]} til ${aargang[aargang.length - 1]}.`;
   } else {
     under.textContent = "For få årganger til å vise endring.";
   }
@@ -931,15 +970,16 @@ function lagKort(tittel, enhet, verdier, aargang, vekst) {
 }
 
 function linjekart(verdier, aargang, enhet) {
+  /* Priser trenger to desimaler; avrundet til hele kroner blir alle «1». */
+  const vis = (v) => (enhet === "kr/kWh" ? kf.format(v) : nf.format(Math.round(v)));
   const b = 300;
   const h = 120;
   const svg = svgEl("svg", {
     class: "linjekart",
     viewBox: `0 0 ${b} ${h}`,
-    preserveAspectRatio: "none",
     role: "img",
     "aria-label": aargang
-      .map((aar, i) => `${aar}: ${verdier[i] === null ? "mangler" : nf.format(Math.round(verdier[i]))} ${enhet}`)
+      .map((aar, i) => `${aar}: ${verdier[i] === null ? "mangler" : vis(verdier[i])} ${enhet}`)
       .join(", "),
   });
   const gyldige = verdier.filter((v) => v !== null);
@@ -952,21 +992,22 @@ function linjekart(verdier, aargang, enhet) {
   const x = (i) => (verdier.length === 1 ? b / 2 : 24 + (i * (b - 34)) / (verdier.length - 1));
   const y = (v) => bunn - ((v - min) / spenn) * (bunn - topp);
 
-  svg.appendChild(svgEl("line", { class: "akse", x1: 0, x2: b, y1: bunn + 6, y2: bunn + 6 }));
+  svg.appendChild(svgEl("line", { class: "vv-axis", x1: 0, x2: b, y1: bunn + 6, y2: bunn + 6 }));
   const d = verdier
     .map((v, i) => (v === null ? null : `${i === 0 ? "M" : "L"}${x(i)},${y(v)}`))
     .filter(Boolean)
     .join(" ");
-  svg.appendChild(svgEl("path", { d }));
+  svg.appendChild(svgEl("path", { d, class: "vv-line vv-stroke-1" }));
 
   verdier.forEach((v, i) => {
     if (v === null) return;
     const merke = svgEl("text", {
+      class: "vv-value",
       x: x(i),
       y: i === 0 ? y(v) - 8 : y(v) - 8,
       "text-anchor": i === 0 ? "start" : i === verdier.length - 1 ? "end" : "middle",
     });
-    merke.textContent = nf.format(Math.round(v));
+    merke.textContent = vis(v);
     svg.appendChild(merke);
   });
   aargang.forEach((aar, i) => {
