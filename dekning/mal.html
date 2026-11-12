@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dekning av kommunale formålsbygg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+<style>
+/* Layout: kontrollrad øverst, så kommunens seks bygningstyper som tabell, utvikling som små diagrammer, til slutt landsoversikt og metode. */
+:root{
+  --bg:#f5f6f4; --surface:#fcfcfb; --ink:#14181a; --ink2:#4c5356; --ink3:#767d80; --line:#dcdfdc; --line2:#eceeeb;
+  --accent:#1c5d52; --accent-soft:#e2eeea;
+  --under:#c8443c; --over:#2a78d6; --neutral:#8a8f8c; --band:#eceeea;
+  --under-soft:#f8e3e0; --over-soft:#dfeaf8; --neutral-soft:#e9ebe8;
+  --display:"Source Serif 4",Georgia,serif; --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#131615; --surface:#1a1d1c; --ink:#eef0ee; --ink2:#bcc2bf; --ink3:#8d9491; --line:#323735; --line2:#262a29;
+    --accent:#6fc2b0; --accent-soft:#1f3a35;
+    --under:#e0665c; --over:#4b93e8; --neutral:#8d9491; --band:#252928;
+    --under-soft:#43231f; --over-soft:#1c3150; --neutral-soft:#2a2e2d;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#131615; --surface:#1a1d1c; --ink:#eef0ee; --ink2:#bcc2bf; --ink3:#8d9491; --line:#323735; --line2:#262a29;
+  --accent:#6fc2b0; --accent-soft:#1f3a35;
+  --under:#e0665c; --over:#4b93e8; --neutral:#8d9491; --band:#252928;
+  --under-soft:#43231f; --over-soft:#1c3150; --neutral-soft:#2a2e2d;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--body);font-variant-numeric:tabular-nums}
+main{max-width:1180px;margin:0 auto;padding:28px 20px 60px;display:flex;flex-direction:column;gap:28px}
+h1{font:600 30px/1.15 var(--display);margin:0;text-wrap:balance}
+h2{font:600 20px/1.25 var(--display);margin:0;text-wrap:balance}
+p{margin:0}
+.lead{color:var(--ink2);max-width:68ch;margin-top:8px}
+.controls{display:flex;flex-wrap:wrap;gap:14px 20px;align-items:flex-end;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.field>label,.field>span.lab{font-size:12px;font-weight:600;color:var(--ink2);letter-spacing:.02em}
+input[type=text],select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:8px 10px;min-width:0}
+input[type=text]{width:240px;max-width:100%}
+input:focus-visible,select:focus-visible,button:focus-visible,tr:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:var(--bg)}
+.seg button{font:inherit;border:0;background:transparent;color:var(--ink2);padding:8px 12px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed=true]{background:var(--accent);color:var(--surface);font-weight:500}
+.yearfield{flex:1 1 220px}
+.yearrow{display:flex;align-items:center;gap:10px}
+input[type=range]{flex:1;accent-color:var(--accent);min-width:120px}
+output{font-weight:600;min-width:3.2em}
+section{display:flex;flex-direction:column;gap:12px}
+.sechead{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between}
+.sub{color:var(--ink2);font-size:14px;max-width:75ch}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:9px 12px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line2)}
+th{font-size:12px;font-weight:600;color:var(--ink2);border-bottom:1px solid var(--line);vertical-align:bottom;white-space:normal}
+th:first-child,td:first-child{text-align:left}
+tr:last-child td{border-bottom:0}
+td .small{display:block;font-size:12px;color:var(--ink3);white-space:normal}
+td.name{font-weight:500;white-space:normal;min-width:150px}
+.cov{display:inline-flex;align-items:center;gap:8px;justify-content:flex-end}
+.dbar{position:relative;width:96px;height:12px;background:var(--band);border-radius:3px;flex:none}
+.dbar::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--ink3)}
+.dbar i{position:absolute;top:0;bottom:0}
+.dbar i.u{right:50%;background:var(--under);border-radius:3px 0 0 3px}
+.dbar i.o{left:50%;background:var(--over);border-radius:0 3px 3px 0}
+.dbar i.n{left:calc(50% - 2px);width:5px!important;background:var(--neutral)}
+.pct{min-width:3.6em;text-align:right;font-weight:500}
+.pill{display:inline-block;font-size:12px;font-weight:500;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.pill.u{background:var(--under-soft)}.pill.o{background:var(--over-soft)}.pill.n{background:var(--neutral-soft)}.pill.x{background:transparent;color:var(--ink3);border:1px dashed var(--line)}
+.pill::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:0}
+.pill.u::before{background:var(--under)}.pill.o::before{background:var(--over)}.pill.n::before{background:var(--neutral)}.pill.x::before{display:none}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--ink2);align-items:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.panel{padding:14px 14px 8px;position:relative}
+.panel h3{font:600 14px/1.3 var(--body);margin:0}
+.panel .now{font-size:13px;color:var(--ink2);margin-top:2px}
+.panel svg{display:block;width:100%;height:auto;margin-top:6px;overflow:visible}
+.panel .empty{color:var(--ink3);font-size:13px;padding:40px 0;text-align:center}
+svg text{font:11px var(--body);fill:var(--ink3)}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;padding:5px 8px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-100%);display:none;z-index:2}
+.filters{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:flex-end}
+.tall{max-height:560px;overflow:auto}
+.tall thead th{position:sticky;top:0;background:var(--surface);z-index:1}
+th button{font:inherit;font-weight:600;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:inherit}
+th button:hover{color:var(--accent)}
+th button[data-dir]::after{content:" ▾"}th button[data-dir="1"]::after{content:" ▴"}
+tbody.click tr{cursor:pointer}
+tbody.click tr:hover{background:var(--accent-soft)}
+tbody.click tr.sel{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
+.method{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px 32px;padding:18px}
+.method h3{font:600 14px/1.3 var(--body);margin:0 0 6px}
+.method p,.method li{color:var(--ink2);font-size:14px}
+.method ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:5px}
+a{color:var(--accent)}
+.kfacts{display:flex;flex-wrap:wrap;gap:4px 18px;color:var(--ink2);font-size:14px}
+.kfacts b{color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>Dekning av kommunale formålsbygg</h1>
+  <p class="lead">Har kommunen mer eller mindre bygningsareal enn sammenlignbare kommuner, målt per bruker? Og hvordan endrer bildet seg når befolkningen endrer seg? Tall fra SSB: KOSTRA 2025 og befolkningsframskrivingene 2026–2050.</p>
+</header>
+
+<div class="controls">
+  <div class="field"><label for="kom">Kommune</label>
+    <input type="text" id="kom" list="komlist" autocomplete="off" spellcheck="false" placeholder="Skriv kommunenavn">
+    <datalist id="komlist"></datalist></div>
+  <div class="field"><span class="lab">Sammenlign med</span>
+    <div class="seg" id="refseg"><button type="button" data-v="g" aria-pressed="true">KOSTRA-gruppen</button><button type="button" data-v="l" aria-pressed="false">Hele landet</button></div></div>
+  <div class="field"><label for="alt">Befolkningsframskriving</label>
+    <select id="alt"><option value="0">Hovedalternativet (MMMM)</option><option value="1">Lav nasjonal vekst (LLML)</option><option value="2">Høy nasjonal vekst (HHMH)</option></select></div>
+  <div class="field yearfield"><label for="yr">Framskriv til år</label>
+    <div class="yearrow"><input type="range" id="yr" min="2027" max="2050" value="2040" step="1"><output id="yrout" for="yr">2040</output></div></div>
+</div>
+
+<section>
+  <div class="sechead"><h2 id="komtitle"></h2>
+    <div class="legend"><span class="pill u">Underdekning: under 90 %</span><span class="pill n">Balanse: 90–110 %</span><span class="pill o">Overdekning: over 110 %</span></div></div>
+  <div class="kfacts" id="kfacts"></div>
+  <div class="card scroll"><table id="main"><thead></thead><tbody></tbody></table></div>
+  <p class="sub">Dekning = kommunens areal delt på arealet den ville hatt med medianens kvadratmeter per bruker. 100 % betyr samme arealbruk per bruker som medianen i sammenligningsgruppen.</p>
+</section>
+
+<section>
+  <div class="sechead"><h2>Utvikling i dekning 2026–2050</h2></div>
+  <p class="sub">Dagens areal holdt uendret, mens brukergrunnlaget følger SSBs framskriving for kommunen. Den stiplede linjen er 100 %, det grå feltet er 90–110 %. Den loddrette streken viser valgt år.</p>
+  <div class="grid" id="charts"></div>
+</section>
+
+<section>
+  <div class="sechead"><h2>Alle kommuner</h2></div>
+  <div class="filters">
+    <div class="field"><label for="typ">Bygningstype</label><select id="typ"></select></div>
+    <div class="field"><span class="lab">Vis</span>
+      <div class="seg" id="scopeseg"><button type="button" data-v="a" aria-pressed="true">Alle</button><button type="button" data-v="g" aria-pressed="false">KOSTRA-gruppen</button><button type="button" data-v="f" aria-pressed="false">Fylket</button></div></div>
+    <p class="sub" id="listinfo"></p>
+  </div>
+  <div class="card tall"><table id="list"><thead></thead><tbody class="click"></tbody></table></div>
+</section>
+
+<section>
+  <h2>Metode og kilder</h2>
+  <div class="card method">
+    <div><h3>Slik beregnes dekningen</h3>
+      <ul>
+        <li>Areal er brutto kvadratmeter som kommunen eier eller leier, per bygningstype, slik kommunen har rapportert i KOSTRA for 2025.</li>
+        <li>Arealet deles på brukergrunnlaget. Det gir kvadratmeter per bruker.</li>
+        <li>Referansen er medianen av kvadratmeter per bruker blant kommunene i samme KOSTRA-gruppe, eller blant alle kommuner. Oslo er alene i gruppe 13 og sammenlignes med storbyene i gruppe 12.</li>
+        <li>Behov = brukere × referansens kvadratmeter per bruker. Dekning = areal ÷ behov. Avvik = areal − behov.</li>
+        <li>Framover skaleres brukertallet med veksten i den aktuelle aldersgruppen fra 2026 til valgt år. Arealet holdes uendret.</li>
+      </ul></div>
+    <div><h3>Brukergrunnlag per bygningstype</h3>
+      <ul id="usrlist"></ul></div>
+    <div><h3>Forbehold</h3>
+      <ul>
+        <li>Dette er et relativt mål. Medianen er ikke en norm, og hele gruppen kan ha for mye eller for lite areal.</li>
+        <li>Tallene sier ingenting om byggenes tilstand, egnethet eller plassering i kommunen.</li>
+        <li>Kommuner med spredt bosetting trenger ofte mer areal per bruker. KOSTRA-gruppen fanger bare delvis opp dette.</li>
+        <li>Institusjonsplasser som kommunen kjøper av private teller ikke som kommunalt areal, og kan gi tilsynelatende underdekning.</li>
+        <li>Idretts- og kulturbygg rapporteres ujevnt. Kommuner med 0 eller manglende areal vises som «ikke rapportert».</li>
+        <li>Framskrivingen forutsetter at kommunale barnehager og skoler beholder sin andel av barna.</li>
+        <li id="y24note"></li>
+      </ul></div>
+    <div><h3>Kilder (Statistisk sentralbyrå)</h3>
+      <ul>
+        <li><a href="https://www.ssb.no/statbank/table/11906">Tabell 11906</a>: Areal for kommunale formålsbygg, etter eieform og funksjon</li>
+        <li><a href="https://www.ssb.no/statbank/table/14522">Tabell 14522</a>: Barn i barnehager, etter eierforhold</li>
+        <li><a href="https://www.ssb.no/statbank/table/11971">Tabell 11971</a>: Elever i kommunale grunnskoler</li>
+        <li><a href="https://www.ssb.no/statbank/table/11875">Tabell 11875</a>: Plasser i helse- og omsorgsinstitusjoner</li>
+        <li><a href="https://www.ssb.no/statbank/table/14746">Tabell 14746</a>: Framskrevet folkemengde 2026–2050</li>
+        <li><a href="https://www.ssb.no/klass/klassifikasjoner/112">Klass 112</a>: Gruppering av kommuner (KOSTRA-grupper)</li>
+        <li>Hentet fra SSBs API /*HENTET*/.</li>
+      </ul></div>
+  </div>
+</section>
+</main>
+
+<script id="data" type="application/json">/*DATA*/</script>
+<script>
+(function(){
+"use strict";
+var D=JSON.parse(document.getElementById('data').textContent), K=D.koms, Y0=2026;
+var byCode={}; K.forEach(function(r){byCode[r.k]=r;});
+var FYLKE={"03":"Oslo","11":"Rogaland","15":"Møre og Romsdal","18":"Nordland","31":"Østfold","32":"Akershus","33":"Buskerud","34":"Innlandet","39":"Vestfold","40":"Telemark","42":"Agder","46":"Vestland","50":"Trøndelag","55":"Troms","56":"Finnmark"};
+var T=[
+ {f:"221",name:"Barnehagelokaler",unit:"barn",user:"Barn i kommunale barnehager",drv:"b",drvName:"innbyggere 1–5 år",den:function(r){return r.bk;}},
+ {f:"222",name:"Skolelokaler",unit:"elev",user:"Elever i kommunale grunnskoler",drv:"s",drvName:"innbyggere 6–15 år",den:function(r){return r.el;}},
+ {f:"261",name:"Institusjonslokaler",unit:"innb. 80+",user:"Innbyggere 80 år og eldre",drv:"e",drvName:"innbyggere 80 år og eldre",den:function(r){return r.p[0].e[0];}},
+ {f:"130",name:"Administrasjonslokaler",unit:"innbygger",user:"Alle innbyggere",drv:"t",drvName:"folketallet",den:function(r){return r.p[0].t[0];}},
+ {f:"381",name:"Idrettsbygg og idrettsanlegg",unit:"innbygger",user:"Alle innbyggere",drv:"t",drvName:"folketallet",den:function(r){return r.p[0].t[0];}},
+ {f:"386",name:"Kulturbygg",unit:"innbygger",user:"Alle innbyggere",drv:"t",drvName:"folketallet",den:function(r){return r.p[0].t[0];}}
+];
+var S={k:"0301",ref:"g",alt:0,yr:2040,typ:0,scope:"a",sort:"cov",dir:1};
+try{var sv=localStorage.getItem("formaalsbygg-kommune"); if(sv&&byCode[sv])S.k=sv;}catch(e){}
+
+var nf0=new Intl.NumberFormat("nb-NO",{maximumFractionDigits:0}), nf1=new Intl.NumberFormat("nb-NO",{minimumFractionDigits:1,maximumFractionDigits:1}), nf2=new Intl.NumberFormat("nb-NO",{minimumFractionDigits:2,maximumFractionDigits:2});
+function fm2(v){return v==null?"–":(v<10?nf2.format(v):nf1.format(v));}
+function fpct(v){return v==null?"–":nf0.format(v)+" %";}
+function fsign(v){return v==null?"–":(v>0?"+":v<0?"−":"")+nf0.format(Math.abs(v));}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+function ratio(r,t){var a=r.a[t.f],d=t.den(r);return (a>0&&d>0)?a/d:null;}
+function median(xs){xs=xs.slice().sort(function(a,b){return a-b;});var n=xs.length;if(!n)return null;return n%2?xs[(n-1)/2]:(xs[n/2-1]+xs[n/2])/2;}
+function peers(r,mode){
+  if(mode==="l")return K;
+  var g=r.g===13?[12,13]:[r.g];
+  return K.filter(function(x){return g.indexOf(x.g)>=0;});
+}
+var refCache={};
+function refOf(r,t,mode){
+  var key=(mode==="l"?"l":(r.g===13?"13":r.g))+"|"+t.f;
+  if(!(key in refCache)){
+    var xs=[];peers(r,mode).forEach(function(x){var v=ratio(x,t);if(v!=null)xs.push(v);});
+    refCache[key]={m:median(xs),n:xs.length};
+  }
+  return refCache[key];
+}
+function growth(r,t,alt,yr){var s=r.p[alt][t.drv],b=s[0];return b>0?s[yr-Y0]/b:null;}
+// Kjerneberegning: dekning i prosent og avvik i m2 for et gitt år
+function calc(r,t,mode,alt,yr){
+  var a=r.a[t.f],d=t.den(r),ref=refOf(r,t,mode),g=growth(r,t,alt,yr);
+  if(!(a>0)||!(d>0)||ref.m==null||g==null||g<=0)return null;
+  var users=d*g,need=users*ref.m;
+  return {area:a,users:users,need:need,cov:a/need*100,gap:a-need,ref:ref.m,n:ref.n,ratio:a/d};
+}
+function cls(c){return c==null?"x":c<90?"u":c>110?"o":"n";}
+function label(c){return c==null?"Ikke rapportert":c<90?"Underdekning":c>110?"Overdekning":"Balanse";}
+function bar(c){
+  if(c==null)return "";
+  var k=cls(c),w=Math.min(Math.abs(c-100),100)/2;
+  return '<span class="dbar" aria-hidden="true"><i class="'+k+'" style="width:'+w+'%"></i></span>';
+}
+function covCell(c){return c==null?'<span class="pill x">Ikke rapportert</span>':'<span class="cov">'+bar(c)+'<span class="pct">'+fpct(c)+'</span></span>';}
+
+function renderMain(){
+  var r=byCode[S.k];
+  document.getElementById("komtitle").textContent=r.n;
+  var pop=r.p[S.alt].t, refTxt=S.ref==="l"?"alle kommuner":(r.g===13?"KOSTRA-gruppe 12 og 13 (storbyene)":"KOSTRA-gruppe "+r.g);
+  document.getElementById("kfacts").innerHTML='<span><b>'+nf0.format(pop[0])+'</b> innbyggere 1.1.2026</span><span><b>'+nf0.format(pop[S.yr-Y0])+'</b> framskrevet i '+S.yr+' ('+fsign((pop[S.yr-Y0]/pop[0]-1)*100)+' %)</span><span>KOSTRA-gruppe <b>'+r.g+'</b></span><span>'+esc(FYLKE[r.k.slice(0,2)]||"")+'</span><span>Sammenlignes med medianen i '+refTxt+'</span>';
+  document.querySelector("#main thead").innerHTML='<tr><th>Bygningstype</th><th>Areal, m²</th><th>Brukere i dag</th><th>m² per bruker</th><th>Median i referansen</th><th>Dekning i dag</th><th>Dekning i '+S.yr+'</th><th>Avvik i '+S.yr+', m²</th><th>Status i '+S.yr+'</th></tr>';
+  var h="";
+  T.forEach(function(t){
+    var now=calc(r,t,S.ref,S.alt,Y0),fut=calc(r,t,S.ref,S.alt,S.yr),a=r.a[t.f],d=t.den(r),ref=refOf(r,t,S.ref);
+    var lease=(a>0&&r.le[t.f]>0)?'<span class="small">'+nf0.format(r.le[t.f]/a*100)+' % leid</span>':'';
+    var yn=(a>0&&r.ay[t.f]===2024)?'<span class="small">2024-tall</span>':'';
+    h+='<tr><td class="name">'+t.name+'<span class="small">'+t.user+'</span></td>'+
+      '<td>'+(a>0?nf0.format(a):"–")+lease+yn+'</td>'+
+      '<td>'+(d>0?nf0.format(d):"–")+'</td>'+
+      '<td>'+fm2(now?now.ratio:null)+'</td>'+
+      '<td>'+fm2(ref.m)+'<span class="small">'+ref.n+' kommuner</span></td>'+
+      '<td>'+covCell(now?now.cov:null)+'</td>'+
+      '<td>'+(fut?covCell(fut.cov):"–")+'</td>'+
+      '<td>'+(fut?fsign(fut.gap):"–")+'</td>'+
+      '<td><span class="pill '+cls(fut?fut.cov:null)+'">'+label(fut?fut.cov:null)+'</span></td></tr>';
+  });
+  document.querySelector("#main tbody").innerHTML=h;
+}
+
+function renderCharts(){
+  var r=byCode[S.k],host=document.getElementById("charts");host.innerHTML="";
+  var W=320,H=170,L=38,R=14,Tp=10,B=22,n=25;
+  T.forEach(function(t){
+    var el=document.createElement("div");el.className="card panel";
+    var series=[];for(var y=Y0;y<=2050;y++){var c=calc(r,t,S.ref,S.alt,y);series.push(c?c.cov:null);}
+    var head='<h3>'+t.name+'</h3>';
+    if(series[0]==null){el.innerHTML=head+'<div class="empty">Areal eller brukertall er ikke rapportert</div>';host.appendChild(el);return;}
+    var g=growth(r,t,S.alt,S.yr);
+    head+='<div class="now">'+fpct(series[0])+' i dag, '+fpct(series[S.yr-Y0])+' i '+S.yr+'. '+t.drvName.charAt(0).toUpperCase()+t.drvName.slice(1)+': '+fsign((g-1)*100)+' %</div>';
+    var lo=Math.min.apply(null,series.concat([85])),hi=Math.max.apply(null,series.concat([115]));
+    var pad=(hi-lo)*0.08;lo=Math.max(0,Math.floor((lo-pad)/10)*10);hi=Math.ceil((hi+pad)/10)*10;
+    function x(i){return L+i*(W-L-R)/(n-1);}function yy(v){return Tp+(hi-v)*(H-Tp-B)/(hi-lo);}
+    var step=(hi-lo)<=60?10:(hi-lo)<=150?25:(hi-lo)<=300?50:100,ticks=[];
+    for(var v=Math.ceil(lo/step)*step;v<=hi;v+=step)ticks.push(v);
+    var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+t.name+': dekning i prosent 2026 til 2050">';
+    var b1=Math.max(lo,90),b2=Math.min(hi,110);
+    s+='<rect x="'+L+'" y="'+yy(b2)+'" width="'+(W-L-R)+'" height="'+(yy(b1)-yy(b2))+'" fill="var(--band)"/>';
+    ticks.forEach(function(v){if(v!==100)s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+yy(v)+'" y2="'+yy(v)+'" stroke="var(--line2)"/>';s+='<text x="'+(L-6)+'" y="'+(yy(v)+4)+'" text-anchor="end">'+v+' %</text>';});
+    if(ticks.indexOf(100)<0)s+='<text x="'+(L-6)+'" y="'+(yy(100)+4)+'" text-anchor="end">100 %</text>';
+    s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+yy(100)+'" y2="'+yy(100)+'" stroke="var(--ink3)" stroke-dasharray="3 3"/>';
+    [2026,2030,2040,2050].forEach(function(y){s+='<text x="'+x(y-Y0)+'" y="'+(H-6)+'" text-anchor="middle">'+y+'</text>';});
+    var si=S.yr-Y0;
+    s+='<line x1="'+x(si)+'" x2="'+x(si)+'" y1="'+Tp+'" y2="'+(H-B)+'" stroke="var(--line)"/>';
+    var pts=series.map(function(v,i){return x(i).toFixed(1)+","+yy(v).toFixed(1);}).join(" ");
+    var col="var(--"+({u:"under",o:"over",n:"neutral"})[cls(series[si])]+")";
+    s+='<polyline points="'+pts+'" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+    s+='<circle cx="'+x(si)+'" cy="'+yy(series[si])+'" r="5" fill="'+col+'" stroke="var(--surface)" stroke-width="2"/>';
+    s+='<line class="ch" x1="0" x2="0" y1="'+Tp+'" y2="'+(H-B)+'" stroke="var(--ink3)" visibility="hidden"/><circle class="cd" r="4" fill="var(--ink)" stroke="var(--surface)" stroke-width="2" visibility="hidden"/>';
+    s+='<rect class="hit" x="'+L+'" y="0" width="'+(W-L-R)+'" height="'+H+'" fill="transparent"/></svg><div class="tip"></div>';
+    el.innerHTML=head+s;host.appendChild(el);
+    var svg=el.querySelector("svg"),tip=el.querySelector(".tip"),ch=el.querySelector(".ch"),cd=el.querySelector(".cd");
+    function move(ev){
+      var bb=svg.getBoundingClientRect(),px=(ev.clientX-bb.left)*W/bb.width,i=Math.round((px-L)/((W-L-R)/(n-1)));i=Math.max(0,Math.min(n-1,i));
+      ch.setAttribute("x1",x(i));ch.setAttribute("x2",x(i));ch.setAttribute("visibility","visible");
+      cd.setAttribute("cx",x(i));cd.setAttribute("cy",yy(series[i]));cd.setAttribute("visibility","visible");
+      var c=calc(r,t,S.ref,S.alt,Y0+i),pb=el.getBoundingClientRect();
+      tip.textContent=(Y0+i)+": "+fpct(series[i])+" ("+fsign(c.gap)+" m²)";tip.style.display="block";
+      var lx=bb.left-pb.left+x(i)*bb.width/W;tip.style.left=Math.max(80,Math.min(pb.width-80,lx))+"px";tip.style.top=(bb.top-pb.top+yy(series[i])*bb.height/H-10)+"px";
+    }
+    function out(){tip.style.display="none";ch.setAttribute("visibility","hidden");cd.setAttribute("visibility","hidden");}
+    svg.addEventListener("pointermove",move);svg.addEventListener("pointerdown",move);svg.addEventListener("pointerleave",out);
+  });
+}
+
+var COLS=[["name","Kommune"],["g","KOSTRA-gruppe"],["users","Brukere i dag"],["ratio","m² per bruker"],["now","Dekning i dag"],["cov","Dekning i valgt år"],["gap","Avvik i valgt år, m²"]];
+function renderList(){
+  var t=T[S.typ],me=byCode[S.k];
+  var rows=K.filter(function(r){return S.scope==="a"||(S.scope==="g"&&(r.g===me.g))||(S.scope==="f"&&r.k.slice(0,2)===me.k.slice(0,2));}).map(function(r){
+    var now=calc(r,t,S.ref,S.alt,Y0),fut=calc(r,t,S.ref,S.alt,S.yr);
+    return {r:r,name:r.n,g:r.g,users:t.den(r)||null,ratio:now?now.ratio:null,now:now?now.cov:null,cov:fut?fut.cov:null,gap:fut?fut.gap:null};
+  });
+  var key=S.sort,dir=S.dir;
+  rows.sort(function(a,b){var x=a[key],y=b[key];if(x==null&&y==null)return a.name.localeCompare(b.name,"nb");if(x==null)return 1;if(y==null)return -1;return (typeof x==="string"?x.localeCompare(y,"nb"):x-y)*dir;});
+  document.querySelector("#list thead").innerHTML="<tr>"+COLS.map(function(c){var lab=c[1].replace("valgt år",S.yr);return '<th><button type="button" data-k="'+c[0]+'"'+(c[0]===key?' data-dir="'+dir+'"':'')+'>'+lab+'</button></th>';}).join("")+"</tr>";
+  var rep=rows.filter(function(x){return x.cov!=null;}).length,u=rows.filter(function(x){return x.cov!=null&&x.cov<90;}).length,o=rows.filter(function(x){return x.cov>110;}).length;
+  document.getElementById("listinfo").textContent=rows.length+" kommuner. I "+S.yr+": "+u+" med underdekning, "+(rep-u-o)+" i balanse, "+o+" med overdekning, "+(rows.length-rep)+" uten rapporterte tall. Klikk en rad for å velge kommunen.";
+  document.querySelector("#list tbody").innerHTML=rows.map(function(x){
+    return '<tr tabindex="0" data-k="'+x.r.k+'"'+(x.r.k===S.k?' class="sel"':'')+'><td class="name">'+esc(x.name)+'</td><td>'+x.g+'</td><td>'+(x.users?nf0.format(x.users):"–")+'</td><td>'+fm2(x.ratio)+'</td><td>'+covCell(x.now)+'</td><td>'+(x.cov==null?"–":covCell(x.cov))+'</td><td>'+fsign(x.gap)+'</td></tr>';
+  }).join("");
+}
+function render(){renderMain();renderCharts();renderList();}
+
+// Oppsett
+var sorted=K.slice().sort(function(a,b){return a.n.localeCompare(b.n,"nb");});
+document.getElementById("komlist").innerHTML=sorted.map(function(r){return '<option value="'+esc(r.n)+'">';}).join("");
+document.getElementById("typ").innerHTML=T.map(function(t,i){return '<option value="'+i+'">'+t.name+'</option>';}).join("");
+document.getElementById("usrlist").innerHTML=T.map(function(t){return '<li>'+t.name+': '+t.user.toLowerCase()+'. Framskrives med '+t.drvName+'.</li>';}).join("");
+var n24=K.filter(function(r){return T.some(function(t){return r.a[t.f]>0&&r.ay[t.f]===2024;});}).map(function(r){return r.n;});
+document.getElementById("y24note").textContent=n24.length?"For "+n24.length+" kommuner mangler 2025-tall for areal, og 2024-tall er brukt: "+n24.join(", ")+".":"Alle arealtall er fra 2025.";
+var komIn=document.getElementById("kom");komIn.value=byCode[S.k].n;
+function setKom(k){S.k=k;komIn.value=byCode[k].n;try{localStorage.setItem("formaalsbygg-kommune",k);}catch(e){}render();}
+function pick(){
+  var q=komIn.value.trim().toLowerCase();if(!q)return;
+  var hit=sorted.filter(function(r){return r.n.toLowerCase()===q;})[0]||sorted.filter(function(r){return r.n.toLowerCase().indexOf(q)===0;})[0]||sorted.filter(function(r){return r.n.toLowerCase().indexOf(q)>=0;})[0];
+  if(hit)setKom(hit.k);
+}
+komIn.addEventListener("change",pick);
+komIn.addEventListener("input",function(){var q=komIn.value.toLowerCase();var hit=sorted.filter(function(r){return r.n.toLowerCase()===q;})[0];if(hit&&hit.k!==S.k){S.k=hit.k;try{localStorage.setItem("formaalsbygg-kommune",hit.k);}catch(e){}render();}});
+komIn.addEventListener("focus",function(){komIn.select();});
+komIn.addEventListener("blur",function(){komIn.value=byCode[S.k].n;});
+function seg(id,prop){var el=document.getElementById(id);el.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;S[prop]=b.dataset.v;[].forEach.call(el.children,function(c){c.setAttribute("aria-pressed",c===b);});render();});}
+seg("refseg","ref");seg("scopeseg","scope");
+document.getElementById("alt").addEventListener("change",function(e){S.alt=+e.target.value;render();});
+document.getElementById("yr").addEventListener("input",function(e){S.yr=+e.target.value;document.getElementById("yrout").textContent=S.yr;render();});
+document.getElementById("typ").addEventListener("change",function(e){S.typ=+e.target.value;renderList();});
+document.querySelector("#list thead").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;if(S.sort===b.dataset.k)S.dir=-S.dir;else{S.sort=b.dataset.k;S.dir=1;}renderList();});
+var tb=document.querySelector("#list tbody");
+tb.addEventListener("click",function(e){var tr=e.target.closest("tr");if(tr){setKom(tr.dataset.k);window.scrollTo({top:0,behavior:"smooth"});}});
+tb.addEventListener("keydown",function(e){if(e.key==="Enter"){var tr=e.target.closest("tr");if(tr){setKom(tr.dataset.k);window.scrollTo({top:0});}}});
+window.__calc=function(k,f,mode,alt,yr){return calc(byCode[k],T.filter(function(t){return t.f===f;})[0],mode,alt,yr);};
+render();
+})();
+</script>
+</body>
+</html>

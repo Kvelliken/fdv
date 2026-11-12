@@ -43,13 +43,26 @@ docs/                    GitHub Pages
 tests/                   enhetstester, syntetisk grunnlag, nett-tester
 ```
 
+## Andre prosjekter i repoet
+
+To selvstendige prosjekter ligger ved siden av `kostra_fdv`. De deler ingen kode
+med pakken, og publiseres under samme GitHub Pages-side.
+
+| Mappe | Hva | Nettside | Bygges med |
+|---|---|---|---|
+| `dekning/` | Over- og underdekning av areal per kommune og bygningstype, framskrevet til 2050 | `docs/dekning/` | `python dekning/bygg.py` |
+| `byggekost/` | Prognose for SSBs byggekostnadsindeks for boligblokk (tidligere eget repo, historikken er bevart) | `docs/byggekost/` | `cd byggekost && python modell.py` |
+
+Hvert prosjekt har sin egen README.
+
 ## Workflows
 
 | Fil | Når | Hva |
 |---|---|---|
-| `test.yml` | hver push | tester, og sjekk mot hardkodede verdikoder |
+| `test.yml` | hver push | tester for fdv og byggekost, og sjekk mot hardkodede verdikoder |
 | `manedlig.yml` | den 5. hver måned | endringsdetektor: ny eller stille revidert årgang |
 | `grunnlag.yml` | manuelt | full henting, blokkerende avstemming, publisering |
+| `byggekost.yml` | den 16. hver måned | byggekost-modellen: henter indeksen, tester, publiserer `docs/byggekost/` |
 
 `manedlig.yml` er en detektor, ikke en beregningsjobb. Uten indeksjustering er
 det ingenting å regne på mellom KOSTRA-publiseringene, så de fleste kjøringene
