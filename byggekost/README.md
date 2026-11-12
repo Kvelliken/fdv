@@ -5,7 +5,10 @@ boligblokk (tabell 08655), for 1, 3, 5 og 10 år frem, med usikkerhetsspenn.
 
 Kjører automatisk den 16. hver måned og publiserer resultatet som en nettside.
 
-**Resultatside:** https://Kvelliken.github.io/byggekost/
+**Resultatside:** https://kvelliken.github.io/fdv/byggekost/
+
+Modellen var tidligere et eget repo (Kvelliken/byggekost) og ligger nå i
+mappen `byggekost/` i fdv-repoet. Historikken er bevart.
 
 Rapporten viser hvordan hvert tall er blitt til, hvor ofte modellen ville ha
 truffet historisk, og hvor mye anslagene avhenger av valgene i `config.py`.
@@ -53,8 +56,8 @@ snittveksten alene. Det er spennet som er modellens viktigste bidrag.
 | `modell.py` | Henter data, estimerer, simulerer, tester, lager grafer og rapport. |
 | `tests/` | Automatiske tester. Kjøres før hver månedskjøring. |
 | `requirements.txt` | Pakkene som trengs. |
-| `.github/workflows/manedlig.yml` | Timeplanen for den automatiske kjøringen. |
-| `docs/` | Nettsiden som publiseres. Skrives av modellen — ikke rediger. |
+| `../.github/workflows/byggekost.yml` | Timeplanen for den automatiske kjøringen. |
+| `../docs/byggekost/` | Nettsiden som publiseres. Skrives av modellen — ikke rediger. |
 | `data/` | Rådata per måned, tilbaketesten og logg over anslagene. |
 
 I `data/` heter øyeblikksbildene `indeks_ÅÅÅÅ-MM.csv` etter siste måned de
@@ -64,6 +67,7 @@ modellversjon.
 ## Kjøre den selv
 
 ```bash
+cd byggekost
 pip install -r requirements.txt
 ```
 
@@ -71,7 +75,7 @@ pip install -r requirements.txt
 python modell.py
 ```
 
-Åpne så `docs/index.html` i nettleseren.
+Åpne så `docs/byggekost/index.html` (i rotmappen) i nettleseren.
 
 Uten nett, eller for å prøve en endring i `config.py` på de sist lagrede tallene:
 

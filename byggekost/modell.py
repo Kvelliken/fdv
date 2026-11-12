@@ -71,7 +71,9 @@ plt.rcParams.update(
 # ulike metoder.
 MODELLVERSJON = "2"
 
-UT = "docs"
+# Stiene er relative til byggekost/, som er arbeidsmappen når modellen kjøres.
+# Nettsiden publiseres fra fdv-repoets docs/, under docs/byggekost/.
+UT = "../docs/byggekost"
 DATA = "data"
 
 
