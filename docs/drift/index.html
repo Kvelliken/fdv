@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../felles/logo/vargvind-symbol.svg" type="image/svg+xml">
+<title>Drift og vedlikehold – FDV-normtall for kommunale formålsbygg</title>
+<meta name="description" content="Forvaltning, drift og vedlikehold per kvadratmeter for kommunale formålsbygg, regnet fra KOSTRA.">
+<link rel="preload" href="../felles/fonter/Inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../felles/vargvind.css">
+<link rel="stylesheet" href="drift.css">
+</head>
+<body>
+<a class="vv-hopp" href="#innhold">Hopp til innholdet</a>
+<header class="vv-topp">
+  <div class="vv-topp__inner">
+    <a class="vv-topp__merke" href="../">
+      <img class="vv-logo" src="../felles/logo/vargvind-logo.svg" alt="Vargvind Analyse" width="212" height="48">
+      <img class="vv-symbol" src="../felles/logo/vargvind-symbol.svg" alt="Vargvind" width="28" height="32">
+      <span class="vv-topp__navn"><b>Formålsbygg</b><span>Behov, byggekostnad og drift</span></span>
+    </a>
+    <nav aria-label="Hovedmeny">
+      <ul class="vv-meny">
+        <li><a href="../">Oversikt</a></li>
+        <li><a href="../dekning/"><span class="vv-steg" aria-hidden="true">1</span>Arealbehov</a></li>
+        <li><a href="../byggekost/"><span class="vv-steg" aria-hidden="true">2</span>Byggekostnad</a></li>
+        <li><a href="../drift/" aria-current="page"><span class="vv-steg" aria-hidden="true">3</span><span>Drift<span class="vv-ekstra"> og vedlikehold</span></span></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="vv-side">
+  <div class="vv-sidehode">
+    <p class="vv-overline">Steg 3 · Drift og vedlikehold</p>
+    <h1>Hva koster det å drifte et kommunalt formålsbygg?</h1>
+    <p class="vv-ingress">
+      Kroner og kilowattimer rapportert av kommunene i KOSTRA, delt på eid areal.
+      Tallene viser hva kommunene faktisk bruker, ikke hva et bygg burde koste.
+      Hvert tall kan spores tilbake til statistikkbanken.
+    </p>
+    <p class="vv-caption vv-stempel" id="merking">Laster grunnlaget …</p>
+  </div>
+
+  <div id="tom" class="vv-callout" hidden>
+    <span aria-hidden="true"></span>
+    <div>
+      <p class="vv-callout__title">Ingen publiserte tall ennå</p>
+      <p class="vv-callout__body">
+        Siden bygges fra <code>normtall.json</code>, som lages av workflowen
+        <code>grunnlag.yml</code>. Kjør den, så fyller siden seg.
+      </p>
+    </div>
+  </div>
+
+  <div id="side" hidden>
+    <div class="vv-kontroller velger">
+      <div class="vv-felt">
+        <span class="vv-felt__navn" id="bygg-etikett">Bygningstype</span>
+        <div id="bygg-knapper" class="vv-seg" role="tablist" aria-labelledby="bygg-etikett"></div>
+      </div>
+    </div>
+
+    <div class="vv-oppslag">
+      <nav class="vv-toc" data-toc aria-label="På denne siden">
+        <p class="vv-overline">På denne siden</p>
+        <ol></ol>
+      </nav>
+
+      <main id="innhold" tabindex="-1">
+        <section class="vv-seksjon" aria-labelledby="hovedtall">
+          <h2 id="hovedtall" data-kort="Hovedtall"><span id="hero-navn"></span>: drift og vedlikehold</h2>
+          <div class="hero-rad">
+            <div class="vv-kpi hero">
+              <span class="vv-kpi__label">Sannsynlig nivå, <span id="hero-aar"></span></span>
+              <span class="vv-kpi__value"><span id="hero-verdi"></span> <small>kr/m² per år</small></span>
+              <div id="hero-spenn"></div>
+              <p class="vv-kpi__delta">
+                Åtte av ti kommuner ligger mellom <strong id="hero-kvartil"></strong>.
+                Beregnet på <span id="hero-n"></span> kommuner etter at rapporteringsfeil er luket ut.
+              </p>
+            </div>
+            <div class="vv-kpi">
+              <span class="vv-kpi__label">FDV samlet</span>
+              <span class="vv-kpi__value"><span id="fdv-verdi"></span> <small>kr/m²</small></span>
+              <p class="vv-kpi__delta">Med forvaltning, som er et porteføljetall likt for alle bygningstyper.</p>
+            </div>
+            <div class="vv-kpi">
+              <span class="vv-kpi__label">Energibruk</span>
+              <span class="vv-kpi__value"><span id="kwh-verdi"></span> <small>kWh/m²</small></span>
+              <p class="vv-kpi__delta" id="kwh-under"></p>
+            </div>
+          </div>
+          <p class="vv-blokk kryss">
+            <a class="vv-lenkepil" id="til-dekning" href="../dekning/">Har kommunen nok areal av denne typen?</a>
+          </p>
+        </section>
+
+        <section class="vv-seksjon" aria-labelledby="normtall-tittel">
+          <h2 id="normtall-tittel" data-kort="Per post">Normtall per post</h2>
+          <p>
+            Postene er nøstet i KOSTRA. Drift består av energi, renhold og øvrig
+            drift, så bare drift og vedlikehold kan summeres. Spennet er satt på
+            drift og vedlikehold samlet og brutt ned med medianandeler, slik at
+            radene summerer seg til totalen.
+          </p>
+          <div class="vv-blokk vv-table__ramme vv-rulle">
+            <table id="normtall" class="vv-table">
+              <caption class="vv-skjult">Kroner per kvadratmeter, siste årgang</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Post</th>
+                  <th scope="col" class="vv-num">Lav</th>
+                  <th scope="col" class="vv-num">Sannsynlig</th>
+                  <th scope="col" class="vv-num">Høy</th>
+                  <th scope="col" class="spennkol">Spenn i kr/m²</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <p class="vv-table__source">Kroner per kvadratmeter eid areal, siste årgang. Lav er 10. persentil, høy er 90. Kilde: SSB, KOSTRA.</p>
+          <p class="vv-caption fotnote" id="forvaltning-note"></p>
+          <p class="vv-caption fotnote">
+            Vedlikehold er periodisk. Et tverrsnitt av ett år fanger mange kommuner
+            i en lavperiode, så medianen undervurderer årsnivået. Standard
+            sentralmål for vedlikehold er derfor 10&nbsp;% trimmet snitt:
+            <span id="vedlikehold-sentralmaal"></span>.
+          </p>
+        </section>
+
+        <section class="vv-seksjon" aria-labelledby="tidsserie-tittel">
+          <h2 id="tidsserie-tittel" data-kort="Utvikling">Utvikling over tid</h2>
+          <p>
+            Alle tall er i løpende kroner, så veksten inkluderer generell
+            prisstigning. Nivået regnes på alle rene kommuner hvert år. Vekstraten
+            regnes på det balanserte panelet, kommunene som er rene i alle årene,
+            fordi en kommune som faller ut og inn ellers flytter medianen uten at
+            noen pris har endret seg.
+          </p>
+          <div class="vv-blokk vv-table__ramme vv-rulle">
+            <table id="tidsserie" class="vv-table">
+              <caption class="vv-skjult">Median kr/m² per årgang og nominell endring</caption>
+              <thead><tr><th scope="col">Post</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <p class="vv-table__source" id="panel-note"></p>
+        </section>
+
+        <section class="vv-seksjon" aria-labelledby="energi-tittel">
+          <h2 id="energi-tittel" data-kort="Energi">Energibruk</h2>
+          <div class="vv-callout vv-blokk" style="margin-top:0">
+            <svg class="vv-callout__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></svg>
+            <p class="vv-callout__body">
+              Tallene er ikke temperaturkorrigert. Et kaldt år løfter alle kommuner,
+              og nordlige kommuner ligger høyere enn sørlige. Varme fra varmepumper
+              og solfangere er ikke med, bare strømmen som driver dem, så dette er
+              tilført energi og ikke energibehov.
+            </p>
+          </div>
+          <div class="vv-blokk vv-table__ramme vv-rulle">
+            <table id="energi" class="vv-table">
+              <caption class="vv-skjult">Energibruk i kWh per kvadratmeter</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Årgang</th>
+                  <th scope="col" class="vv-num">Lav</th>
+                  <th scope="col" class="vv-num">Sannsynlig</th>
+                  <th scope="col" class="vv-num">Høy</th>
+                  <th scope="col" class="vv-num">Arealvektet</th>
+                  <th scope="col" class="vv-num">Fornybar</th>
+                  <th scope="col" class="vv-num">Kr/kWh</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <p class="vv-table__source">kWh per kvadratmeter eid areal. Fornybar og kr/kWh er medianer. Kilde: SSB, KOSTRA.</p>
+          <h3>Fordeling på energivare</h3>
+          <div id="energivarer" class="vv-kort"></div>
+        </section>
+
+        <section class="vv-seksjon" aria-labelledby="dekomp-tittel">
+          <h2 id="dekomp-tittel" data-kort="Pris eller forbruk">Kommer kostnadsveksten fra pris eller forbruk?</h2>
+          <p>
+            Energikostnaden er pris ganger forbruk. Vises begge i samme periode,
+            ser man hvilken av dem som driver utviklingen. Implisitt pris er
+            energiutgift delt på energibruk, og er samtidig den sterkeste
+            kvalitetskontrollen: kroner og kilowattimer kommer fra hvert sitt
+            skjema, så et urimelig forholdstall viser hvilken side feilen ligger på.
+          </p>
+          <div id="dekomponering" class="vv-blokk vv-rutenett"></div>
+        </section>
+
+        <section class="vv-seksjon" aria-labelledby="kvalitet-tittel">
+          <h2 id="kvalitet-tittel" data-kort="Datakvalitet">Datakvalitet</h2>
+          <p>
+            Kvalitetsflaggene settes på råstørrelsene, ikke på forholdstallet. Det
+            skiller en billig kommune fra en kommune som ikke har rapportert
+            kostnaden. Uteliggergrensen regnes i log-rom etter at de øvrige
+            flaggene er satt, slik at rapporteringsfeil ikke flytter kvartilene.
+          </p>
+          <div class="vv-blokk vv-table__ramme vv-rulle">
+            <table id="kvalitet" class="vv-table">
+              <caption class="vv-skjult">Kommuner i grunnlaget og i kjernedatasettet</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Årgang</th>
+                  <th scope="col" class="vv-num">I grunnlaget</th>
+                  <th scope="col" class="vv-num">I kjernen</th>
+                  <th scope="col">Frafall per årsak</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <h3>Implisitt energipris i landet</h3>
+          <p id="prisfordeling"></p>
+        </section>
+
+        <section class="vv-seksjon" aria-labelledby="forbehold-tittel">
+          <h2 id="forbehold-tittel">Forbehold</h2>
+          <ul id="forbehold" class="forbehold"></ul>
+        </section>
+
+        <section class="vv-seksjon" aria-labelledby="last-ned-tittel">
+          <h2 id="last-ned-tittel" data-kort="Last ned">Last ned grunnlaget</h2>
+          <p>
+            Revisjonsfilen har én rad per kommune med kroner, kilowattimer, areal og
+            alle kvalitetsflagg. Den er nok til å regne hvert publiserte tall på nytt.
+          </p>
+          <ul id="nedlasting" class="vv-blokk lenker"></ul>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <section class="vv-videre" aria-labelledby="videre-tittel">
+    <h2 id="videre-tittel">Se også</h2>
+    <div class="vv-videre__rad">
+      <a href="../dekning/">
+        <span class="vv-overline">Steg 1 · Arealbehov</span>
+        <b>Har kommunen nok areal?</b>
+        <span>Dekning per kommune og bygningstype, i dag og framskrevet til 2050.</span>
+        <span>Til arealbehov</span>
+      </a>
+      <a href="../byggekost/">
+        <span class="vv-overline">Steg 2 · Byggekostnad</span>
+        <b>Hvor mye stiger byggekostnadene?</b>
+        <span>Prognose for SSBs byggekostnadsindeks 1–10 år fram, med usikkerhetsspenn.</span>
+        <span>Til byggekostnad</span>
+      </a>
+    </div>
+  </section>
+
+  <footer class="vv-bunn">
+    <p id="kodevalg-fot"></p>
+    <p>
+      Kilde: Statistisk sentralbyrå, KOSTRA. Beregningen er dokumentert i
+      <a href="https://github.com/Kvelliken/fdv/blob/main/METODE.md">METODE.md</a> i repoet.
+    </p>
+  </footer>
+</div>
+
+<script src="../felles/side.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

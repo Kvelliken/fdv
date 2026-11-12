@@ -19,7 +19,8 @@ python -m kostra_fdv.cli beregn
 
 `hent` henter og fryser de fem siste **reviderte** årgangene under
 `data/grunnlag/<år>/`. `beregn` leser det frosne grunnlaget, skriver
-revisjonsfiler per kommune og bygger `docs/normtall.json`, som nettsiden leser.
+revisjonsfiler per kommune og bygger `docs/normtall.json`, som FDV-siden
+(`docs/drift/`), oversiktssiden og arealbehov-siden leser.
 
 Første gang bør du lese jobbloggen fra `hent`. Den skriver ut hvilke verdikoder
 den fant, og om valget var automatisk eller overstyrt.
@@ -40,6 +41,11 @@ src/kostra_fdv/
 data/grunnlag/<år>/      frosset KOSTRA-grunnlag, versjonert
 data/revisjon/<år>/      per kommune: kroner, kWh, areal, flagg
 docs/                    GitHub Pages
+  index.html             oversikt: de tre stegene, kommunesøk og prosjektregner
+  drift/                 FDV-siden (håndskrevet, leser ../normtall.json)
+  dekning/               arealbehov, bygges av dekning/bygg.py
+  byggekost/             byggekostnad, bygges av byggekost/modell.py
+  felles/                Vargvind-stil, skrifter og innholdsliste for alle sidene
 tests/                   enhetstester, syntetisk grunnlag, nett-tester
 ```
 
@@ -54,6 +60,27 @@ med pakken, og publiseres under samme GitHub Pages-side.
 | `byggekost/` | Prognose for SSBs byggekostnadsindeks for boligblokk (tidligere eget repo, historikken er bevart) | `docs/byggekost/` | `cd byggekost && python modell.py` |
 
 Hvert prosjekt har sin egen README.
+
+## Nettstedet
+
+De tre delene publiseres som ett nettsted med felles meny og Vargvind-profil:
+oversikt, arealbehov (steg 1), byggekostnad (steg 2) og drift og vedlikehold
+(steg 3). Farger, skrift og komponenter ligger i `docs/felles/vargvind.css`, og
+skriftene ligger i `docs/felles/fonter/`, så ingenting hentes fra tredjepart.
+Logoen ligger i `docs/felles/logo/` som rene SVG-er med navnetrekket tegnet som
+kurver; symbolet alene brukes på mobil og som favicon.
+
+Menyen står i fire filer: `docs/index.html`, `docs/drift/index.html`,
+`dekning/mal.html` og `lag_rapport()` i `byggekost/modell.py`.
+`tests/test_nettsted.py` feiler hvis de glir fra hverandre eller en intern
+lenke er død.
+
+Sidene kan lenkes direkte til et valg:
+
+| Adresse | Viser |
+|---|---|
+| `drift/?bygg=222` | FDV-normtall for skolelokaler |
+| `dekning/?kommune=4601&bygg=222&aar=2040` | Bergen, skolelokaler i lista, framskrevet til 2040 |
 
 ## Workflows
 

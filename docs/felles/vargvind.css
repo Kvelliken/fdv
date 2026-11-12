@@ -1,0 +1,351 @@
+/* Vargvind-profil for formålsbygg-sidene.
+   Felles for oversikten, arealbehov, byggekostnad og drift (FDV).
+   Tokens og vv-komponenter er hentet fra Vargvinds designsystem; resten er
+   sidens egen layout bygget på de samme tokenene. Endre farger her, ikke i
+   den enkelte siden. */
+
+/* Skriftene ligger i fonter/ (SIL Open Font License), så siden henter ingenting fra tredjepart. */
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonter/Inter-400.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonter/Inter-500.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonter/Inter-600.woff2") format("woff2"); }
+@font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonter/CormorantGaramond-400.woff2") format("woff2"); }
+@font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonter/CormorantGaramond-500.woff2") format("woff2"); }
+@font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonter/CormorantGaramond-600.woff2") format("woff2"); }
+
+:root {
+  /* Flater og tekst */
+  --bg-000: #FFFFFF;
+  --bg-100: #F4F7F9;
+  --bg-200: #E8EEF3;
+  --ink-900: #12233A;
+  --ink-700: #34485E;
+  --ink-500: #5A6B7C;
+  --line-200: #D5DEE6;
+  --line-400: #7A8EA0;
+
+  /* Merkevare og fremheving */
+  --brand-900: var(--ink-900);
+  --brand-600: #4A6A84;
+  --brand-500: #5E7F99;
+  --brand-300: #A9C4D6;
+  --brand-100: #DCE8F0;
+  --accent-600: #A85A14;
+  --accent-500: #C8823A;
+  --accent-100: #F6E9D8;
+  --positive-600: #1F7A5C;
+  --positive-100: #DDF0E8;
+  --negative-600: #B23A3A;
+  --negative-100: #F6DEDE;
+
+  /* Diagram */
+  --chart-1: var(--brand-900);
+  --chart-2: var(--brand-600);
+  --chart-3: var(--brand-300);
+  --chart-4: var(--accent-500);
+  --chart-5: #8793A0;
+  --chart-6: #2E8B7A;
+  --seq-1: #E3ECF2; --seq-2: #BCD0DE; --seq-3: #8FAEC4;
+  --seq-4: #5E86A3; --seq-5: #365C7D; --seq-6: var(--brand-900);
+  --div-neg-2: var(--accent-600);
+  --div-neg-1: #E2B98A;
+  --div-mid: #EEF1F4;
+  --div-pos-1: var(--seq-3);
+  --div-pos-2: var(--seq-5);
+
+  /* Typografi */
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Avstand, radius, skygge */
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
+  --radius-sm: 2px; --radius-md: 4px; --radius-lg: 8px; --radius-full: 999px;
+  --shadow-sm: 0 1px 2px rgba(18, 35, 58, 0.08);
+  --shadow-md: 0 6px 20px rgba(18, 35, 58, 0.12);
+
+  /* Sidens egne mål */
+  --bredde: 1200px;
+  --maal: 70ch;
+  --topp-hoyde: 64px;
+}
+
+/* -- Grunnlag ------------------------------------------------------------ */
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--topp-hoyde) + var(--space-6)); }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+body {
+  margin: 0;
+  background: var(--bg-100);
+  color: var(--ink-700);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 26px;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { color: var(--ink-900); margin: 0; text-wrap: balance; }
+h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(36px, 5.2vw, 56px); line-height: 1.05; letter-spacing: -0.01em; }
+h2 { font-family: var(--font-display); font-weight: 600; font-size: 28px; line-height: 1.2; }
+h3 { font-family: var(--font-sans); font-weight: 600; font-size: 20px; line-height: 28px; }
+h4 { font-family: var(--font-sans); font-weight: 600; font-size: 16px; line-height: 24px; }
+p { margin: 0; max-width: var(--maal); }
+p + p { margin-top: var(--space-4); }
+strong, b { color: var(--ink-900); font-weight: 600; }
+a { color: var(--brand-600); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { color: var(--ink-900); }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.9em; background: var(--bg-200); padding: 1px 5px; border-radius: var(--radius-sm); color: var(--ink-900); }
+:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+img { max-width: 100%; }
+
+.vv-overline { font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-500); margin: 0; }
+.vv-ingress { font-size: 18px; line-height: 28px; color: var(--ink-700); max-width: 64ch; }
+.vv-caption { font-size: 12px; line-height: 18px; font-weight: 500; color: var(--ink-500); max-width: var(--maal); }
+.vv-dempet { color: var(--ink-500); }
+.vv-liten { font-size: 14px; line-height: 22px; }
+.vv-skjult {
+  position: absolute !important; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+.vv-hopp { position: absolute; left: -9999px; top: var(--space-2); z-index: 50; background: var(--bg-000); color: var(--ink-900); padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); box-shadow: var(--shadow-md); }
+.vv-hopp:focus { left: var(--space-4); }
+
+/* -- Toppmeny ------------------------------------------------------------ */
+
+.vv-topp {
+  position: sticky; top: 0; z-index: 30;
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid var(--line-200);
+  backdrop-filter: saturate(1.2) blur(6px);
+}
+.vv-topp__inner {
+  max-width: var(--bredde); margin: 0 auto; padding: 0 var(--space-6);
+  min-height: var(--topp-hoyde);
+  display: flex; align-items: center; gap: var(--space-8);
+}
+.vv-topp__inner > nav { min-width: 0; margin-left: auto; }
+@media (max-width: 1100px) { .vv-topp__navn span { display: none; } }
+/* Logo til venstre, så hårlinje og sidens navn. Logoen står på hvit flate
+   med frisone, og under 160 px bredde brukes symbolet alene. */
+.vv-topp__merke { display: flex; align-items: center; gap: var(--space-4); text-decoration: none; color: var(--ink-900); flex: none; }
+.vv-topp__merke:hover { color: var(--ink-900); }
+.vv-logo { display: block; height: 48px; width: auto; }
+.vv-symbol { display: none; height: 32px; width: auto; }
+.vv-topp__navn {
+  display: flex; flex-direction: column; color: var(--ink-900);
+  line-height: 1.1; padding-left: var(--space-4); border-left: 1px solid var(--line-200);
+}
+.vv-topp__navn b { font-family: var(--font-display); font-size: 22px; font-weight: 600; }
+.vv-topp__navn span { font-size: 12px; line-height: 16px; color: var(--ink-500); margin-top: 2px; }
+.vv-meny { display: flex; gap: var(--space-1); margin: 0; padding: 0; list-style: none; overflow-x: auto; scrollbar-width: none; }
+.vv-meny::-webkit-scrollbar { display: none; }
+.vv-meny a {
+  display: flex; align-items: center; gap: var(--space-2);
+  min-height: var(--topp-hoyde); padding: 0 var(--space-3);
+  color: var(--ink-700); text-decoration: none; font-size: 14px; font-weight: 500; white-space: nowrap;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.vv-meny a:hover { color: var(--ink-900); background: var(--bg-100); }
+.vv-meny a[aria-current="page"] { color: var(--ink-900); font-weight: 600; border-bottom-color: var(--brand-900); }
+.vv-meny .vv-steg {
+  display: inline-grid; place-items: center; width: 20px; height: 20px; flex: none;
+  border-radius: var(--radius-full); border: 1px solid var(--line-400);
+  font-size: 11px; line-height: 1; font-weight: 600; color: var(--ink-700);
+}
+.vv-meny a[aria-current="page"] .vv-steg { background: var(--brand-900); border-color: var(--brand-900); color: var(--bg-000); }
+
+@media (max-width: 760px) {
+  :root { --topp-hoyde: 52px; }
+  .vv-topp__inner { flex-direction: column; align-items: stretch; gap: 0; padding: 0; }
+  .vv-topp__merke { padding: var(--space-3) var(--space-4) 0; gap: var(--space-3); }
+  .vv-logo { display: none; }
+  .vv-topp__inner > nav { margin-left: 0; }
+  .vv-symbol { display: block; }
+  .vv-topp__navn { padding-left: var(--space-3); }
+  .vv-topp__navn b { font-size: 20px; }
+  .vv-topp__navn span { display: none; }
+  .vv-meny { padding: 0 var(--space-2); }
+  .vv-meny a { padding: 0 var(--space-2); }
+  .vv-meny .vv-steg, .vv-meny .vv-ekstra { display: none; }
+  html { scroll-padding-top: 160px; }
+}
+
+/* -- Sideoppsett ----------------------------------------------------------- */
+
+.vv-side { max-width: var(--bredde); margin: 0 auto; padding: 0 var(--space-6); }
+.vv-sidehode { padding: var(--space-12) 0 var(--space-8); }
+.vv-sidehode .vv-overline { margin-bottom: var(--space-3); }
+.vv-sidehode h1 { max-width: 22ch; }
+.vv-sidehode .vv-ingress { margin-top: var(--space-4); }
+.vv-sidehode .vv-stempel { margin-top: var(--space-4); }
+
+/* Lang side: innholdsliste til venstre, innhold til høyre */
+.vv-oppslag { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: var(--space-12); align-items: start; }
+.vv-oppslag > main { min-width: 0; grid-column: -2 / -1; }
+.vv-oppslag > .vv-toc { grid-column: 1; grid-row: 1; }
+.vv-toc { position: sticky; top: calc(var(--topp-hoyde) + var(--space-6)); }
+.vv-toc .vv-overline { margin-bottom: var(--space-3); }
+.vv-toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-200); }
+.vv-toc a {
+  display: block; padding: 6px var(--space-3); margin-left: -1px;
+  border-left: 2px solid transparent; color: var(--ink-500); text-decoration: none;
+  font-size: 14px; line-height: 20px;
+}
+.vv-toc a:hover { color: var(--ink-900); }
+.vv-toc a[aria-current="true"] { color: var(--ink-900); font-weight: 600; border-left-color: var(--brand-900); }
+
+@media (max-width: 1023px) {
+  .vv-oppslag { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .vv-oppslag > main, .vv-oppslag > .vv-toc { grid-column: 1; grid-row: auto; }
+  .vv-toc {
+    top: var(--topp-hoyde); z-index: 20; margin: 0 calc(-1 * var(--space-6));
+    background: var(--bg-100); border-bottom: 1px solid var(--line-200);
+  }
+  .vv-toc .vv-overline { display: none; }
+  .vv-toc ol { display: flex; overflow-x: auto; border-left: 0; padding: 0 var(--space-4); scrollbar-width: none; }
+  .vv-toc ol::-webkit-scrollbar { display: none; }
+  .vv-toc a { white-space: nowrap; border-left: 0; border-bottom: 2px solid transparent; padding: var(--space-3); margin: 0; }
+  .vv-toc a[aria-current="true"] { border-bottom-color: var(--brand-900); }
+}
+@media (max-width: 760px) {
+  .vv-side { padding: 0 var(--space-4); }
+  .vv-toc { margin: 0 calc(-1 * var(--space-4)); top: 100px; }
+}
+
+.vv-seksjon { padding: var(--space-12) 0; border-top: 1px solid var(--line-200); }
+.vv-seksjon:first-child { border-top: 0; padding-top: var(--space-6); }
+.vv-seksjon > h2 { margin-bottom: var(--space-3); }
+.vv-seksjon > h2 + p, .vv-seksjon > .vv-lede { color: var(--ink-700); }
+.vv-seksjon h3 { margin: var(--space-8) 0 var(--space-3); }
+.vv-blokk { margin-top: var(--space-6); }
+/* Cormorant har gammeldagse sifre som standard; tall skal stå på linjen. */
+h1, h2, .vv-kpi__value, .vv-tall { font-variant-numeric: lining-nums proportional-nums; }
+.vv-stabel > * + * { margin-top: var(--space-4); }
+
+/* -- Kort og kontroller --------------------------------------------------- */
+
+.vv-kort { background: var(--bg-000); border: 1px solid var(--line-200); border-radius: var(--radius-lg); padding: var(--space-6); }
+.vv-kort--tett { padding: var(--space-4); }
+.vv-rutenett { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+
+.vv-kontroller {
+  display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-6); align-items: flex-end;
+  background: var(--bg-000); border: 1px solid var(--line-200); border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-6);
+}
+.vv-felt { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.vv-felt > label, .vv-felt > .vv-felt__navn { font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.04em; color: var(--ink-700); }
+.vv-felt input[type="text"], .vv-felt input[type="search"], .vv-felt select {
+  font: inherit; font-size: 14px; color: var(--ink-900); background: var(--bg-000);
+  border: 1px solid var(--line-400); border-radius: var(--radius-md);
+  min-height: 40px; padding: 0 var(--space-3); min-width: 0;
+}
+.vv-felt select { padding-right: var(--space-8); }
+.vv-felt input[type="range"] { accent-color: var(--brand-900); }
+
+.vv-seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--line-400); border-radius: var(--radius-md); overflow: hidden; background: var(--bg-000); }
+.vv-seg button {
+  font: inherit; font-size: 14px; font-weight: 500; min-height: 38px; padding: 0 var(--space-4);
+  border: 0; background: transparent; color: var(--ink-700); cursor: pointer;
+}
+.vv-seg button + button { border-left: 1px solid var(--line-200); }
+.vv-seg button:hover { background: var(--bg-200); color: var(--ink-900); }
+.vv-seg button[aria-pressed="true"], .vv-seg button[aria-selected="true"] { background: var(--brand-900); color: var(--bg-000); font-weight: 600; }
+
+.vv-lenkepil { font-weight: 600; text-decoration: none; display: inline-flex; gap: var(--space-1); align-items: center; }
+.vv-lenkepil::after { content: "→"; transition: transform .15s; }
+.vv-lenkepil:hover::after { transform: translateX(3px); }
+
+.vv-rulle { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* -- Videre: lenker til de andre sidene ----------------------------------- */
+
+.vv-videre { padding: var(--space-12) 0 var(--space-8); border-top: 1px solid var(--line-200); }
+.vv-videre h2 { margin-bottom: var(--space-6); }
+.vv-videre__rad { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.vv-videre a {
+  display: flex; flex-direction: column; gap: var(--space-2);
+  background: var(--bg-000); border: 1px solid var(--line-200); border-radius: var(--radius-lg);
+  padding: var(--space-6); text-decoration: none; color: var(--ink-700);
+  transition: border-color .15s, box-shadow .15s;
+}
+.vv-videre a:hover { border-color: var(--line-400); box-shadow: var(--shadow-sm); }
+.vv-videre a b { font-family: var(--font-display); font-size: 24px; line-height: 1.2; font-weight: 600; color: var(--ink-900); }
+.vv-videre a span:last-child { margin-top: auto; padding-top: var(--space-2); color: var(--brand-600); font-weight: 600; font-size: 14px; }
+
+.vv-bunn { padding: var(--space-8) 0 var(--space-16); border-top: 1px solid var(--line-200); }
+.vv-bunn p { font-size: 12px; line-height: 18px; font-weight: 500; color: var(--ink-500); }
+.vv-bunn p + p { margin-top: var(--space-2); }
+
+/* -- Vargvind-komponenter (components/bundle.css) ------------------------- */
+
+.vv-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:44px;padding:0 var(--space-6);border:1px solid transparent;border-radius:var(--radius-md);font-family:var(--font-sans);font-size:14px;font-weight:600;line-height:1;letter-spacing:.02em;cursor:pointer;text-decoration:none}
+.vv-btn:focus-visible{outline:2px solid var(--brand-600);outline-offset:2px}
+.vv-btn--primary{background:var(--brand-900);color:var(--bg-000)}
+.vv-btn--primary:hover{background:var(--ink-700);color:var(--bg-000)}
+.vv-btn--secondary{background:var(--bg-000);color:var(--ink-900);border-color:var(--line-400)}
+.vv-btn--secondary:hover{background:var(--bg-200)}
+.vv-btn--ghost{background:transparent;color:var(--brand-600);padding:0 var(--space-3)}
+.vv-btn--ghost:hover{background:var(--bg-200)}
+.vv-btn:disabled{background:var(--bg-200);color:var(--ink-500);border-color:transparent;cursor:not-allowed}
+
+.vv-badge{display:inline-flex;align-items:center;gap:var(--space-1);padding:2px var(--space-2);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:12px;font-weight:600;line-height:18px;font-variant-numeric:tabular-nums;background:var(--bg-200);color:var(--ink-900);white-space:nowrap}
+.vv-badge--info{background:var(--brand-100);color:var(--ink-900)}
+.vv-badge--accent{background:var(--accent-100);color:var(--accent-600)}
+.vv-badge--positive{background:var(--positive-100);color:var(--positive-600)}
+.vv-badge--negative{background:var(--negative-100);color:var(--negative-600)}
+
+.vv-callout{display:grid;grid-template-columns:24px minmax(0,1fr);gap:var(--space-3);padding:var(--space-4) var(--space-6);border-radius:var(--radius-md);background:var(--brand-100);color:var(--ink-900);font-family:var(--font-sans);font-size:16px;line-height:26px}
+.vv-callout--insight{background:var(--accent-100)}
+.vv-callout--positive{background:var(--positive-100)}
+.vv-callout--negative{background:var(--negative-100)}
+.vv-callout__icon{width:24px;height:24px;margin-top:1px;fill:none;stroke:var(--ink-900);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.vv-callout--insight .vv-callout__icon{stroke:var(--accent-600)}
+.vv-callout__title{margin:0 0 var(--space-1);font-size:16px;line-height:24px;font-weight:600}
+.vv-callout__body{margin:0;max-width:none}
+.vv-mark{background:var(--accent-100);color:var(--ink-900);padding:0 var(--space-1);border-radius:var(--radius-sm)}
+
+.vv-kpi{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-6);background:var(--bg-000);border:1px solid var(--line-200);border-radius:var(--radius-lg);font-family:var(--font-sans);color:var(--ink-900)}
+.vv-kpi__label{font-size:12px;line-height:16px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-500)}
+.vv-kpi__value{font-family:var(--font-display);font-size:48px;line-height:1;font-weight:500}
+.vv-kpi__value small{font-family:var(--font-sans);font-size:14px;font-weight:500;color:var(--ink-500);letter-spacing:0}
+.vv-kpi__delta{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-2);font-size:14px;line-height:22px;color:var(--ink-500)}
+
+.vv-table{width:100%;border-collapse:collapse;background:var(--bg-000);font-family:var(--font-sans);font-size:14px;line-height:22px;color:var(--ink-900);font-variant-numeric:tabular-nums}
+.vv-table caption{caption-side:top;text-align:left;padding:0 0 var(--space-3);font-size:16px;line-height:24px;font-weight:600}
+.vv-table th,.vv-table td{padding:var(--space-2) var(--space-3);text-align:left;border-bottom:1px solid var(--line-200);vertical-align:baseline}
+.vv-table thead th{background:var(--bg-200);font-size:12px;line-height:18px;font-weight:600;letter-spacing:.04em;color:var(--ink-700);border-bottom:1px solid var(--line-400);vertical-align:bottom}
+.vv-table tbody th{font-weight:500}
+.vv-table .vv-num{text-align:right;white-space:nowrap}
+.vv-table tbody tr:hover{background:var(--bg-100)}
+.vv-table tr.vv-table__highlight{background:var(--accent-100)}
+.vv-table tr.vv-table__sum th,.vv-table tr.vv-table__sum td{font-weight:600;border-top:1px solid var(--ink-900)}
+.vv-table tfoot th,.vv-table tfoot td{font-weight:600;border-top:1px solid var(--ink-900);border-bottom:0}
+.vv-table__ramme{border:1px solid var(--line-200);border-radius:var(--radius-lg);overflow:hidden;background:var(--bg-000)}
+.vv-table__ramme .vv-table tbody tr:last-child > *{border-bottom:0}
+.vv-table__source{margin:var(--space-2) 0 0;font-family:var(--font-sans);font-size:12px;line-height:18px;font-weight:500;color:var(--ink-500)}
+
+.vv-chart{margin:0;padding:var(--space-6);background:var(--bg-000);border:1px solid var(--line-200);border-radius:var(--radius-lg);font-family:var(--font-sans);color:var(--ink-900)}
+.vv-chart__title{margin:0;font-family:var(--font-display);font-size:28px;line-height:1.2;font-weight:600}
+.vv-chart__subtitle{margin:var(--space-1) 0 var(--space-4);font-size:14px;line-height:22px;color:var(--ink-500)}
+.vv-chart__source{margin:var(--space-3) 0 0;font-size:12px;line-height:18px;font-weight:500;color:var(--ink-500)}
+.vv-chart svg{display:block;width:100%;height:auto}
+.vv-chart text{font-family:var(--font-sans);font-size:12px;fill:var(--ink-500);font-variant-numeric:tabular-nums}
+.vv-chart .vv-value{fill:var(--ink-900);font-weight:600}
+.vv-chart .vv-grid{stroke:var(--line-200);stroke-width:1}
+.vv-chart .vv-axis{stroke:var(--line-400);stroke-width:1}
+.vv-legend{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-4);margin:0 0 var(--space-3);padding:0;list-style:none;font-size:12px;line-height:18px;font-weight:500;color:var(--ink-700)}
+.vv-legend li{display:flex;align-items:center;gap:var(--space-2)}
+.vv-legend__dot{width:10px;height:10px;border-radius:var(--radius-full);flex:none}
+.vv-line{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.vv-line--ref{stroke-width:1.5;stroke-dasharray:4 4}
+
+@media print {
+  .vv-topp, .vv-toc, .vv-videre, .vv-hopp { display: none !important; }
+  body { background: #fff; }
+  .vv-oppslag { display: block; }
+}

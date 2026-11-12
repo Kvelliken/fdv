@@ -1,0 +1,60 @@
+/* Det som er særegent for FDV-siden. Farger og typografi kommer fra ../felles/vargvind.css. */
+
+.velger { margin-bottom: var(--space-6); }
+.velger .vv-seg button { min-height: 40px; }
+
+.hero-rad { display: grid; gap: var(--space-4); grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); margin-top: var(--space-6); }
+.hero-rad .vv-kpi__value small { white-space: nowrap; }
+.hero .vv-kpi__value { font-size: clamp(56px, 7vw, 80px); }
+.hero .vv-kpi__delta { display: block; max-width: 56ch; }
+@media (max-width: 900px) { .hero-rad { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .hero-rad .hero { grid-column: 1 / -1; } }
+@media (max-width: 520px) { .hero-rad { grid-template-columns: minmax(0, 1fr); } }
+
+.kryss { margin-top: var(--space-6); }
+
+/* Spennbar: lav til høy som flate, sannsynlig som strek */
+.spenn { width: 100%; height: 20px; display: block; }
+.spenn-boks { position: relative; padding-top: 22px; margin: var(--space-2) 0 var(--space-3); }
+.spenn-boks .spenn { height: 28px; }
+.spenn-merke { position: absolute; top: 0; font-size: 12px; line-height: 18px; font-weight: 500; color: var(--ink-500); white-space: nowrap; }
+.spenn-merke.hoy { transform: translateX(-100%); }
+.spenn .bane { fill: var(--brand-300); }
+.spenn .tick { stroke: var(--brand-900); stroke-width: 3; }
+.spenn .merke { fill: var(--ink-500); font: 500 12px var(--font-sans); }
+.hero .spenn .tick { stroke: var(--accent-500); stroke-width: 4; }
+
+td.spennkol, th.spennkol { width: 34%; min-width: 180px; }
+.vv-table tr.portefolje td, .vv-table tr.portefolje th { color: var(--ink-500); }
+.postnavn { display: block; }
+.postmerke { display: block; font-size: 12px; line-height: 18px; font-weight: 500; color: var(--ink-500); }
+.vv-table td.postmerke, .vv-table th.postmerke { display: table-cell; }
+.brudd { color: var(--accent-600); }
+
+.fotnote { margin-top: var(--space-3); }
+
+/* Energivarer */
+.varestabel { display: flex; height: 24px; width: 100%; border-radius: var(--radius-sm); overflow: hidden; gap: 2px; background: var(--bg-000); }
+.varestabel span { display: block; height: 100%; }
+.varelegende { list-style: none; padding: 0; margin: var(--space-4) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); font-size: 14px; line-height: 22px; color: var(--ink-700); }
+.varelegende li { display: flex; align-items: center; gap: var(--space-2); }
+.varelegende b { font-weight: 600; }
+.prikk { width: 10px; height: 10px; display: inline-block; border-radius: var(--radius-full); flex: none; }
+
+/* Små linjediagram */
+.smaakart-kort h4 { margin: 0; }
+.smaakart-kort .enhet { font-size: 12px; line-height: 18px; font-weight: 500; color: var(--ink-500); }
+.linjekart { width: 100%; height: 130px; display: block; margin-top: var(--space-3); overflow: visible; }
+.linjekart path { fill: none; stroke: var(--brand-900); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.linjekart circle { fill: var(--bg-000); stroke: var(--brand-900); stroke-width: 2; }
+.linjekart .akse { stroke: var(--line-400); stroke-width: 1; }
+.linjekart text { font: 500 12px var(--font-sans); fill: var(--ink-500); }
+.linjekart text.verdi { fill: var(--ink-900); font-weight: 600; }
+.smaakart-kort .endring { font-size: 14px; line-height: 22px; color: var(--ink-700); margin-top: var(--space-3); }
+
+.forbehold { max-width: var(--maal); padding-left: 1.1rem; margin: 0; }
+.forbehold li { margin-bottom: var(--space-3); }
+
+.lenker { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.lenker a { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 40px; padding: 0 var(--space-4); border: 1px solid var(--line-400); border-radius: var(--radius-md); background: var(--bg-000); color: var(--ink-900); text-decoration: none; font-size: 14px; font-weight: 500; }
+.lenker a:hover { background: var(--bg-200); }
+.lenker a::before { content: "↓"; color: var(--brand-600); }

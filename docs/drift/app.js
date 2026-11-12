@@ -12,11 +12,15 @@ const POSTREKKEFOLGE = [
   ["fdv", "FDV samlet", "forvaltning, drift og vedlikehold"],
 ];
 
-const VAREFARGER = ["#0c5c8a", "#4a8fae", "#8a5b00", "#3f7a5e", "#7a6a9b", "#a2493c"];
+// Vargvinds kategoriske skala, i fast rekkefølge.
+const VAREFARGER = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)", "var(--chart-5)", "var(--chart-6)"];
 
 const nf = new Intl.NumberFormat("nb-NO");
 const pf = new Intl.NumberFormat("nb-NO", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 const kf = new Intl.NumberFormat("nb-NO", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const pfs = new Intl.NumberFormat("nb-NO", { minimumFractionDigits: 1, maximumFractionDigits: 1, signDisplay: "exceptZero" });
+// Endring skrives med fortegn og ekte minustegn: +4,2 %, −1,8 %.
+const endring = (v) => pfs.format(v).replace("-", "−").replace("\u2212", "−");
 
 let data = null;
 let valgtFunksjon = null;
@@ -33,7 +37,7 @@ async function start() {
   if (startet) return;
   startet = true;
   try {
-    const svar = await fetch("normtall.json", { cache: "no-cache" });
+    const svar = await fetch("../normtall.json", { cache: "no-cache" });
     if (!svar.ok) throw new Error(svar.status);
     data = await svar.json();
   } catch (feil) {
@@ -47,7 +51,9 @@ async function start() {
   lagKnapper();
   visForbehold();
   visKodevalg();
-  velg(Object.keys(data.funksjoner)[0]);
+  const fraUrl = new URLSearchParams(location.search).get("bygg");
+  velg(fraUrl && data.funksjoner[fraUrl] ? fraUrl : Object.keys(data.funksjoner)[0], false);
+  if (window.vvByggToc) window.vvByggToc();
 }
 
 function lagKnapper() {
@@ -58,17 +64,44 @@ function lagKnapper() {
     knapp.textContent = innhold.navn;
     knapp.setAttribute("role", "tab");
     knapp.dataset.funksjon = kode;
-    knapp.addEventListener("click", () => velg(kode));
+    knapp.addEventListener("click", () => velg(kode, true));
     rad.appendChild(knapp);
   }
+  // Piltaster flytter mellom bygningstypene, som i en vanlig faneliste.
+  rad.addEventListener("keydown", (e) => {
+    const knapper = [...rad.querySelectorAll("button")];
+    const i = knapper.indexOf(document.activeElement);
+    if (i < 0) return;
+    let j = null;
+    if (e.key === "ArrowRight") j = (i + 1) % knapper.length;
+    if (e.key === "ArrowLeft") j = (i - 1 + knapper.length) % knapper.length;
+    if (e.key === "Home") j = 0;
+    if (e.key === "End") j = knapper.length - 1;
+    if (j === null) return;
+    e.preventDefault();
+    knapper[j].focus();
+    velg(knapper[j].dataset.funksjon, true);
+  });
 }
 
-function velg(kode) {
+function velg(kode, oppdaterUrl) {
   valgtFunksjon = kode;
   for (const knapp of document.querySelectorAll("#bygg-knapper button")) {
-    knapp.setAttribute("aria-selected", knapp.dataset.funksjon === kode ? "true" : "false");
+    const valgt = knapp.dataset.funksjon === kode;
+    knapp.setAttribute("aria-selected", valgt ? "true" : "false");
+    knapp.tabIndex = valgt ? 0 : -1;
+  }
+  if (oppdaterUrl) {
+    // Valget står i adressen, så lenken kan deles og tilbake-knappen lander riktig.
+    const url = new URL(location.href);
+    url.searchParams.set("bygg", kode);
+    history.replaceState(null, "", url);
   }
   const f = data.funksjoner[kode];
+  document.getElementById("hero-navn").textContent = f.navn;
+  document.getElementById("til-dekning").href = `../dekning/?bygg=${encodeURIComponent(kode)}`;
+  document.getElementById("til-dekning").textContent =
+    `Har kommunen nok ${f.navn.toLowerCase()}? Se dekningen per kommune`;
   visHero(f);
   visNormtall(f);
   visTidsserie(f);
@@ -108,28 +141,31 @@ function svgEl(navn, attributter) {
 
 /* Spennbar: lav til høy som flate, sannsynlig som strek. Dette er figuren
    siden er bygget rundt — et normtall uten spenn er en gjetning uten feilmargin. */
-function spennbar(lav, sannsynlig, hoy, skala, medTekst) {
+function spennbar(lav, sannsynlig, hoy, skala, etiketter) {
   const svg = svgEl("svg", {
     class: "spenn",
-    viewBox: "0 0 400 34",
+    viewBox: "0 0 400 20",
     preserveAspectRatio: "none",
     role: "img",
     "aria-label": `Fra ${nf.format(Math.round(lav))} til ${nf.format(Math.round(hoy))} kroner per kvadratmeter, sannsynlig ${nf.format(Math.round(sannsynlig))}`,
   });
   const x = (v) => Math.max(0, Math.min(400, (v / skala) * 400));
-  const y = medTekst ? 14 : 10;
-  const h = 12;
-  svg.appendChild(svgEl("rect", { class: "bane", x: x(lav), y, width: Math.max(2, x(hoy) - x(lav)), height: h }));
-  svg.appendChild(svgEl("line", { class: "tick", x1: x(sannsynlig), x2: x(sannsynlig), y1: y - 4, y2: y + h + 4 }));
-  if (medTekst) {
-    const venstre = svgEl("text", { class: "merke", x: Math.max(2, x(lav)), y: 10 });
-    venstre.textContent = nf.format(Math.round(lav));
-    const hoyre = svgEl("text", { class: "merke", x: Math.min(398, x(hoy)), y: 10, "text-anchor": "end" });
-    hoyre.textContent = nf.format(Math.round(hoy));
-    svg.appendChild(venstre);
-    svg.appendChild(hoyre);
+  svg.appendChild(svgEl("rect", { class: "bane", x: x(lav), y: 5, width: Math.max(2, x(hoy) - x(lav)), height: 10, rx: 1 }));
+  svg.appendChild(svgEl("line", { class: "tick", x1: x(sannsynlig), x2: x(sannsynlig), y1: 0, y2: 20, "vector-effect": "non-scaling-stroke" }));
+  if (!etiketter) return svg;
+  // Etikettene står i HTML, så teksten ikke strekkes sammen med figuren.
+  const boks = document.createElement("div");
+  boks.className = "spenn-boks";
+  const pst = (v) => `${(x(v) / 4).toFixed(2)}%`;
+  for (const [verdi, tekst, klasse] of [[lav, etiketter[0], "lav"], [hoy, etiketter[1], "hoy"]]) {
+    const el = document.createElement("span");
+    el.className = `spenn-merke ${klasse}`;
+    el.style.left = pst(verdi);
+    el.textContent = tekst;
+    boks.appendChild(el);
   }
-  return svg;
+  boks.appendChild(svg);
+  return boks;
 }
 
 /* -- Hero ------------------------------------------------------------ */
@@ -143,7 +179,16 @@ function visHero(f) {
   document.getElementById("hero-n").textContent = nf.format(f.kostnad.n_kjerne);
   const boks = document.getElementById("hero-spenn");
   boks.textContent = "";
-  boks.appendChild(spennbar(tall(dv.lav), tall(dv.sannsynlig), tall(dv.hoy), tall(dv.hoy) * 1.12, true));
+  boks.appendChild(spennbar(tall(dv.lav), tall(dv.sannsynlig), tall(dv.hoy), tall(dv.hoy) * 1.08,
+    [`Lav ${avrundet(dv.lav)}`, `Høy ${avrundet(dv.hoy)}`]));
+
+  const fdv = f.kostnad.normtall_forankret.fdv;
+  document.getElementById("fdv-verdi").textContent = fdv ? avrundet(fdv.sannsynlig) : "–";
+  const siste = f.energi.per_aargang[String(data.grunnlag.siste_aargang)];
+  document.getElementById("kwh-verdi").textContent = siste ? avrundet(siste.kwh_per_m2.sannsynlig) : "–";
+  document.getElementById("kwh-under").textContent = siste
+    ? `Spenn ${avrundet(siste.kwh_per_m2.lav)}–${avrundet(siste.kwh_per_m2.hoy)} kWh/m². Ikke temperaturkorrigert.`
+    : "";
 }
 
 /* -- Normtallstabell -------------------------------------------------- */
@@ -165,7 +210,7 @@ function visNormtall(f) {
     const punkt = nokkel === "forvaltning" ? portefolje.tre_punkt : forankret[nokkel];
     if (!punkt) continue;
     const rad = document.createElement("tr");
-    if (nokkel === "dv" || nokkel === "fdv") rad.className = "sum";
+    if (nokkel === "dv" || nokkel === "fdv") rad.className = "vv-table__sum";
     if (nokkel === "forvaltning") rad.className = "portefolje";
 
     const th = document.createElement("th");
@@ -182,9 +227,9 @@ function visNormtall(f) {
     }
     rad.appendChild(th);
 
-    celle(rad, avrundet(punkt.lav), "tall");
-    celle(rad, avrundet(punkt.sannsynlig), "tall");
-    celle(rad, avrundet(punkt.hoy), "tall");
+    celle(rad, avrundet(punkt.lav), "vv-num");
+    celle(rad, avrundet(punkt.sannsynlig), "vv-num");
+    celle(rad, avrundet(punkt.hoy), "vv-num");
 
     const grafisk = document.createElement("td");
     grafisk.className = "spennkol";
@@ -218,14 +263,14 @@ function visTidsserie(f) {
   for (const aar of aargang) {
     const th = document.createElement("th");
     th.scope = "col";
-    th.className = "tall";
+    th.className = "vv-num";
     th.textContent = aar;
     hoderad.appendChild(th);
   }
   for (const navn of ["Endring, panel", "Per år"]) {
     const th = document.createElement("th");
     th.scope = "col";
-    th.className = "tall";
+    th.className = "vv-num";
     th.textContent = navn;
     hoderad.appendChild(th);
   }
@@ -239,7 +284,7 @@ function visTidsserie(f) {
     const hist = nokkel === "forvaltning" ? data.forvaltning.historikk : f.kostnad.historikk[nokkel];
     if (!hist) continue;
     const rad = document.createElement("tr");
-    if (nokkel === "dv" || nokkel === "fdv") rad.className = "sum";
+    if (nokkel === "dv" || nokkel === "fdv") rad.className = "vv-table__sum";
     const th = document.createElement("th");
     th.scope = "row";
     th.textContent = navn;
@@ -248,7 +293,7 @@ function visTidsserie(f) {
     const punkter = new Map(hist.nivaaserie.punkter.map((p) => [p.aargang, p]));
     for (const aar of aargang) {
       const p = punkter.get(aar);
-      const td = celle(rad, p && p.median !== null ? nf.format(rund5(p.median)) : "–", "tall");
+      const td = celle(rad, p && p.median !== null ? nf.format(rund5(p.median)) : "–", "vv-num");
       if (p && p.median !== null) {
         td.title =
           `P10 ${nf.format(rund5(p.p10))} – P90 ${nf.format(rund5(p.p90))} kr/m², ` +
@@ -258,17 +303,17 @@ function visTidsserie(f) {
 
     const vekst = hist.vekst;
     if (!vekst) {
-      celle(rad, "–", "tall");
-      celle(rad, "–", "tall");
+      celle(rad, "–", "vv-num");
+      celle(rad, "–", "vv-num");
     } else if (vekst.skjult_grunnet_brudd) {
-      celle(rad, "brudd", "tall brudd");
-      celle(rad, "brudd", "tall brudd");
+      celle(rad, "brudd", "vv-num brudd");
+      celle(rad, "brudd", "vv-num brudd");
       for (const b of vekst.brudd) {
         panelnotat.push(`Brudd i ${b.aar}: ${b.beskrivelse || b.gjelder}. Vekstraten er skjult over bruddpunktet.`);
       }
     } else {
-      celle(rad, `${pf.format(vekst.nominell_endring_prosent)} %`, "tall");
-      celle(rad, `${pf.format(vekst.aarlig_gjennomsnittlig_endring_prosent)} %`, "tall");
+      celle(rad, `${endring(vekst.nominell_endring_prosent)} %`, "vv-num");
+      celle(rad, `${endring(vekst.aarlig_gjennomsnittlig_endring_prosent)} %`, "vv-num");
     }
     kropp.appendChild(rad);
 
@@ -281,10 +326,10 @@ function visTidsserie(f) {
       under.appendChild(merke);
       for (const aar of aargang) {
         const p = punkter.get(aar);
-        celle(under, p && p.arealvektet_snitt ? nf.format(rund5(p.arealvektet_snitt)) : "–", "tall postmerke");
+        celle(under, p && p.arealvektet_snitt ? nf.format(rund5(p.arealvektet_snitt)) : "–", "vv-num postmerke");
       }
-      celle(under, "", "tall");
-      celle(under, "", "tall");
+      celle(under, "", "vv-num");
+      celle(under, "", "vv-num");
       kropp.appendChild(under);
     }
   }
@@ -316,28 +361,31 @@ function visEnergi(f) {
     th.scope = "row";
     th.textContent = aar;
     rad.appendChild(th);
-    celle(rad, avrundet(e.kwh_per_m2.lav), "tall");
-    celle(rad, avrundet(e.kwh_per_m2.sannsynlig), "tall");
-    celle(rad, avrundet(e.kwh_per_m2.hoy), "tall");
-    celle(rad, avrundet(e.kwh_per_m2.arealvektet_snitt), "tall");
+    celle(rad, avrundet(e.kwh_per_m2.lav), "vv-num");
+    celle(rad, avrundet(e.kwh_per_m2.sannsynlig), "vv-num");
+    celle(rad, avrundet(e.kwh_per_m2.hoy), "vv-num");
+    celle(rad, avrundet(e.kwh_per_m2.arealvektet_snitt), "vv-num");
     celle(
       rad,
       e.fornybarandel_median !== null ? `${pf.format(e.fornybarandel_median * 100)} %` : "–",
-      "tall"
+      "vv-num"
     );
     celle(
       rad,
       e.implisitt_energipris && e.implisitt_energipris.median
         ? kf.format(e.implisitt_energipris.median)
         : "–",
-      "tall"
+      "vv-num"
     );
     kropp.appendChild(rad);
   }
 
   const boks = document.getElementById("energivarer");
   boks.textContent = "";
-  const fordeling = Object.entries(f.energi.siste.energivarefordeling || {}).sort((a, b) => b[1] - a[1]);
+  // Energivarer under 0,05 % vises ikke; de ville bare stått som 0,0 %.
+  const fordeling = Object.entries(f.energi.siste.energivarefordeling || {})
+    .filter(([, andel]) => andel >= 0.0005)
+    .sort((a, b) => b[1] - a[1]);
   if (!fordeling.length) {
     boks.textContent = "Ingen energivarefordeling i grunnlaget.";
     return;
@@ -362,7 +410,10 @@ function visEnergi(f) {
     prikk.className = "prikk";
     prikk.style.background = VAREFARGER[i % VAREFARGER.length];
     li.appendChild(prikk);
-    li.appendChild(document.createTextNode(`${navn} ${pf.format(andel * 100)} %`));
+    li.appendChild(document.createTextNode(`${navn} `));
+    const b = document.createElement("b");
+    b.textContent = `${pf.format(andel * 100)} %`;
+    li.appendChild(b);
     legende.appendChild(li);
   });
   boks.appendChild(stabel);
@@ -397,20 +448,24 @@ function serieFra(hist, aargang) {
 
 function lagKort(tittel, enhet, verdier, aargang, vekst) {
   const kort = document.createElement("div");
-  kort.className = "kort";
-  const h = document.createElement("h3");
-  h.textContent = `${tittel} (${enhet})`;
+  kort.className = "vv-kort smaakart-kort";
+  const h = document.createElement("h4");
+  h.textContent = tittel;
   kort.appendChild(h);
+  const e = document.createElement("span");
+  e.className = "enhet";
+  e.textContent = `Median, ${enhet}`;
+  kort.appendChild(e);
   kort.appendChild(linjekart(verdier, aargang, enhet));
 
   const under = document.createElement("p");
   under.className = "endring";
   const gyldige = verdier.filter((v) => v !== null);
   if (vekst && !vekst.skjult_grunnet_brudd && vekst.nominell_endring_prosent !== null) {
-    under.textContent = `${pf.format(vekst.nominell_endring_prosent)} % fra ${vekst.fra_aargang} til ${vekst.til_aargang}, regnet på panelet.`;
+    under.textContent = `${endring(vekst.nominell_endring_prosent)} % fra ${vekst.fra_aargang} til ${vekst.til_aargang}, regnet på panelet.`;
   } else if (gyldige.length >= 2) {
-    const endring = (gyldige[gyldige.length - 1] / gyldige[0] - 1) * 100;
-    under.textContent = `${pf.format(endring)} % fra ${aargang[0]} til ${aargang[aargang.length - 1]}.`;
+    const prosent = (gyldige[gyldige.length - 1] / gyldige[0] - 1) * 100;
+    under.textContent = `${endring(prosent)} % fra ${aargang[0]} til ${aargang[aargang.length - 1]}.`;
   } else {
     under.textContent = "For få årganger til å vise endring.";
   }
@@ -418,16 +473,20 @@ function lagKort(tittel, enhet, verdier, aargang, vekst) {
   return kort;
 }
 
+/* Tall under 10 får to desimaler (kr/kWh), resten heltall. */
+function kortTall(v) {
+  return Math.abs(v) < 10 ? kf.format(v) : nf.format(Math.round(v));
+}
+
 function linjekart(verdier, aargang, enhet) {
   const b = 300;
-  const h = 120;
+  const h = 130;
   const svg = svgEl("svg", {
     class: "linjekart",
     viewBox: `0 0 ${b} ${h}`,
-    preserveAspectRatio: "none",
     role: "img",
     "aria-label": aargang
-      .map((aar, i) => `${aar}: ${verdier[i] === null ? "mangler" : nf.format(Math.round(verdier[i]))} ${enhet}`)
+      .map((aar, i) => `${aar}: ${verdier[i] === null ? "mangler" : kortTall(verdier[i])} ${enhet}`)
       .join(", "),
   });
   const gyldige = verdier.filter((v) => v !== null);
@@ -435,12 +494,12 @@ function linjekart(verdier, aargang, enhet) {
   const min = Math.min(...gyldige);
   const maks = Math.max(...gyldige);
   const spenn = maks - min || maks || 1;
-  const topp = 18;
-  const bunn = h - 26;
-  const x = (i) => (verdier.length === 1 ? b / 2 : 24 + (i * (b - 34)) / (verdier.length - 1));
+  const topp = 26;
+  const bunn = h - 30;
+  const x = (i) => (verdier.length === 1 ? b / 2 : 28 + (i * (b - 56)) / (verdier.length - 1));
   const y = (v) => bunn - ((v - min) / spenn) * (bunn - topp);
 
-  svg.appendChild(svgEl("line", { class: "akse", x1: 0, x2: b, y1: bunn + 6, y2: bunn + 6 }));
+  svg.appendChild(svgEl("line", { class: "akse", x1: 0, x2: b, y1: bunn + 10, y2: bunn + 10 }));
   const d = verdier
     .map((v, i) => (v === null ? null : `${i === 0 ? "M" : "L"}${x(i)},${y(v)}`))
     .filter(Boolean)
@@ -449,20 +508,14 @@ function linjekart(verdier, aargang, enhet) {
 
   verdier.forEach((v, i) => {
     if (v === null) return;
-    const merke = svgEl("text", {
-      x: x(i),
-      y: i === 0 ? y(v) - 8 : y(v) - 8,
-      "text-anchor": i === 0 ? "start" : i === verdier.length - 1 ? "end" : "middle",
-    });
-    merke.textContent = nf.format(Math.round(v));
+    svg.appendChild(svgEl("circle", { cx: x(i), cy: y(v), r: 3.5 }));
+    const merke = svgEl("text", { x: x(i), y: y(v) - 10, "text-anchor": "middle" });
+    if (i === verdier.length - 1) merke.setAttribute("class", "verdi");
+    merke.textContent = kortTall(v);
     svg.appendChild(merke);
   });
   aargang.forEach((aar, i) => {
-    const merke = svgEl("text", {
-      x: x(i),
-      y: h - 6,
-      "text-anchor": i === 0 ? "start" : i === aargang.length - 1 ? "end" : "middle",
-    });
+    const merke = svgEl("text", { x: x(i), y: h - 4, "text-anchor": "middle" });
     merke.textContent = aar;
     svg.appendChild(merke);
   });
@@ -481,8 +534,8 @@ function visKvalitet(funksjon) {
     th.scope = "row";
     th.textContent = aar;
     rad.appendChild(th);
-    celle(rad, nf.format(k.n_grunnlag), "tall");
-    celle(rad, nf.format(k.n_kjerne), "tall");
+    celle(rad, nf.format(k.n_grunnlag), "vv-num");
+    celle(rad, nf.format(k.n_kjerne), "vv-num");
     const arsaker = Object.entries(k.frafall_per_aarsak || {})
       .sort((a, b) => b[1] - a[1])
       .map(([navn, antall]) => `${navn.replace(/_/g, " ")} ${antall}`)
@@ -524,8 +577,8 @@ function visNedlasting(funksjon) {
   for (const aar of data.grunnlag.aargang_frosne) {
     const li = document.createElement("li");
     const lenke = document.createElement("a");
-    lenke.href = `nedlasting/${aar}/${funksjon}.csv`;
-    lenke.textContent = `${data.funksjoner[funksjon].navn} ${aar} (CSV)`;
+    lenke.href = `../nedlasting/${aar}/${funksjon}.csv`;
+    lenke.textContent = `${data.funksjoner[funksjon].navn} ${aar}, CSV`;
     li.appendChild(lenke);
     liste.appendChild(li);
   }
