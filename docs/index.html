@@ -3,202 +3,344 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FDV-normtall for kommunale formålsbygg</title>
-<meta name="description" content="Forvaltning, drift og vedlikehold per kvadratmeter for kommunale formålsbygg, regnet fra KOSTRA.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="stil.css">
+<link rel="icon" href="felles/logo/vargvind-symbol.svg" type="image/svg+xml">
+<title>Formålsbygg – behov, byggekostnad og drift for kommunale bygg</title>
+<meta name="description" content="Arealbehov, byggekostnadsprognose og FDV-normtall for kommunale formålsbygg, regnet fra åpne tall fra SSB.">
+<link rel="preload" href="felles/fonter/Inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="felles/vargvind.css">
+<style>
+/* Oversiktssiden. Felles stil i felles/vargvind.css. */
+.steg { display: grid; gap: var(--space-4); grid-template-columns: repeat(3, minmax(0, 1fr)); counter-reset: steg; }
+@media (max-width: 960px) { .steg { grid-template-columns: minmax(0, 1fr); } }
+.steg-kort { display: flex; flex-direction: column; gap: var(--space-4); background: var(--bg-000); border: 1px solid var(--line-200); border-radius: var(--radius-lg); padding: var(--space-6); position: relative; }
+.steg-kort h2 { font-size: 28px; }
+.steg-kort .handling { margin-top: auto; padding-top: var(--space-2); display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+.steg-kort .vv-kpi__value { font-size: 56px; }
+.steg-kort .vv-kpi__value.funn { color: var(--ink-900); }
+.steg-kort .vv-kpi__value small { font-size: 16px; }
+.pil { position: absolute; right: calc(-1 * var(--space-4) + 1px); top: 50%; width: var(--space-4); height: 1px; background: var(--line-400); }
+@media (max-width: 960px) { .pil { display: none; } }
+
+.sok { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.sok input { flex: 1 1 180px; }
+
+.typeliste { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-200); }
+.typeliste li { border-bottom: 1px solid var(--line-200); }
+.typeliste a { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-2) 0; text-decoration: none; color: var(--ink-700); font-size: 14px; line-height: 22px; }
+.typeliste a:hover { color: var(--ink-900); background: var(--bg-100); }
+.typeliste a b { font-weight: 600; color: var(--ink-900); white-space: nowrap; }
+
+.horisonter { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-2); border-top: 1px solid var(--line-200); padding-top: var(--space-3); }
+.horisonter div { font-size: 12px; line-height: 18px; font-weight: 500; color: var(--ink-500); }
+.horisonter b { display: block; font-size: 16px; line-height: 24px; color: var(--ink-900); }
+
+/* Kalkulator */
+.regner { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-6); align-items: start; }
+@media (max-width: 960px) { .regner { grid-template-columns: minmax(0, 1fr); } }
+.regner .vv-kontroller { flex-direction: column; align-items: stretch; padding: var(--space-6); }
+.regner .vv-felt input, .regner .vv-felt select { width: 100%; }
+.svar { display: grid; gap: var(--space-4); grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+@media (max-width: 600px) { .svar { grid-template-columns: minmax(0, 1fr); } }
+.svar .vv-kpi__value { font-size: 44px; }
+.svar .vv-kpi.funn { border-color: var(--accent-500); box-shadow: inset 4px 0 0 var(--accent-500); }
+
+.kilder { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-6); }
+.kilder h3 { font-size: 16px; line-height: 24px; margin: 0 0 var(--space-1); }
+.kilder p { font-size: 14px; line-height: 22px; color: var(--ink-700); }
+</style>
 </head>
 <body>
-<a class="hopp" href="#innhold">Hopp til innholdet</a>
-
-<header class="topp">
-  <p class="kilde" id="merking">Laster grunnlaget …</p>
-  <h1>Hva koster det å drifte et kommunalt formålsbygg?</h1>
-  <p class="ingress">
-    Tallene under er regnet fra KOSTRA: kroner og kilowattimer rapportert av
-    kommunene, delt på eid areal. De viser hva kommunene faktisk bruker, ikke
-    hva et bygg burde koste. Hvert tall kan spores tilbake til et kronebeløp,
-    et kWh-tall og et areal i statistikkbanken.
-  </p>
+<a class="vv-hopp" href="#innhold">Hopp til innholdet</a>
+<header class="vv-topp">
+  <div class="vv-topp__inner">
+    <a class="vv-topp__merke" href="./">
+      <img class="vv-logo" src="felles/logo/vargvind-logo.svg" alt="Vargvind Analyse" width="212" height="48">
+      <img class="vv-symbol" src="felles/logo/vargvind-symbol.svg" alt="Vargvind" width="28" height="32">
+      <span class="vv-topp__navn"><b>Formålsbygg</b><span>Behov, byggekostnad og drift</span></span>
+    </a>
+    <nav aria-label="Hovedmeny">
+      <ul class="vv-meny">
+        <li><a href="./" aria-current="page">Oversikt</a></li>
+        <li><a href="dekning/"><span class="vv-steg" aria-hidden="true">1</span>Arealbehov</a></li>
+        <li><a href="byggekost/"><span class="vv-steg" aria-hidden="true">2</span>Byggekostnad</a></li>
+        <li><a href="drift/"><span class="vv-steg" aria-hidden="true">3</span><span>Drift<span class="vv-ekstra"> og vedlikehold</span></span></a></li>
+      </ul>
+    </nav>
+  </div>
 </header>
 
-<main id="innhold">
-  <div id="tom" class="tom" hidden>
-    <h2>Ingen publiserte tall ennå</h2>
-    <p>
-      Nettsiden bygges fra <code>normtall.json</code>. Den lages av
-      <code>grunnlag.yml</code>, som henter og fryser KOSTRA-grunnlaget.
-      Kjør den workflowen, så fyller siden seg.
+<div class="vv-side">
+  <div class="vv-sidehode">
+    <p class="vv-overline">Kommunale formålsbygg</p>
+    <h1>Fra arealbehov til driftsbudsjett</h1>
+    <p class="vv-ingress">
+      Tre verktøy som følger et formålsbygg fra behov til drift. Hvor mye areal
+      trenger kommunen, hvor mye stiger byggekostnadene, og hva koster bygget å
+      drifte? Alt er regnet fra åpne tall fra Statistisk sentralbyrå, og hvert
+      tall kan spores tilbake til kilden.
     </p>
   </div>
 
-  <div id="side" hidden>
-    <nav class="velger" aria-label="Bygningstype">
-      <span class="velger-tittel">Bygningstype</span>
-      <div id="bygg-knapper" class="knapperad" role="tablist"></div>
-    </nav>
+  <main id="innhold" tabindex="-1">
+    <div class="steg">
+      <section class="steg-kort" aria-labelledby="steg1">
+        <span class="pil" aria-hidden="true"></span>
+        <p class="vv-overline">Steg 1 · Arealbehov</p>
+        <h2 id="steg1">Har kommunen nok areal?</h2>
+        <p class="vv-liten">
+          Dekning for skoler, barnehager, sykehjem, administrasjon, idrett og kultur,
+          sammenlignet med kommuner som ligner, og framskrevet med befolkningen til 2050.
+        </p>
+        <form class="vv-felt" id="kommuneskjema" action="dekning/" method="get">
+          <label for="kommune">Finn kommunen din</label>
+          <div class="sok">
+            <input type="search" id="kommune" list="kommuneliste" autocomplete="off" spellcheck="false" placeholder="For eksempel Bergen">
+            <datalist id="kommuneliste"></datalist>
+            <input type="hidden" name="kommune" id="kommunekode">
+            <button class="vv-btn vv-btn--primary" type="submit">Vis dekning</button>
+          </div>
+          <span class="vv-caption" id="kommunemelding" aria-live="polite"></span>
+        </form>
+        <p class="vv-liten vv-dempet">Eller gå rett til <a href="dekning/?kommune=0301">Oslo</a>, <a href="dekning/?kommune=4601">Bergen</a>, <a href="dekning/?kommune=5001">Trondheim</a>, <a href="dekning/?kommune=1103">Stavanger</a>, <a href="dekning/?kommune=5501">Tromsø</a>.</p>
+        <div class="handling">
+          <a class="vv-lenkepil" href="dekning/">Til arealbehov</a>
+        </div>
+      </section>
 
-    <section class="hero" aria-labelledby="hero-tittel">
-      <h2 id="hero-tittel" class="skjult">Drift og vedlikehold, siste årgang</h2>
-      <p class="hero-merke">Drift og vedlikehold, <span id="hero-aar"></span></p>
-      <p class="hero-tall"><span id="hero-verdi"></span> <span class="enhet">kr/m² per år</span></p>
-      <div id="hero-spenn"></div>
-      <p class="hero-under">
-        Åtte av ti kommuner ligger mellom <span id="hero-kvartil"></span>.
-        Lav er 10. persentil, høy er 90. Beregnet på
-        <span id="hero-n"></span> kommuner, etter at rapporteringsfeil er luket ut.
-      </p>
-    </section>
+      <section class="steg-kort" aria-labelledby="steg2">
+        <span class="pil" aria-hidden="true"></span>
+        <p class="vv-overline">Steg 2 · Byggekostnad</p>
+        <h2 id="steg2">Hvor mye stiger byggekostnadene?</h2>
+        <div>
+          <span class="vv-kpi__label">Ventet vekst neste år</span>
+          <p class="vv-kpi__value funn" id="bk-1">–</p>
+          <p class="vv-kpi__delta" id="bk-1-spenn"></p>
+        </div>
+        <div class="horisonter" id="bk-horisonter"></div>
+        <p class="vv-caption" id="bk-kilde">Snitt per år. SSBs byggekostnadsindeks for boligblokk.</p>
+        <div class="handling">
+          <a class="vv-lenkepil" href="byggekost/">Til byggekostnad</a>
+        </div>
+      </section>
 
-    <section aria-labelledby="normtall-tittel">
-      <h2 id="normtall-tittel">Normtall per post</h2>
-      <p class="forklaring">
-        Postene er nøstet i KOSTRA. Drift består av energi, renhold og øvrig
-        drift, så bare drift og vedlikehold kan summeres. Spennet er satt på
-        drift og vedlikehold samlet og brutt ned med medianandeler, slik at
-        radene faktisk summerer seg til totalen.
+      <section class="steg-kort" aria-labelledby="steg3">
+        <p class="vv-overline">Steg 3 · Drift og vedlikehold</p>
+        <h2 id="steg3">Hva koster bygget å drifte?</h2>
+        <p class="vv-liten">Sannsynlig drift og vedlikehold, kr/m² per år:</p>
+        <ul class="typeliste" id="fdv-liste"><li><a href="drift/">Laster …<b></b></a></li></ul>
+        <p class="vv-caption" id="fdv-kilde"></p>
+        <div class="handling">
+          <a class="vv-lenkepil" href="drift/">Til drift og vedlikehold</a>
+        </div>
+      </section>
+    </div>
+
+    <section class="vv-seksjon" aria-labelledby="regner-tittel" style="margin-top: var(--space-12)">
+      <h2 id="regner-tittel">Regn på et byggeprosjekt</h2>
+      <p>
+        Sett inn arealet du vurderer å bygge. Regneren henter driftskostnaden fra
+        FDV-normtallene og prisveksten fra byggekostnadsprognosen, så du ser begge
+        sidene av prosjektet samlet.
       </p>
-      <div class="tabellramme">
-        <table id="normtall">
-          <caption class="skjult">Kroner per kvadratmeter, siste årgang</caption>
-          <thead>
-            <tr>
-              <th scope="col">Post</th>
-              <th scope="col" class="tall">Lav</th>
-              <th scope="col" class="tall">Sannsynlig</th>
-              <th scope="col" class="tall">Høy</th>
-              <th scope="col" class="spennkol">Spenn i kr/m²</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+      <div class="regner vv-blokk">
+        <form class="vv-kontroller" id="regner" onsubmit="return false">
+          <div class="vv-felt">
+            <label for="r-type">Bygningstype</label>
+            <select id="r-type"></select>
+          </div>
+          <div class="vv-felt">
+            <label for="r-areal">Areal, m²</label>
+            <input type="text" id="r-areal" inputmode="numeric" value="2 000" autocomplete="off">
+          </div>
+          <div class="vv-felt">
+            <label for="r-aar">Byggestart om</label>
+            <select id="r-aar"></select>
+          </div>
+        </form>
+        <div>
+          <div class="svar" aria-live="polite">
+            <div class="vv-kpi funn">
+              <span class="vv-kpi__label">Drift og vedlikehold per år</span>
+              <span class="vv-kpi__value" id="s-fdv">–</span>
+              <p class="vv-kpi__delta" id="s-fdv-spenn"></p>
+            </div>
+            <div class="vv-kpi">
+              <span class="vv-kpi__label">Prisvekst fram til byggestart</span>
+              <span class="vv-kpi__value" id="s-bk">–</span>
+              <p class="vv-kpi__delta" id="s-bk-spenn"></p>
+            </div>
+          </div>
+          <p class="vv-caption" style="margin-top: var(--space-3)">
+            Driften er FDV samlet (forvaltning, drift og vedlikehold) ganget med arealet,
+            i løpende kroner. Prisveksten er medianen for gjennomsnittlig årlig vekst i
+            byggekostnadsindeksen for boligblokk, lagt sammen over årene. Indeksen måler
+            entreprenørens innsatsfaktorer og er en tilnærming for formålsbygg.
+          </p>
+          <p style="margin-top: var(--space-4)"><a class="vv-lenkepil" id="s-lenke" href="drift/">Se normtallene for bygningstypen</a></p>
+        </div>
       </div>
-      <p class="fotnote" id="forvaltning-note"></p>
-      <p class="fotnote">
-        Vedlikehold er periodisk. Et tverrsnitt av ett år fanger mange kommuner
-        i en lavperiode, så medianen undervurderer årsnivået. Standard
-        sentralmål for vedlikehold er derfor 10&nbsp;% trimmet snitt:
-        <span id="vedlikehold-sentralmaal"></span>.
-      </p>
     </section>
 
-    <section aria-labelledby="tidsserie-tittel">
-      <h2 id="tidsserie-tittel">Utvikling</h2>
-      <p class="forklaring">
-        Alle tall er i løpende kroner for den årgangen de gjelder. Ingenting er
-        prisjustert, så veksten inkluderer generell prisstigning. Nivået per år
-        regnes på alle rene kommuner det året. Vekstraten regnes på det
-        balanserte panelet — kommunene som er rene i alle årene — fordi en
-        kommune som faller ut og inn igjen ellers flytter medianen uten at noen
-        pris har endret seg.
-      </p>
-      <div class="tabellramme">
-        <table id="tidsserie">
-          <caption class="skjult">Median kr/m² per årgang og nominell endring</caption>
-          <thead><tr><th scope="col">Post</th></tr></thead>
-          <tbody></tbody>
-        </table>
+    <section class="vv-seksjon" aria-labelledby="kilder-tittel">
+      <h2 id="kilder-tittel">Datagrunnlag</h2>
+      <div class="kilder vv-blokk">
+        <div>
+          <h3>Arealbehov</h3>
+          <p>KOSTRA-areal, brukertall og SSBs befolkningsframskrivinger. <span id="d-dekning"></span></p>
+        </div>
+        <div>
+          <h3>Byggekostnad</h3>
+          <p>SSBs byggekostnadsindeks for boligblokk, tabell 08655. Oppdateres automatisk den 16. hver måned. <span id="d-bk"></span></p>
+        </div>
+        <div>
+          <h3>Drift og vedlikehold</h3>
+          <p>KOSTRA-regnskap, energibruk og areal, revidert utgave. <span id="d-fdv"></span></p>
+        </div>
       </div>
-      <p class="fotnote" id="panel-note"></p>
     </section>
+  </main>
 
-    <section aria-labelledby="energi-tittel">
-      <h2 id="energi-tittel">Energibruk</h2>
-      <p class="advarsel">
-        Tallene er ikke temperaturkorrigert. Et kaldt år løfter alle kommuner,
-        og nordlige kommuner ligger systematisk høyere enn sørlige. Det er
-        klima, ikke drift. Varme fra varmepumper og solfangere er ikke med,
-        bare elektrisiteten som driver dem, så dette er tilført energi og ikke
-        energibehov.
-      </p>
-      <div class="tabellramme">
-        <table id="energi">
-          <caption class="skjult">Energibruk i kWh per kvadratmeter</caption>
-          <thead>
-            <tr>
-              <th scope="col">Årgang</th>
-              <th scope="col" class="tall">Lav</th>
-              <th scope="col" class="tall">Sannsynlig</th>
-              <th scope="col" class="tall">Høy</th>
-              <th scope="col" class="tall">Arealvektet</th>
-              <th scope="col" class="tall">Fornybar</th>
-              <th scope="col" class="tall">Kr/kWh</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-      <h3>Fordeling på energivare</h3>
-      <div id="energivarer"></div>
-    </section>
+  <footer class="vv-bunn">
+    <p>Kilde: Statistisk sentralbyrå. Beregningene er egne og står ikke for SSBs regning.
+      Koden og metoden ligger i <a href="https://github.com/Kvelliken/fdv">Kvelliken/fdv</a> på GitHub.</p>
+  </footer>
+</div>
 
-    <section aria-labelledby="dekomp-tittel">
-      <h2 id="dekomp-tittel">Kommer kostnadsveksten fra pris eller forbruk?</h2>
-      <p class="forklaring">
-        Energikostnaden er kroner ganger forbruk. Vises begge i samme periode,
-        ser man hvilken av dem som driver utviklingen. Implisitt pris er
-        energiutgift delt på energibruk, og er samtidig den sterkeste
-        kvalitetskontrollen i grunnlaget: kroner og kilowattimer kommer fra
-        hvert sitt skjema, så et urimelig forholdstall isolerer hvilken side
-        feilen ligger på.
-      </p>
-      <div id="dekomponering" class="smaakart"></div>
-    </section>
+<script>
+(function () {
+  "use strict";
+  var nf = new Intl.NumberFormat("nb-NO");
+  var p1 = new Intl.NumberFormat("nb-NO", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  function pst(v) { return p1.format(v * 100).replace("-", "−") + " %"; }
+  function pstFortegn(v) { return (v >= 0 ? "+" : "−") + p1.format(Math.abs(v * 100)) + " %"; }
+  function mill(kr) {
+    if (kr >= 1e6) return p1.format(kr / 1e6) + " mill. kr";
+    return nf.format(Math.round(kr / 1000) * 1000) + " kr";
+  }
+  function rund5(v) { return Math.round(v / 5) * 5; }
+  function dato(iso) {
+    var d = new Date(iso);
+    return isNaN(d) ? iso : d.toLocaleDateString("nb-NO", { day: "numeric", month: "long", year: "numeric" });
+  }
 
-    <section aria-labelledby="kvalitet-tittel">
-      <h2 id="kvalitet-tittel">Datakvalitet</h2>
-      <p class="forklaring">
-        Kvalitetsflaggene settes på råstørrelsene, ikke på forholdstallet. Det
-        skiller en billig kommune fra en kommune som ikke har rapportert
-        kostnaden. Uteliggergrensen regnes i log-rom, og først etter at de
-        øvrige flaggene er satt, slik at rapporteringsfeil ikke trekker
-        kvartilene nedover og dermed beskytter seg selv.
-      </p>
-      <div class="tabellramme">
-        <table id="kvalitet">
-          <caption class="skjult">Kommuner i grunnlaget og i kjernedatasettet</caption>
-          <thead>
-            <tr>
-              <th scope="col">Årgang</th>
-              <th scope="col" class="tall">I grunnlaget</th>
-              <th scope="col" class="tall">I kjernen</th>
-              <th scope="col">Frafall per årsak</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-      <h3>Implisitt energipris i landet</h3>
-      <p id="prisfordeling" class="forklaring"></p>
-    </section>
+  var FDV = null, BK = null;
 
-    <section aria-labelledby="forbehold-tittel">
-      <h2 id="forbehold-tittel">Forbehold</h2>
-      <ul id="forbehold" class="forbehold"></ul>
-    </section>
+  /* Steg 1: kommunesøk som lenker rett inn i arealbehov for kommunen */
+  var kommuner = [];
+  fetch("dekning/kommuner.json").then(function (r) { return r.json(); }).then(function (d) {
+    kommuner = d.kommuner;
+    document.getElementById("kommuneliste").innerHTML = kommuner.map(function (k) {
+      return '<option value="' + k.n.replace(/"/g, "&quot;") + '">';
+    }).join("");
+    document.getElementById("d-dekning").textContent = "Hentet " + dato(d.hentet) + ".";
+  }).catch(function () {});
+  function finn(q) {
+    q = q.trim().toLowerCase();
+    if (!q) return null;
+    return kommuner.filter(function (k) { return k.n.toLowerCase() === q; })[0] ||
+      kommuner.filter(function (k) { return k.n.toLowerCase().indexOf(q) === 0; })[0] ||
+      kommuner.filter(function (k) { return k.n.toLowerCase().indexOf(q) >= 0; })[0] || null;
+  }
+  document.getElementById("kommuneskjema").addEventListener("submit", function (e) {
+    var treff = finn(document.getElementById("kommune").value);
+    if (!treff) {
+      e.preventDefault();
+      document.getElementById("kommunemelding").textContent = kommuner.length
+        ? "Fant ingen kommune med det navnet." : "Kommunelisten er ikke lastet ennå.";
+      return;
+    }
+    document.getElementById("kommunekode").value = treff.k;
+  });
 
-    <section aria-labelledby="last-ned-tittel">
-      <h2 id="last-ned-tittel">Last ned grunnlaget</h2>
-      <p class="forklaring">
-        Revisjonsfilen har én rad per kommune med kroner, kilowattimer, areal og
-        alle kvalitetsflagg. Den er nok til å regne hvert publiserte tall på
-        nytt.
-      </p>
-      <ul id="nedlasting" class="lenker"></ul>
-    </section>
-  </div>
-</main>
+  /* Steg 2: byggekostnadsprognosen */
+  fetch("byggekost/resultater.csv", { cache: "no-cache" }).then(function (r) { return r.text(); }).then(function (t) {
+    var linjer = t.trim().split(/\r?\n/), hode = linjer[0].split(",");
+    BK = {};
+    linjer.slice(1).forEach(function (l) {
+      var c = l.split(","), r = {};
+      hode.forEach(function (h, i) { r[h] = isNaN(+c[i]) ? c[i] : +c[i]; });
+      BK[r.horisont_ar] = r;
+    });
+    var en = BK[1];
+    document.getElementById("bk-1").innerHTML = pstFortegn(en.median).replace(" %", " <small>%</small>");
+    document.getElementById("bk-1-spenn").textContent = "80 % sannsynlig mellom " + pst(en.p10) + " og " + pst(en.p90) + ".";
+    document.getElementById("bk-horisonter").innerHTML = Object.keys(BK).filter(function (h) { return h !== "1"; }).map(function (h) {
+      return "<div>Neste " + h + " år<b>" + pstFortegn(BK[h].median) + "</b></div>";
+    }).join("");
+    var p = String(en.siste_periode).split("-");
+    var mnd = ["januar","februar","mars","april","mai","juni","juli","august","september","oktober","november","desember"][+p[1] - 1];
+    document.getElementById("bk-kilde").textContent = "Snitt per år. Indeks til og med " + mnd + " " + p[0] + ".";
+    document.getElementById("d-bk").textContent = "Sist kjørt " + dato(en["kjørt"]) + ".";
+    lagAarvalg();
+    regn();
+  }).catch(function () {});
 
-<footer>
-  <p id="kodevalg-fot"></p>
-  <p>
-    Kilde: Statistisk sentralbyrå, KOSTRA. Beregningen og denne siden er
-    dokumentert i <code>METODE.md</code> i repoet.
-  </p>
-</footer>
+  /* Steg 3: FDV-normtall */
+  fetch("normtall.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(function (d) {
+    FDV = d;
+    var rader = Object.keys(d.funksjoner).map(function (f) {
+      var x = d.funksjoner[f];
+      return { f: f, navn: x.navn, dv: x.kostnad.normtall_forankret.dv.sannsynlig.verdi_avrundet };
+    });
+    document.getElementById("fdv-liste").innerHTML = rader.map(function (r) {
+      return '<li><a href="drift/?bygg=' + r.f + '">' + r.navn + "<b>" + nf.format(r.dv) + " kr</b></a></li>";
+    }).join("");
+    document.getElementById("fdv-kilde").textContent = "KOSTRA " + d.grunnlag.siste_aargang + ", løpende kroner per m² eid areal.";
+    document.getElementById("d-fdv").textContent = "Grunnlag: KOSTRA " + d.grunnlag.siste_aargang + ", publisert " + dato(d.generert) + ".";
+    document.getElementById("r-type").innerHTML = rader.map(function (r) {
+      return '<option value="' + r.f + '">' + r.navn + "</option>";
+    }).join("");
+    document.getElementById("r-type").value = rader.some(function (r) { return r.f === "222"; }) ? "222" : rader[0].f;
+    regn();
+  }).catch(function () {});
 
-<script src="app.js"></script>
+  /* Kalkulatoren */
+  function lagAarvalg() {
+    var s = document.getElementById("r-aar");
+    s.innerHTML = Object.keys(BK).map(function (h) {
+      return '<option value="' + h + '">' + (h === "1" ? "1 år" : h + " år") + "</option>";
+    }).join("");
+    s.value = BK[5] ? "5" : Object.keys(BK)[0];
+  }
+  function areal() {
+    var v = parseFloat(document.getElementById("r-areal").value.replace(/\s| /g, "").replace(",", "."));
+    return v > 0 ? v : null;
+  }
+  function regn() {
+    var a = areal();
+    if (FDV) {
+      var f = document.getElementById("r-type").value;
+      var x = FDV.funksjoner[f] && FDV.funksjoner[f].kostnad.normtall_forankret.fdv;
+      document.getElementById("s-lenke").href = "drift/?bygg=" + f;
+      document.getElementById("s-lenke").textContent = "Se normtallene for " + FDV.funksjoner[f].navn.toLowerCase();
+      if (x && a) {
+        document.getElementById("s-fdv").textContent = mill(a * x.sannsynlig.verdi);
+        document.getElementById("s-fdv-spenn").textContent =
+          "Åtte av ti kommuner ville brukt mellom " + mill(a * x.lav.verdi) + " og " + mill(a * x.hoy.verdi) +
+          ". Grunnlag " + nf.format(rund5(x.sannsynlig.verdi)) + " kr/m².";
+      } else {
+        document.getElementById("s-fdv").textContent = "–";
+        document.getElementById("s-fdv-spenn").textContent = a ? "" : "Skriv inn et areal i kvadratmeter.";
+      }
+    }
+    if (BK) {
+      var n = +document.getElementById("r-aar").value, r = BK[n];
+      if (r) {
+        var samlet = function (v) { return Math.pow(1 + v, n) - 1; };
+        document.getElementById("s-bk").textContent = pstFortegn(samlet(r.median));
+        document.getElementById("s-bk-spenn").textContent =
+          "80 % sannsynlig mellom " + pstFortegn(samlet(r.p10)) + " og " + pstFortegn(samlet(r.p90)) +
+          ". Det er " + pst(r.median) + " i året i " + n + (n === 1 ? " år." : " år.");
+      }
+    }
+  }
+  ["r-type", "r-aar"].forEach(function (id) { document.getElementById(id).addEventListener("change", regn); });
+  document.getElementById("r-areal").addEventListener("input", regn);
+  document.getElementById("r-areal").addEventListener("blur", function () {
+    var a = areal();
+    if (a) this.value = nf.format(Math.round(a));
+  });
+})();
+</script>
 </body>
 </html>

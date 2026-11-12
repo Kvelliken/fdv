@@ -36,15 +36,16 @@ import config as C
 # Utseende
 # ===========================================================================
 
+# Vargvind-profilen, samme farger som nettsiden (docs/felles/vargvind.css).
 FARGE = {
-    "blekk": "#17232B",
-    "historikk": "#2E3F4A",
-    "median": "#0F4C5C",
-    "band": "#6B9AA6",
-    "anker": "#8A6A2F",
-    "svak": "#8E9AA0",
-    "rutenett": "#DCE0DE",
-    "flate": "#FFFFFF",
+    "blekk": "#12233A",      # ink-900
+    "historikk": "#4A6A84",  # brand-600
+    "median": "#12233A",     # brand-900
+    "band": "#5E7F99",       # brand-500, legges i lag med gjennomsiktighet
+    "anker": "#A85A14",      # accent-600, rav: det leseren skal se
+    "svak": "#5A6B7C",       # ink-500
+    "rutenett": "#D5DEE6",   # line-200
+    "flate": "#FFFFFF",      # bg-000
 }
 
 plt.rcParams.update(
@@ -62,6 +63,13 @@ plt.rcParams.update(
         "xtick.color": FARGE["svak"],
         "ytick.color": FARGE["svak"],
         "font.size": 10,
+        # Inter er Vargvinds tekstskrift. Mangler den, faller matplotlib tilbake
+        # til DejaVu Sans uten å stoppe kjøringen.
+        "font.family": "sans-serif",
+        "font.sans-serif": ["Inter", "DejaVu Sans"],
+        "axes.spines.top": False,
+        "axes.spines.right": False,
+        "axes.titlelocation": "left",
         "figure.dpi": 130,
         "savefig.bbox": "tight",
     }
@@ -626,12 +634,12 @@ def graf_fordelinger(
             )
 
         ax.set_title(
-            f"{aar} år   ·   {info['median']*100:.1f} %"
-            f"   ({info['p10']*100:.1f} – {info['p90']*100:.1f})",
+            f"{aar} år   ·   {nf(info['median']*100)} %"
+            f"   ({nf(info['p10']*100)} – {nf(info['p90']*100)})",
             fontsize=11,
         )
         ax.annotate(
-            f"skjevhet {info['skjevhet']:+.2f} · {info['form']}",
+            f"skjevhet {fortegn(info['skjevhet'])} · {info['form']}",
             xy=(0.03, 0.95),
             xycoords="axes fraction",
             fontsize=8.5,
@@ -688,7 +696,7 @@ def graf_bredde(rader: list[dict], m: Modell, fil: str) -> None:
             zorder=5,
         )
         ax.annotate(
-            f"{r['bredde_80']*100:.1f} pp",
+            f"{nf(r['bredde_80']*100)} pp",
             xy=(r["p95"] * 100, i),
             xytext=(10, 0),
             textcoords="offset points",
@@ -987,7 +995,7 @@ def graf_tilbaketest_feil(tb: pd.DataFrame, fil: str) -> None:
     fig, ax = plt.subplots(figsize=(9, 4.0))
     ax.axhline(0, color=FARGE["blekk"], lw=0.9)
 
-    nyanser = ["#9CC0C9", "#6B9AA6", "#2E7080", "#0F4C5C"]
+    nyanser = ["#BCD0DE", "#8FAEC4", "#5E86A3", "#12233A"]  # seq-2 … seq-6
     for i, a in enumerate(aarene):
         del_ = t[t.horisont_ar == a].sort_values("dato")
         ax.plot(
@@ -1157,57 +1165,51 @@ def endring_siden_forrige_maned(indeks: pd.Series, rader: list[dict]) -> dict[in
 # ===========================================================================
 
 
+# Felles Vargvind-stil ligger i docs/felles/vargvind.css. Her står bare det
+# som er særegent for byggekost-rapporten.
 STIL = """
-:root{
-  --blekk:#17232B; --dyp:#0F4C5C; --band:#6B9AA6; --bronse:#8A6A2F;
-  --svak:#6C7A80; --flate:#FFFFFF; --papir:#F2F3F1; --strek:#DFE3E0;
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--papir);color:var(--blekk);
-     font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-     line-height:1.55;-webkit-font-smoothing:antialiased}
-.ark{max-width:900px;margin:0 auto;padding:56px 26px 90px}
-h1{font-family:Georgia,"Iowan Old Style",serif;font-weight:400;
-   font-size:clamp(28px,4.2vw,40px);line-height:1.15;margin:0 0 6px}
-.undertittel{color:var(--svak);font-size:16px;margin:0 0 6px}
-.stempel{color:var(--svak);font-size:13.5px;margin:0}
-h2{font-family:Georgia,serif;font-weight:400;font-size:21px;
-   margin:54px 0 10px;padding-bottom:8px;border-bottom:1px solid var(--strek)}
-p{max-width:68ch}
-.tall{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));
-      gap:1px;background:var(--strek);border:1px solid var(--strek);
-      margin:34px 0 10px}
-.rute{background:var(--flate);padding:20px 18px 18px}
-.horisont{font-size:13px;color:var(--svak);margin-bottom:10px}
-.stor{font-family:Georgia,serif;font-size:38px;line-height:1;color:var(--dyp)}
-.stor span{font-size:19px;color:var(--svak)}
-.spenn{font-size:13.5px;color:var(--svak);margin-top:9px}
-.bar{position:relative;height:5px;background:#E7EBE9;margin-top:11px}
-.bar i{position:absolute;top:0;height:5px;background:var(--band);display:block}
-.bar b{position:absolute;top:-3px;width:2px;height:11px;background:var(--dyp)}
-.delta{font-size:12.5px;margin-top:10px;color:var(--svak)}
-.opp{color:#8A3A1F}.ned{color:#2F6B4F}
-figure{margin:26px 0 0}
-figure img{width:100%;display:block;background:var(--flate);border:1px solid var(--strek)}
-figcaption{font-size:13.5px;color:var(--svak);margin-top:11px;max-width:68ch}
-table{border-collapse:collapse;width:100%;font-size:14px;margin-top:20px;background:var(--flate)}
-th,td{padding:9px 11px;border-bottom:1px solid var(--strek);text-align:right}
-th:first-child,td:first-child{text-align:left}
-th{font-weight:600;font-size:12.5px;color:var(--svak)}
-.merk{background:var(--flate);border-left:3px solid var(--bronse);
-      padding:15px 18px;margin:26px 0;font-size:14.5px}
-h3{font-family:Georgia,serif;font-weight:400;font-size:17.5px;margin:34px 0 6px}
-.ingress{font-size:17px;max-width:66ch;margin:26px 0 0}
-.trinn{max-width:68ch;padding-left:22px}
-.trinn li{margin-bottom:12px}
-.n{color:var(--svak);font-size:12.5px}
-.rulle{overflow-x:auto}
-code{font-size:.92em;background:#E7EBE9;padding:1px 5px}
-footer{margin-top:66px;padding-top:20px;border-top:1px solid var(--strek);
-       color:var(--svak);font-size:13px}
-a{color:var(--dyp)}
-@media print{body{background:#fff}.ark{padding:0}figure{break-inside:avoid}}
+.tall{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:var(--space-4);margin:0}
+.rute{background:var(--bg-000);border:1px solid var(--line-200);border-radius:var(--radius-lg);padding:var(--space-6)}
+.rute.forst{border-color:var(--line-400)}
+.horisont{font-size:12px;line-height:16px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-500);margin-bottom:var(--space-3)}
+.stor{font-family:var(--font-display);font-size:48px;line-height:1;font-weight:500;color:var(--ink-900);font-variant-numeric:lining-nums}
+.stor span{font-family:var(--font-sans);font-size:16px;color:var(--ink-500)}
+.spenn{font-size:14px;line-height:22px;color:var(--ink-700);margin-top:var(--space-3)}
+.bar{position:relative;height:8px;background:var(--bg-200);border-radius:var(--radius-sm);margin-top:var(--space-2)}
+.bar i{position:absolute;top:0;height:8px;background:var(--brand-300);border-radius:var(--radius-sm);display:block}
+.bar b{position:absolute;top:-4px;width:3px;height:16px;background:var(--ink-900);border-radius:1px}
+.forst .bar b{background:var(--accent-500)}
+.delta{font-size:12px;line-height:18px;font-weight:500;margin-top:var(--space-3);color:var(--ink-500)}
+.opp{color:var(--negative-600)}.ned{color:var(--positive-600)}
+figure{margin:var(--space-6) 0 0;background:var(--bg-000);border:1px solid var(--line-200);border-radius:var(--radius-lg);padding:var(--space-4)}
+figure img{width:100%;display:block}
+figcaption{font-size:12px;line-height:18px;font-weight:500;color:var(--ink-500);margin-top:var(--space-3);max-width:80ch}
+.vv-seksjon table{margin-top:var(--space-6)}
+.vv-seksjon .vv-table__ramme table{margin-top:0}
+.vv-table td{text-align:right;white-space:nowrap}
+.vv-table th{text-align:right}
+.vv-table th:first-child,.vv-table td:first-child{text-align:left}
+.vv-table.nokkel td:last-child{white-space:normal}
+.merk{background:var(--accent-100);border-radius:var(--radius-md);padding:var(--space-4) var(--space-6);margin:var(--space-6) 0;font-size:16px;line-height:26px;color:var(--ink-900);max-width:var(--maal)}
+.stempel{font-size:12px;line-height:18px;font-weight:500;color:var(--ink-500);margin-top:var(--space-3)}
+.trinn{max-width:var(--maal);padding-left:22px;margin:var(--space-6) 0 0}
+.trinn li{margin-bottom:var(--space-3)}
+.n{color:var(--ink-500);font-size:12px}
+.vv-seksjon ul{max-width:var(--maal)}
+.ingressboks{margin-top:var(--space-8)}
+@media print{figure{break-inside:avoid}}
 """
+
+
+# Overskriftene i rapporten, med id og kort etikett til innholdslisten.
+SEKSJONER = [
+    ("Slik kommer modellen frem til tallet", "oppbygging", "Oppbygging"),
+    ("Slik ser usikkerheten ut", "usikkerhet", "Usikkerhet"),
+    ("Banen videre", "bane", "Banen videre"),
+    ("Ville modellen ha truffet?", "tilbaketest", "Tilbaketest"),
+    ("Hva om vi hadde valgt annerledes?", "folsomhet", "Følsomhet"),
+    ("Om modellen", "om", "Om modellen"),
+]
 
 
 def nf(x: float, d: int = 1) -> str:
@@ -1259,7 +1261,7 @@ def lag_rapport(
             )
 
         ruter.append(f"""
-      <div class="rute">
+      <div class="rute{' forst' if aar == min(r2['horisont_ar'] for r2 in rader) else ''}">
         <div class="horisont">{"Neste år" if aar == 1 else f"Neste {aar} år"}</div>
         <div class="stor">{nf(md)}<span> %</span></div>
         <div class="spenn">80 %: {nf(lo)} – {nf(hi)} %</div>
@@ -1405,9 +1407,9 @@ def lag_rapport(
      stiplede streken, og lager så en prognose {C.TILBAKETEST_VIS_AAR} år frem.
      Den mørke linjen er hva som faktisk skjedde.</p>
   <figure><img src="tilbaketest_bane.png" alt="Historiske prognoser mot fasit">
-  <figcaption>Mørk linje er faktisk indeks, blå linje er modellens median, og de
+  <figcaption>Stålblå linje er faktisk indeks, mørk linje er modellens median, og de
   blå feltene er usikkerhetsspennet. Ringen markerer hvor fasiten landet etter
-  {C.TILBAKETEST_VIS_AAR} år: mørk ring betyr innenfor 80 %-intervallet, brun
+  {C.TILBAKETEST_VIS_AAR} år: mørk ring betyr innenfor 80 %-intervallet, rav
   ring betyr utenfor.</figcaption></figure>
 
   <h3>Tallene bak</h3>
@@ -1494,32 +1496,71 @@ def lag_rapport(
     )
 
     html = f"""<!doctype html>
-<html lang="no"><head>
+<html lang="nb"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{C.RAPPORT_TITTEL}</title>
+<link rel="icon" href="../felles/logo/vargvind-symbol.svg" type="image/svg+xml">
+<title>Byggekostnad – {C.RAPPORT_TITTEL}</title>
+<meta name="description" content="{C.RAPPORT_UNDERTITTEL} i SSBs byggekostnadsindeks for boligblokk, 1–10 år fram.">
+<link rel="preload" href="../felles/fonter/Inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../felles/vargvind.css">
 <style>{STIL}</style>
-</head><body><div class="ark">
+</head><body>
+<a class="vv-hopp" href="#innhold">Hopp til innholdet</a>
+<header class="vv-topp">
+  <div class="vv-topp__inner">
+    <a class="vv-topp__merke" href="../">
+      <img class="vv-logo" src="../felles/logo/vargvind-logo.svg" alt="Vargvind Analyse" width="212" height="48">
+      <img class="vv-symbol" src="../felles/logo/vargvind-symbol.svg" alt="Vargvind" width="28" height="32">
+      <span class="vv-topp__navn"><b>Formålsbygg</b><span>Behov, byggekostnad og drift</span></span>
+    </a>
+    <nav aria-label="Hovedmeny">
+      <ul class="vv-meny">
+        <li><a href="../">Oversikt</a></li>
+        <li><a href="../dekning/"><span class="vv-steg" aria-hidden="true">1</span>Arealbehov</a></li>
+        <li><a href="../byggekost/" aria-current="page"><span class="vv-steg" aria-hidden="true">2</span>Byggekostnad</a></li>
+        <li><a href="../drift/"><span class="vv-steg" aria-hidden="true">3</span><span>Drift<span class="vv-ekstra"> og vedlikehold</span></span></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-<h1>{C.RAPPORT_TITTEL}</h1>
-<p class="undertittel">{C.RAPPORT_UNDERTITTEL}</p>
-<p class="stempel">Oppdatert {idag} · siste observasjon {siste} ·
-   indeks {nf(indeks.iloc[-1])} · siste 12 md. {fortegn(v12, 1)} %</p>
-{lokal_html}
+<div class="vv-side">
+<div class="vv-sidehode">
+  <p class="vv-overline">Steg 2 · Byggekostnad</p>
+  <h1>Hvor mye stiger byggekostnadene?</h1>
+  <p class="vv-ingress">{C.RAPPORT_UNDERTITTEL} i SSBs {C.RAPPORT_TITTEL.lower()},
+     for ett, tre, fem og ti år fram. Midttallet er det mest sannsynlige, spennet
+     viser hvor mye det kan bomme.</p>
+  <p class="vv-caption vv-stempel">Oppdatert {idag} · siste observasjon {siste} ·
+     indeks {nf(indeks.iloc[-1])} · siste 12 md. {fortegn(v12, 1)} %</p>
+  {lokal_html}
+</div>
 
-<div class="tall">{''.join(ruter)}</div>
+<div class="vv-oppslag">
+<nav class="vv-toc" data-toc aria-label="På denne siden">
+  <p class="vv-overline">På denne siden</p>
+  <ol></ol>
+</nav>
+<main id="innhold" tabindex="-1">
+<section class="vv-seksjon">
+<h2 id="prognose" data-kort="Prognose">Prognose for gjennomsnittlig årlig vekst</h2>
+<div class="tall vv-blokk">{''.join(ruter)}</div>
 <p class="stempel">Midttallet er medianen: halvparten av de simulerte utfallene
    ligger over, halvparten under. Stolpen viser 80 prosent-intervallet: ett av ti
    utfall havner under, ett av ti over. «Effekt av siste måned» er hvor mye den
    nyeste observasjonen alene flyttet anslaget.</p>
 
-<p class="ingress">{kort_fortalt}</p>
+<div class="vv-callout vv-callout--insight ingressboks">
+  <svg class="vv-callout__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17l5-5 4 4 7-8"/><path d="M15 8h5v5"/></svg>
+  <div><p class="vv-callout__title">Kort fortalt</p><p class="vv-callout__body">{kort_fortalt}</p></div>
+</div>
 
 <h2>Slik kommer modellen frem til tallet</h2>
 <p>Prognosen bygges i fire trinn. Figuren viser hvor mye hvert trinn flytter
    anslaget, for hver horisont.</p>
 <figure><img src="oppbygging.png" alt="Prognosen bygget opp trinn for trinn">
-<figcaption>Blå strek flytter anslaget opp, brun strek flytter det ned. Nederst i
+<figcaption>Mørk strek flytter anslaget opp, rav strek flytter det ned. Nederst i
 hvert panel står 80 %-intervallet rundt medianen.</figcaption></figure>
 {trinn_tekst}
 <table>
@@ -1563,7 +1604,7 @@ sammen krone for krone, så summen av de to er større enn totalen.</p>
 <p class="stempel">Alle tall i prosent per år. Skjevhet er null for en perfekt
 symmetrisk fordeling.</p>
 
-<h2>Bane</h2>
+<h2>Banen videre</h2>
 <figure><img src="vifte_indeks.png" alt="Indeks med vifte"></figure>
 <figure><img src="vifte_vekst.png" alt="Tolvmånedersvekst med vifte">
 <figcaption>Samme simuleringer sett som årlig vekstrate. Medianbanen går mot
@@ -1596,7 +1637,7 @@ vendepunkter. Det den kan, er å si hva som er normalt, hvor mye dagens tempo pl
 <li>Fremtidige sjokk ligner på dem vi har sett i vinduet, i størrelse og hyppighet.</li>
 <li>Det valgte ankeret er et rimelig forhåndssyn. Vekten står i tabellen under.</li>
 </ul>
-<table>
+<table class="nokkel">
 <tbody>
 <tr><td>Serie</td><td>SSB tabell {C.TABELL}, kode {serie_tekst}</td></tr>
 <tr><td>Estimeringsvindu</td><td>{_mnd(m.vindu.index[0])} til {siste} ({C.VINDU_AAR} år, rullerende)</td></tr>
@@ -1614,16 +1655,45 @@ vendepunkter. Det den kan, er å si hva som er normalt, hvor mye dagens tempo pl
 tall. Rådataene for hver måned ligger i mappen <code>data/</code>, og alle
 innstillinger står i <code>config.py</code>.</p>
 
-<footer>
-Kilde: Statistisk sentralbyrå, tabell {C.TABELL}, lisensiert CC BY 4.0.
-Beregningene er egne og står ikke for SSBs regning.
-Siden bygges automatisk hver måned. {C.KONTAKT}
-</footer>
-</div></body></html>"""
+</section>
+</main>
+</div>
 
+<section class="vv-videre" aria-labelledby="videre-tittel">
+  <h2 id="videre-tittel">Se også</h2>
+  <div class="vv-videre__rad">
+    <a href="../dekning/">
+      <span class="vv-overline">Steg 1 · Arealbehov</span>
+      <b>Hvor mye areal trenger kommunen?</b>
+      <span>Dekning per kommune og bygningstype, i dag og framskrevet til 2050.</span>
+      <span>Til arealbehov</span>
+    </a>
+    <a href="../drift/">
+      <span class="vv-overline">Steg 3 · Drift og vedlikehold</span>
+      <b>Hva koster bygget å drifte?</b>
+      <span>Normtall i kr/m² per år for seks bygningstyper, fra KOSTRA.</span>
+      <span>Til drift og vedlikehold</span>
+    </a>
+  </div>
+</section>
+<footer class="vv-bunn">
+<p>Kilde: Statistisk sentralbyrå, tabell {C.TABELL}, lisensiert CC BY 4.0.
+Beregningene er egne og står ikke for SSBs regning.
+Siden bygges automatisk hver måned. {C.KONTAKT}</p>
+</footer>
+</div>
+<script src="../felles/side.js"></script>
+</body></html>"""
+
+    for tittel, nokkel, kort in SEKSJONER:
+        html = html.replace(
+            f"<h2>{tittel}</h2>",
+            f'</section>\n<section class="vv-seksjon">\n<h2 id="{nokkel}" data-kort="{kort}">{tittel}</h2>',
+        )
     html = html.replace(f"{C.ANTALL_BANER:,}", f"{C.ANTALL_BANER:,}".replace(",", "&nbsp;"))
     html = html.replace(" %", "&nbsp;%")
-    html = html.replace("<table>", '<div class="rulle"><table>').replace("</table>", "</table></div>")
+    html = html.replace("<table>", '<div class="vv-table__ramme vv-rulle"><table class="vv-table">').replace("</table>", "</table></div>")
+    html = html.replace('<table class="nokkel">', '<div class="vv-table__ramme vv-rulle"><table class="vv-table nokkel">')
     with open(fil, "w", encoding="utf-8") as f:
         f.write(html)
 

@@ -11,6 +11,7 @@ import sys
 HER = pathlib.Path(__file__).resolve().parent
 GRUNNLAG = HER / "grunnlag"
 UT = HER.parent / "docs" / "dekning" / "index.html"
+KOMMUNER = HER.parent / "docs" / "dekning" / "kommuner.json"
 
 FUNKSJONER = ["221", "222", "261", "130", "381", "386"]
 ALTERNATIVER = ["Personer", "Personer1", "Personer2"]  # MMMM, LLML, HHMH
@@ -101,6 +102,13 @@ def main():
     UT.parent.mkdir(parents=True, exist_ok=True)
     UT.write_text(side, encoding="utf-8")
     print(f"Skrev {UT.relative_to(HER.parent)} ({UT.stat().st_size:,} byte)")
+    # Liten kommuneliste til søket på oversiktssiden, så den slipper å laste hele siden.
+    liste = sorted(({"k": r["k"], "n": r["n"]} for r in kommuner), key=lambda r: r["n"])
+    KOMMUNER.write_text(
+        json.dumps({"hentet": hentet, "kommuner": liste}, ensure_ascii=False, separators=(",", ":")),
+        encoding="utf-8",
+    )
+    print(f"Skrev {KOMMUNER.relative_to(HER.parent)} ({len(liste)} kommuner)")
 
 
 if __name__ == "__main__":

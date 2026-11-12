@@ -1,69 +1,86 @@
 <!doctype html>
-<html lang="no"><head>
+<html lang="nb"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Byggekostnadsindeks boligblokk</title>
+<link rel="icon" href="../felles/logo/vargvind-symbol.svg" type="image/svg+xml">
+<title>Byggekostnad – Byggekostnadsindeks boligblokk</title>
+<meta name="description" content="Prognose for gjennomsnittlig årlig kostnadsvekst i SSBs byggekostnadsindeks for boligblokk, 1–10 år fram.">
+<link rel="preload" href="../felles/fonter/Inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../felles/vargvind.css">
 <style>
-:root{
-  --blekk:#17232B; --dyp:#0F4C5C; --band:#6B9AA6; --bronse:#8A6A2F;
-  --svak:#6C7A80; --flate:#FFFFFF; --papir:#F2F3F1; --strek:#DFE3E0;
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--papir);color:var(--blekk);
-     font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-     line-height:1.55;-webkit-font-smoothing:antialiased}
-.ark{max-width:900px;margin:0 auto;padding:56px 26px 90px}
-h1{font-family:Georgia,"Iowan Old Style",serif;font-weight:400;
-   font-size:clamp(28px,4.2vw,40px);line-height:1.15;margin:0 0 6px}
-.undertittel{color:var(--svak);font-size:16px;margin:0 0 6px}
-.stempel{color:var(--svak);font-size:13.5px;margin:0}
-h2{font-family:Georgia,serif;font-weight:400;font-size:21px;
-   margin:54px 0 10px;padding-bottom:8px;border-bottom:1px solid var(--strek)}
-p{max-width:68ch}
-.tall{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));
-      gap:1px;background:var(--strek);border:1px solid var(--strek);
-      margin:34px 0 10px}
-.rute{background:var(--flate);padding:20px 18px 18px}
-.horisont{font-size:13px;color:var(--svak);margin-bottom:10px}
-.stor{font-family:Georgia,serif;font-size:38px;line-height:1;color:var(--dyp)}
-.stor span{font-size:19px;color:var(--svak)}
-.spenn{font-size:13.5px;color:var(--svak);margin-top:9px}
-.bar{position:relative;height:5px;background:#E7EBE9;margin-top:11px}
-.bar i{position:absolute;top:0;height:5px;background:var(--band);display:block}
-.bar b{position:absolute;top:-3px;width:2px;height:11px;background:var(--dyp)}
-.delta{font-size:12.5px;margin-top:10px;color:var(--svak)}
-.opp{color:#8A3A1F}.ned{color:#2F6B4F}
-figure{margin:26px 0 0}
-figure img{width:100%;display:block;background:var(--flate);border:1px solid var(--strek)}
-figcaption{font-size:13.5px;color:var(--svak);margin-top:11px;max-width:68ch}
-table{border-collapse:collapse;width:100%;font-size:14px;margin-top:20px;background:var(--flate)}
-th,td{padding:9px 11px;border-bottom:1px solid var(--strek);text-align:right}
-th:first-child,td:first-child{text-align:left}
-th{font-weight:600;font-size:12.5px;color:var(--svak)}
-.merk{background:var(--flate);border-left:3px solid var(--bronse);
-      padding:15px 18px;margin:26px 0;font-size:14.5px}
-h3{font-family:Georgia,serif;font-weight:400;font-size:17.5px;margin:34px 0 6px}
-.ingress{font-size:17px;max-width:66ch;margin:26px 0 0}
-.trinn{max-width:68ch;padding-left:22px}
-.trinn li{margin-bottom:12px}
-.n{color:var(--svak);font-size:12.5px}
-.rulle{overflow-x:auto}
-code{font-size:.92em;background:#E7EBE9;padding:1px 5px}
-footer{margin-top:66px;padding-top:20px;border-top:1px solid var(--strek);
-       color:var(--svak);font-size:13px}
-a{color:var(--dyp)}
-@media print{body{background:#fff}.ark{padding:0}figure{break-inside:avoid}}
+.tall{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:var(--space-4);margin:0}
+.rute{background:var(--bg-000);border:1px solid var(--line-200);border-radius:var(--radius-lg);padding:var(--space-6)}
+.rute.forst{border-color:var(--line-400)}
+.horisont{font-size:12px;line-height:16px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-500);margin-bottom:var(--space-3)}
+.stor{font-family:var(--font-display);font-size:48px;line-height:1;font-weight:500;color:var(--ink-900);font-variant-numeric:lining-nums}
+.stor span{font-family:var(--font-sans);font-size:16px;color:var(--ink-500)}
+.spenn{font-size:14px;line-height:22px;color:var(--ink-700);margin-top:var(--space-3)}
+.bar{position:relative;height:8px;background:var(--bg-200);border-radius:var(--radius-sm);margin-top:var(--space-2)}
+.bar i{position:absolute;top:0;height:8px;background:var(--brand-300);border-radius:var(--radius-sm);display:block}
+.bar b{position:absolute;top:-4px;width:3px;height:16px;background:var(--ink-900);border-radius:1px}
+.forst .bar b{background:var(--accent-500)}
+.delta{font-size:12px;line-height:18px;font-weight:500;margin-top:var(--space-3);color:var(--ink-500)}
+.opp{color:var(--negative-600)}.ned{color:var(--positive-600)}
+figure{margin:var(--space-6) 0 0;background:var(--bg-000);border:1px solid var(--line-200);border-radius:var(--radius-lg);padding:var(--space-4)}
+figure img{width:100%;display:block}
+figcaption{font-size:12px;line-height:18px;font-weight:500;color:var(--ink-500);margin-top:var(--space-3);max-width:80ch}
+.vv-seksjon table{margin-top:var(--space-6)}
+.vv-seksjon .vv-table__ramme table{margin-top:0}
+.vv-table td{text-align:right;white-space:nowrap}
+.vv-table th{text-align:right}
+.vv-table th:first-child,.vv-table td:first-child{text-align:left}
+.vv-table.nokkel td:last-child{white-space:normal}
+.merk{background:var(--accent-100);border-radius:var(--radius-md);padding:var(--space-4) var(--space-6);margin:var(--space-6) 0;font-size:16px;line-height:26px;color:var(--ink-900);max-width:var(--maal)}
+.stempel{font-size:12px;line-height:18px;font-weight:500;color:var(--ink-500);margin-top:var(--space-3)}
+.trinn{max-width:var(--maal);padding-left:22px;margin:var(--space-6) 0 0}
+.trinn li{margin-bottom:var(--space-3)}
+.n{color:var(--ink-500);font-size:12px}
+.vv-seksjon ul{max-width:var(--maal)}
+.ingressboks{margin-top:var(--space-8)}
+@media print{figure{break-inside:avoid}}
 </style>
-</head><body><div class="ark">
+</head><body>
+<a class="vv-hopp" href="#innhold">Hopp til innholdet</a>
+<header class="vv-topp">
+  <div class="vv-topp__inner">
+    <a class="vv-topp__merke" href="../">
+      <img class="vv-logo" src="../felles/logo/vargvind-logo.svg" alt="Vargvind Analyse" width="212" height="48">
+      <img class="vv-symbol" src="../felles/logo/vargvind-symbol.svg" alt="Vargvind" width="28" height="32">
+      <span class="vv-topp__navn"><b>Formålsbygg</b><span>Behov, byggekostnad og drift</span></span>
+    </a>
+    <nav aria-label="Hovedmeny">
+      <ul class="vv-meny">
+        <li><a href="../">Oversikt</a></li>
+        <li><a href="../dekning/"><span class="vv-steg" aria-hidden="true">1</span>Arealbehov</a></li>
+        <li><a href="../byggekost/" aria-current="page"><span class="vv-steg" aria-hidden="true">2</span>Byggekostnad</a></li>
+        <li><a href="../drift/"><span class="vv-steg" aria-hidden="true">3</span><span>Drift<span class="vv-ekstra"> og vedlikehold</span></span></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-<h1>Byggekostnadsindeks boligblokk</h1>
-<p class="undertittel">Prognose for gjennomsnittlig årlig kostnadsvekst</p>
-<p class="stempel">Oppdatert 12.11.2026 · siste observasjon 2026M09 ·
-   indeks 155,0 · siste 12 md. +5,4&nbsp;%</p>
+<div class="vv-side">
+<div class="vv-sidehode">
+  <p class="vv-overline">Steg 2 · Byggekostnad</p>
+  <h1>Hvor mye stiger byggekostnadene?</h1>
+  <p class="vv-ingress">Prognose for gjennomsnittlig årlig kostnadsvekst i SSBs byggekostnadsindeks boligblokk,
+     for ett, tre, fem og ti år fram. Midttallet er det mest sannsynlige, spennet
+     viser hvor mye det kan bomme.</p>
+  <p class="vv-caption vv-stempel">Oppdatert 12.11.2026 · siste observasjon 2026M09 ·
+     indeks 155,0 · siste 12 md. +5,4&nbsp;%</p>
+  <p class="stempel">Denne kjøringen brukte det lagrede øyeblikksbildet av dataene og hentet ikke nye tall fra SSB.</p>
+</div>
 
-
-<div class="tall">
-      <div class="rute">
+<div class="vv-oppslag">
+<nav class="vv-toc" data-toc aria-label="På denne siden">
+  <p class="vv-overline">På denne siden</p>
+  <ol></ol>
+</nav>
+<main id="innhold" tabindex="-1">
+<section class="vv-seksjon">
+<h2 id="prognose" data-kort="Prognose">Prognose for gjennomsnittlig årlig vekst</h2>
+<div class="tall vv-blokk">
+      <div class="rute forst">
         <div class="horisont">Neste år</div>
         <div class="stor">3,6<span>&nbsp;%</span></div>
         <div class="spenn">80&nbsp;%: 2,2 – 5,8&nbsp;%</div>
@@ -100,13 +117,18 @@ a{color:var(--dyp)}
    utfall havner under, ett av ti over. «Effekt av siste måned» er hvor mye den
    nyeste observasjonen alene flyttet anslaget.</p>
 
-<p class="ingress">Modellen venter at byggekostnadene for boligblokk stiger <strong>3,6&nbsp;%</strong> det neste året, og <strong>3,5&nbsp;%</strong> i året i snitt de neste 10 årene. Utgangspunktet er snittveksten de siste 20 årene, 3,79&nbsp;%. De siste tolv månedene har veksten vært 5,4&nbsp;%, 1,8 prosentpoeng over det modellen regner som normalt. Noe av det avviket ventes å henge igjen, og det løfter ettårsanslaget med 0,20 prosentpoeng.</p>
+<div class="vv-callout vv-callout--insight ingressboks">
+  <svg class="vv-callout__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17l5-5 4 4 7-8"/><path d="M15 8h5v5"/></svg>
+  <div><p class="vv-callout__title">Kort fortalt</p><p class="vv-callout__body">Modellen venter at byggekostnadene for boligblokk stiger <strong>3,6&nbsp;%</strong> det neste året, og <strong>3,5&nbsp;%</strong> i året i snitt de neste 10 årene. Utgangspunktet er snittveksten de siste 20 årene, 3,79&nbsp;%. De siste tolv månedene har veksten vært 5,4&nbsp;%, 1,8 prosentpoeng over det modellen regner som normalt. Noe av det avviket ventes å henge igjen, og det løfter ettårsanslaget med 0,20 prosentpoeng.</p></div>
+</div>
 
-<h2>Slik kommer modellen frem til tallet</h2>
+</section>
+<section class="vv-seksjon">
+<h2 id="oppbygging" data-kort="Oppbygging">Slik kommer modellen frem til tallet</h2>
 <p>Prognosen bygges i fire trinn. Figuren viser hvor mye hvert trinn flytter
    anslaget, for hver horisont.</p>
 <figure><img src="oppbygging.png" alt="Prognosen bygget opp trinn for trinn">
-<figcaption>Blå strek flytter anslaget opp, brun strek flytter det ned. Nederst i
+<figcaption>Mørk strek flytter anslaget opp, rav strek flytter det ned. Nederst i
 hvert panel står 80&nbsp;%-intervallet rundt medianen.</figcaption></figure>
 
   <ol class="trinn">
@@ -129,13 +151,15 @@ hvert panel står 80&nbsp;%-intervallet rundt medianen.</figcaption></figure>
       midterste utfallet, ligger 0,28 prosentpoeng
       under for ettårsanslaget.</li>
   </ol>
-<div class="rulle"><table>
+<div class="vv-table__ramme vv-rulle"><table class="vv-table">
 <thead><tr><th>Horisont</th><th>1. Snitt i dataene</th><th>2. Anker</th>
 <th>3. Dagens tempo</th><th>4. Til median</th><th>Prognose</th></tr></thead>
 <tbody><tr><td>Neste år</td><td>3,79</td><td>−0,10</td><td>+0,20</td><td>−0,28</td><td><strong>3,61</strong></td></tr><tr><td>Neste 3 år</td><td>3,79</td><td>−0,10</td><td>+0,07</td><td>−0,27</td><td><strong>3,49</strong></td></tr><tr><td>Neste 5 år</td><td>3,79</td><td>−0,10</td><td>+0,04</td><td>−0,22</td><td><strong>3,51</strong></td></tr><tr><td>Neste 10 år</td><td>3,79</td><td>−0,10</td><td>+0,02</td><td>−0,17</td><td><strong>3,53</strong></td></tr></tbody></table></div>
 <p class="stempel">Prosent per år. Kolonne 2–4 er endringer i prosentpoeng.</p>
 
-<h2>Slik ser usikkerheten ut</h2>
+</section>
+<section class="vv-seksjon">
+<h2 id="usikkerhet" data-kort="Usikkerhet">Slik ser usikkerheten ut</h2>
 <p>De fire fordelingene under er de simulerte utfallene, ikke en teoretisk kurve.
    Den stiplede linjen er en normalfordeling med samme snitt og spredning, lagt
    oppå som målestokk. Stikker søylene lenger ut til høyre enn kurven, er
@@ -155,7 +179,7 @@ Den stiplede loddrette linjen er ankeret på 3,0 prosent.</figcaption></figure>
    og prishopp som ingen kan forutse. Den andre er at vi ikke vet hva normal vekst
    egentlig er. Tabellen viser hvor bredt 80&nbsp;%-intervallet hadde vært med bare én
    kilde om gangen. Sjokkene betyr mest på alle horisonter.</p>
-<div class="rulle"><table>
+<div class="vv-table__ramme vv-rulle"><table class="vv-table">
 <thead><tr><th>Horisont</th><th>Begge kilder</th><th>Bare sjokk</th>
 <th>Bare usikker normalvekst</th></tr></thead>
 <tbody><tr><td>1 år</td><td>3,57</td><td>3,37</td><td>0,92</td></tr><tr><td>3 år</td><td>2,78</td><td>2,64</td><td>0,92</td></tr><tr><td>5 år</td><td>2,30</td><td>2,08</td><td>0,92</td></tr><tr><td>10 år</td><td>1,81</td><td>1,55</td><td>0,92</td></tr></tbody></table></div>
@@ -163,14 +187,16 @@ Den stiplede loddrette linjen er ankeret på 3,0 prosent.</figcaption></figure>
 sammen krone for krone, så summen av de to er større enn totalen.</p>
 
 <h3>Alle tall</h3>
-<div class="rulle"><table>
+<div class="vv-table__ramme vv-rulle"><table class="vv-table">
 <thead><tr><th>Horisont</th><th>Median</th><th>Snitt</th><th>P5</th><th>P10</th>
 <th>P90</th><th>P95</th><th>Bredde 80</th><th>Skjevhet</th><th>Form</th></tr></thead>
 <tbody><tr><td>1 år</td><td>3,61</td><td>3,81</td><td>1,74</td><td>2,23</td><td>5,80</td><td>6,75</td><td>3,57</td><td>+0,92</td><td>tydelig høyreskjev</td></tr><tr><td>3 år</td><td>3,49</td><td>3,66</td><td>2,17</td><td>2,43</td><td>5,21</td><td>5,75</td><td>2,78</td><td>+0,78</td><td>tydelig høyreskjev</td></tr><tr><td>5 år</td><td>3,51</td><td>3,61</td><td>2,29</td><td>2,54</td><td>4,83</td><td>5,26</td><td>2,30</td><td>+0,59</td><td>tydelig høyreskjev</td></tr><tr><td>10 år</td><td>3,53</td><td>3,58</td><td>2,47</td><td>2,71</td><td>4,52</td><td>4,84</td><td>1,81</td><td>+0,38</td><td>tydelig høyreskjev</td></tr></tbody></table></div>
 <p class="stempel">Alle tall i prosent per år. Skjevhet er null for en perfekt
 symmetrisk fordeling.</p>
 
-<h2>Bane</h2>
+</section>
+<section class="vv-seksjon">
+<h2 id="bane" data-kort="Banen videre">Banen videre</h2>
 <figure><img src="vifte_indeks.png" alt="Indeks med vifte"></figure>
 <figure><img src="vifte_vekst.png" alt="Tolvmånedersvekst med vifte">
 <figcaption>Samme simuleringer sett som årlig vekstrate. Medianbanen går mot
@@ -183,15 +209,17 @@ Mønsteret oppdateres gradvis, slik at nyere år teller mest. Sesongen påvirker
 banen gjennom året, men ikke årsanslagene: over tolv måneder summerer den seg til
 null.</figcaption></figure>
 
-  <h2>Ville modellen ha truffet?</h2>
+  </section>
+<section class="vv-seksjon">
+<h2 id="tilbaketest" data-kort="Tilbaketest">Ville modellen ha truffet?</h2>
   <p>Den beste prøven på en prognosemodell er å stille den opp i fortiden med
      bind for øynene. I panelene under får modellen bare se data til og med den
      stiplede streken, og lager så en prognose 5 år frem.
      Den mørke linjen er hva som faktisk skjedde.</p>
   <figure><img src="tilbaketest_bane.png" alt="Historiske prognoser mot fasit">
-  <figcaption>Mørk linje er faktisk indeks, blå linje er modellens median, og de
+  <figcaption>Stålblå linje er faktisk indeks, mørk linje er modellens median, og de
   blå feltene er usikkerhetsspennet. Ringen markerer hvor fasiten landet etter
-  5 år: mørk ring betyr innenfor 80&nbsp;%-intervallet, brun
+  5 år: mørk ring betyr innenfor 80&nbsp;%-intervallet, rav
   ring betyr utenfor.</figcaption></figure>
 
   <h3>Tallene bak</h3>
@@ -200,7 +228,7 @@ null.</figcaption></figure>
      startpunkt bruker modellen de samme reglene som i dag: de siste
      20 årene med data (eller alt som fantes, de første årene), og det
      inflasjonsmålet som gjaldt da.</p>
-  <div class="rulle"><table>
+  <div class="vv-table__ramme vv-rulle"><table class="vv-table">
   <thead><tr><th>Horisont</th><th>Innenfor 80&nbsp;%</th><th>Bredde 80&nbsp;%</th>
   <th>Bom, modellen</th><th>Bom, bare snittet</th><th>Bom, siste år fortsetter</th>
   <th>Skjevhet</th><th>Prøver</th><th>Uavhengige</th></tr></thead>
@@ -222,7 +250,7 @@ null.</figcaption></figure>
   <p>Ett samlet dekningstall kan skjule at intervallene var for brede i én periode
      og for smale i en annen. Tabellen deler derfor testen etter når prognosen ble
      laget.</p>
-  <div class="rulle"><table>
+  <div class="vv-table__ramme vv-rulle"><table class="vv-table">
   <thead><tr><th>Prognose laget</th><th>1 år</th><th>3 år</th><th>5 år</th><th>10 år</th></tr></thead>
   <tbody><tr><td>1995–2004</td><td>88&nbsp;% <span class="n">(+0,8)</span></td><td>93&nbsp;% <span class="n">(+0,7)</span></td><td>93&nbsp;% <span class="n">(+0,6)</span></td><td>96&nbsp;% <span class="n">(+0,7)</span></td></tr><tr><td>2005–2014</td><td>78&nbsp;% <span class="n">(−0,1)</span></td><td>84&nbsp;% <span class="n">(+0,1)</span></td><td>94&nbsp;% <span class="n">(+0,3)</span></td><td>100&nbsp;% <span class="n">(+0,2)</span></td></tr><tr><td>2015–2025</td><td>67&nbsp;% <span class="n">(−0,5)</span></td><td>71&nbsp;% <span class="n">(−0,6)</span></td><td>35&nbsp;% <span class="n">(−0,8)</span></td><td>86&nbsp;% <span class="n">(−0,5)</span></td></tr></tbody></table></div>
   <p class="stempel">Andel innenfor 80&nbsp;%-intervallet. Tallet i parentes er
@@ -239,19 +267,23 @@ null.</figcaption></figure>
   kan ikke sammenlignes på tvers av horisonter. Et tiårssnitt svinger naturlig
   mindre enn veksten i ett enkelt år.</figcaption></figure>
 
-  <h2>Hva om vi hadde valgt annerledes?</h2>
+  </section>
+<section class="vv-seksjon">
+<h2 id="folsomhet" data-kort="Følsomhet">Hva om vi hadde valgt annerledes?</h2>
   <p>Modellen hviler på noen få valg i innstillingene. Tabellen viser hva
      anslagene hadde vært med andre rimelige valg. Spriker radene mye, er anslaget
      følsomt for valget, og usikkerheten er i realiteten større enn intervallene
      over viser.</p>
-  <div class="rulle"><table>
+  <div class="vv-table__ramme vv-rulle"><table class="vv-table">
   <thead><tr><th>Valg</th><th>Normalvekst</th><th>1 år</th><th>3 år</th><th>5 år</th><th>10 år</th><th>80&nbsp;%, 10 år</th></tr></thead>
   <tbody><tr><td><strong>Dagens oppsett</strong></td><td>3,68</td><td>3,61</td><td>3,49</td><td>3,51</td><td>3,53</td><td>2,7 – 4,5</td></tr><tr><td>Vindu 15 år</td><td>3,55</td><td>3,41</td><td>3,41</td><td>3,47</td><td>3,50</td><td>2,6 – 4,6</td></tr><tr><td>Vindu 25 år</td><td>3,69</td><td>3,72</td><td>3,66</td><td>3,70</td><td>3,70</td><td>2,9 – 4,6</td></tr><tr><td>Vindu 30 år</td><td>3,65</td><td>3,69</td><td>3,60</td><td>3,62</td><td>3,64</td><td>2,9 – 4,5</td></tr><tr><td>Uten anker</td><td>3,79</td><td>3,71</td><td>3,59</td><td>3,62</td><td>3,63</td><td>2,8 – 4,6</td></tr><tr><td>Sterkt anker (usikkerhet 0,3 pp)</td><td>3,30</td><td>3,21</td><td>3,08</td><td>3,11</td><td>3,14</td><td>2,4 – 4,1</td></tr><tr><td>Realvekst 0,5&nbsp;% i ankeret</td><td>3,62</td><td>3,54</td><td>3,42</td><td>3,45</td><td>3,47</td><td>2,6 – 4,4</td></tr><tr><td>Realvekst 1,5&nbsp;% i ankeret</td><td>3,75</td><td>3,67</td><td>3,55</td><td>3,58</td><td>3,60</td><td>2,8 – 4,6</td></tr><tr><td>Tregere sesongtilpasning (halveringstid 10)</td><td>3,68</td><td>3,73</td><td>3,53</td><td>3,52</td><td>3,54</td><td>2,6 – 4,6</td></tr></tbody></table></div>
   <p class="stempel">Median for gjennomsnittlig årlig vekst, i prosent. Med disse
   alternativene varierer 10-årsanslaget fra 3,1 til
   3,7&nbsp;%.</p>
 
-<h2>Om modellen</h2>
+</section>
+<section class="vv-seksjon">
+<h2 id="om" data-kort="Om modellen">Om modellen</h2>
 <div class="merk">
 Indeksen måler kostnadene for entreprenørens innsatsfaktorer. Den fanger ikke
 endret produktivitet og ikke endringer i entreprenørens fortjenestemargin.
@@ -269,7 +301,7 @@ vendepunkter. Det den kan, er å si hva som er normalt, hvor mye dagens tempo pl
 <li>Fremtidige sjokk ligner på dem vi har sett i vinduet, i størrelse og hyppighet.</li>
 <li>Det valgte ankeret er et rimelig forhåndssyn. Vekten står i tabellen under.</li>
 </ul>
-<div class="rulle"><table>
+<div class="vv-table__ramme vv-rulle"><table class="vv-table nokkel">
 <tbody>
 <tr><td>Serie</td><td>SSB tabell 08655, kode 20 – Bustadblokk i alt</td></tr>
 <tr><td>Estimeringsvindu</td><td>2006M09 til 2026M09 (20 år, rullerende)</td></tr>
@@ -287,9 +319,32 @@ vendepunkter. Det den kan, er å si hva som er normalt, hvor mye dagens tempo pl
 tall. Rådataene for hver måned ligger i mappen <code>data/</code>, og alle
 innstillinger står i <code>config.py</code>.</p>
 
-<footer>
-Kilde: Statistisk sentralbyrå, tabell 08655, lisensiert CC BY 4.0.
+</section>
+</main>
+</div>
+
+<section class="vv-videre" aria-labelledby="videre-tittel">
+  <h2 id="videre-tittel">Se også</h2>
+  <div class="vv-videre__rad">
+    <a href="../dekning/">
+      <span class="vv-overline">Steg 1 · Arealbehov</span>
+      <b>Hvor mye areal trenger kommunen?</b>
+      <span>Dekning per kommune og bygningstype, i dag og framskrevet til 2050.</span>
+      <span>Til arealbehov</span>
+    </a>
+    <a href="../drift/">
+      <span class="vv-overline">Steg 3 · Drift og vedlikehold</span>
+      <b>Hva koster bygget å drifte?</b>
+      <span>Normtall i kr/m² per år for seks bygningstyper, fra KOSTRA.</span>
+      <span>Til drift og vedlikehold</span>
+    </a>
+  </div>
+</section>
+<footer class="vv-bunn">
+<p>Kilde: Statistisk sentralbyrå, tabell 08655, lisensiert CC BY 4.0.
 Beregningene er egne og står ikke for SSBs regning.
-Siden bygges automatisk hver måned. 
+Siden bygges automatisk hver måned. </p>
 </footer>
-</div></body></html>
+</div>
+<script src="../felles/side.js"></script>
+</body></html>
